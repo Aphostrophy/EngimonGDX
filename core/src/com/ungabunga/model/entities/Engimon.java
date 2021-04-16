@@ -1,11 +1,11 @@
 package com.ungabunga.model.entities;
 
-import java.util.*;
-
+import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.enums.IElements;
-import com.ungabunga.model.exceptions.*;
 import com.ungabunga.model.utilities.Pair;
+
+import java.util.List;
 
 public class Engimon {
     protected static int count = 0;
@@ -14,7 +14,7 @@ public class Engimon {
     protected int level, exp, cumulativeExp;
     protected List<IElements> elements;
     protected Pair<String, String> parentName, parentSpecies;
-    protected List<Skill> skills;
+    protected List<com.ungabunga.model.entities.Skill> skills;
 
     public Engimon(String name, String species, String slogan, int level, List<IElements> elements, List<Skill> skills, Pair<String, String> parentName, Pair<String, String> parentSpecies) {
         this.id = count++;

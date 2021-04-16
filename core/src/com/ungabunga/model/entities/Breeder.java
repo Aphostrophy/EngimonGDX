@@ -1,12 +1,11 @@
 package com.ungabunga.model.entities;
 
-import java.util.*;
-import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.utilities.Pair;
 
-import javax.swing.text.Element;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Breeder {
     Breeder() {}
