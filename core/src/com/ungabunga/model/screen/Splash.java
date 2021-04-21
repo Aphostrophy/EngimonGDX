@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ungabunga.EngimonGame;
+import sun.rmi.rmic.Main;
 
 public class Splash implements Screen {
     private SpriteBatch batch;
@@ -42,7 +43,7 @@ public class Splash implements Screen {
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.SPACE) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new MainMenu(game));
                 }
                 return true;
             }
@@ -62,7 +63,6 @@ public class Splash implements Screen {
             splash.draw(batch);
             font.draw(batch, "PRESS SPACE TO CONTINUE!!!", Gdx.graphics.getWidth() / 2 - text.width/2, Gdx.graphics.getHeight() / 5);
         }
-        batch.end();
 
         if(alpha < 1) {
             alpha += 0.005;
@@ -70,6 +70,8 @@ public class Splash implements Screen {
         if(y < Gdx.graphics.getHeight()/2) {
             y += 2;
         }
+        batch.end();
+
     }
 
     @Override
@@ -94,6 +96,8 @@ public class Splash implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        splash.getTexture().dispose();
+        font.dispose();
     }
 }
