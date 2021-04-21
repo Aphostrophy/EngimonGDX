@@ -3,16 +3,19 @@ package com.ungabunga.model.entities;
 public class SkillItem {
     private String skillName;
     private int amount;
+    private int power;
 
     SkillItem(){
         this.skillName = "XXX";
         this.amount = 0;
+        this.power = 0;
     }
 
-    SkillItem(String skillName)
+    SkillItem(String skillName, int power)
     {
         this.skillName = skillName;
         this.amount = 1;
+        this.power = power;
     }
 
     public void setAmount(int amount)
@@ -32,5 +35,7 @@ public class SkillItem {
     public String getName(){
         return this.skillName;
     }
+
+    public int getPower(){return this.power;}
 
 }
