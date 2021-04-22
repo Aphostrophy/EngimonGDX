@@ -2,6 +2,7 @@ package com.ungabunga.model.entities;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
+import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.utilities.Pair;
 
 public class Player {
@@ -21,14 +22,6 @@ public class Player {
     private float worldX,worldY;
     private float animTimer;
     private float ANIM_TIMER = 0.5f;
-
-    public enum AVATAR_STATE{
-        WALKING,
-        STANDING,
-        SWIMMING,
-        HIKING,
-        SLIDING,
-    }
 
     public Player(String name){
         this.name = name;
@@ -73,8 +66,8 @@ public class Player {
 
     private void finishMove(){
         this.state = AVATAR_STATE.STANDING;
-        this.worldX = worldX;
-        this.worldY = worldY;
+        this.worldX = this.getX();
+        this.worldY = this.getY();
     }
 
     public void update(float delta){
