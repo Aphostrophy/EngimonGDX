@@ -12,6 +12,8 @@ public class Player {
 
     public String name;
 
+    private DIRECTION facing;
+
     Pair<Integer,Integer> position;
 
     private ActiveEngimon activeEngimon;
@@ -21,8 +23,22 @@ public class Player {
     private float worldX,worldY;
     private float animTimer;
     private float ANIM_TIMER = 0.5f;
+    private float REFACE_TIME = 0.1f;
+
+    private AVATAR_MODE currentMode;
+    private AVATAR_MODE nextMode;
+//    private AnimationSet animations;
+
+//    private Dialogue dialogue;
 
     public enum AVATAR_STATE{
+        WALKING,
+        STANDING,
+        SWIMMING,
+        HIKING,
+        SLIDING,
+    }
+    public enum AVATAR_MODE{
         WALKING,
         STANDING,
         SWIMMING,
@@ -36,8 +52,10 @@ public class Player {
         this.worldX = 0;
         this.worldY = 0;
         this.avatar = new Texture("Avatar/brendan_stand_south.png");
-
+        this.facing = DIRECTION.SOUTH;
         this.state = AVATAR_STATE.STANDING;
+        this.currentMode = AVATAR_MODE.WALKING;
+        this.nextMode = AVATAR_MODE.WALKING;
     }
 
     public void setName(String name){
@@ -77,9 +95,9 @@ public class Player {
 
     public void update(float delta){
         if(state == AVATAR_STATE.WALKING) {
-            animTimer += delta;
-            worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
-            worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+            this.animTimer += delta;
+            this.worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
+            this.worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
 
             if(animTimer > ANIM_TIMER){
                 finishMove();
