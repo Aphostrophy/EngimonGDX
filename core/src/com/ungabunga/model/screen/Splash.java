@@ -35,7 +35,7 @@ public class Splash implements Screen {
         // NANTI LOGO GAMENYA DIGANTIIII!!!!!
         Texture splashTexture = new Texture("Pokemon.png");
         splash = new Sprite(splashTexture);
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("font/white.fnt"));
         text = new GlyphLayout(font, "PRESS SPACE TO CONTINUE!!!");
         splash.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
@@ -43,11 +43,7 @@ public class Splash implements Screen {
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.SPACE) {
-                    try {
-                        game.setScreen(new GameScreen(game));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    game.setScreen(new MainMenu(game));
                 }
                 return true;
             }
@@ -67,7 +63,6 @@ public class Splash implements Screen {
             splash.draw(batch);
             font.draw(batch, "PRESS SPACE TO CONTINUE!!!", Gdx.graphics.getWidth() / 2 - text.width/2, Gdx.graphics.getHeight() / 5);
         }
-        batch.end();
 
         if(alpha < 1) {
             alpha += 0.005;
@@ -75,6 +70,8 @@ public class Splash implements Screen {
         if(y < Gdx.graphics.getHeight()/2) {
             y += 2;
         }
+        batch.end();
+
     }
 
     @Override
@@ -99,6 +96,8 @@ public class Splash implements Screen {
 
     @Override
     public void dispose() {
-
+        batch.dispose();
+        splash.getTexture().dispose();
+        font.dispose();
     }
 }
