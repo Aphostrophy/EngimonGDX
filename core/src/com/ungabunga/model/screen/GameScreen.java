@@ -57,7 +57,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
+        controller.update(delta);
         gameState.player.update(delta);
+
         renderer.setView(camera);
         renderer.render();
 
