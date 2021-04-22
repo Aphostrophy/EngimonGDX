@@ -40,6 +40,8 @@ public class Player {
         this.state = AVATAR_STATE.STANDING;
         this.direction = DIRECTIONS.DOWN;
 
+        this.animTimer = 0f;
+        this.stateTimer = 0f;
         this.animations = animations;
     }
 
@@ -71,7 +73,6 @@ public class Player {
         this.worldX = this.getX();
         this.worldY = this.getY();
         this.animTimer = 0f;
-        this.stateTimer = 0f;
         this.state = AVATAR_STATE.WALKING;
     }
 

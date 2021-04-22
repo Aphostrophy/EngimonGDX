@@ -34,10 +34,10 @@ public class GameScreen extends AbstractScreen {
 
         TextureAtlas atlas = app.getAssetManager().get("pic/packed/avatarTextures.atlas", TextureAtlas.class);
         AnimationSet playerAnimations = new AnimationSet(
-                new Animation<TextureRegion>(ANIM_TIMER/2f, atlas.findRegion("brendan_walk_south")),
-                new Animation<TextureRegion>(ANIM_TIMER/2f, atlas.findRegion("brendan_walk_north")),
-                new Animation<TextureRegion>(ANIM_TIMER/2f, atlas.findRegion("brendan_walk_west")),
-                new Animation<TextureRegion>(ANIM_TIMER/2f, atlas.findRegion("brendan_walk_east")),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("brendan_walk_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("brendan_walk_north"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("brendan_walk_west"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("brendan_walk_east"),Animation.PlayMode.LOOP_PINGPONG),
                 atlas.findRegion("brendan_stand_south"),
                 atlas.findRegion("brendan_stand_north"),
                 atlas.findRegion("brendan_stand_west"),
