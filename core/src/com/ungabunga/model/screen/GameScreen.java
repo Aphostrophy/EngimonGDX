@@ -85,7 +85,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void show() {
-        map = new TmxMapLoader().load("map.tmx");
+        map = new TmxMapLoader().load("Maps/Map.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map);
 
