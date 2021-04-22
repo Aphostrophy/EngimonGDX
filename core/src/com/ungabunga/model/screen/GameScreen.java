@@ -1,9 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -11,13 +9,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.entities.Players;
+import com.ungabunga.model.entities.Player;
 public class GameScreen extends AbstractScreen {
 
-    private Players player;
+    private Player player;
     private PlayerController controller;
     private SpriteBatch batch;
-    private Texture standSouth;
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -26,18 +23,16 @@ public class GameScreen extends AbstractScreen {
     public GameScreen(EngimonGame app) {
         super(app);
 
-        standSouth = new Texture("pic/brendan_stand_south.png");
-
         batch = new SpriteBatch();
 
-        player = new Players(0, 0);
+        player = new Player("orz");
 
         controller = new PlayerController(player);
     }
 
     @Override
     public  void dispose() {
-        standSouth.dispose();
+        player.avatar.dispose();
         batch.dispose();
         map.dispose();
         renderer.dispose();
@@ -59,14 +54,16 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         renderer.setView(camera);
         renderer.render();
 
+        camera.position.set(player.getX() * Settings.SCALED_TILE_SIZE,player.getY() * Settings.SCALED_TILE_SIZE,0);
+        camera.update();
+
         batch.begin();
-        batch.draw(standSouth,player.getX()*Settings.SCALED_TILE_SIZE,player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.draw(player.avatar,player.getX()*Settings.SCALED_TILE_SIZE,player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
         batch.end();
     }
 
@@ -84,7 +81,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void show() {
-        map = new TmxMapLoader().load("map.tmx");
+        map = new TmxMapLoader().load("Maps/Map.tmx");
 
         renderer = new OrthogonalTiledMapRenderer(map);
 

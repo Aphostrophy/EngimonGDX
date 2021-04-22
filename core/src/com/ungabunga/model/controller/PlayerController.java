@@ -1,11 +1,12 @@
 package com.ungabunga.model.controller;
 
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Input.Keys;
-import com.ungabunga.model.entities.Players;
+import com.badlogic.gdx.InputAdapter;
+import com.ungabunga.model.entities.Player;
+
 public class PlayerController extends InputAdapter{
-    private Players player;
-    public PlayerController(Players p) {
+    private Player player;
+    public PlayerController(Player p) {
         this.player = p;
     }
 
@@ -13,16 +14,16 @@ public class PlayerController extends InputAdapter{
     public boolean keyDown(int keycode) {
 
         if(keycode == Keys.W) {
-            player.move(0,1);
+            player.moveUp();
         }
         if(keycode == Keys.S) {
-            player.move(0,-1);
+            player.moveDown();
         }
         if(keycode == Keys.A) {
-            player.move(-1,0);
+            player.moveLeft();
         }
         if(keycode == Keys.D) {
-            player.move(1,0);
+            player.moveRight();
         }
         return false;
     }
