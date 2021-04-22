@@ -6,7 +6,6 @@ import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.fileUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameState {
     public Player player;

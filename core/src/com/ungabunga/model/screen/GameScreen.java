@@ -1,43 +1,42 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.entities.Players;
+
+import java.io.IOException;
+
+
 public class GameScreen extends AbstractScreen {
 
-    private Players player;
+    private GameState gameState;
     private PlayerController controller;
     private SpriteBatch batch;
-    private Texture standSouth;
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
 
-    public GameScreen(EngimonGame app) {
+    public GameScreen(EngimonGame app) throws IOException {
         super(app);
-
-        standSouth = new Texture("pic/brendan_stand_south.png");
 
         batch = new SpriteBatch();
 
-        player = new Players(0, 0);
+        gameState = new GameState("orz");
 
-        controller = new PlayerController(player);
+        controller = new PlayerController(gameState.player);
     }
 
     @Override
     public  void dispose() {
-        standSouth.dispose();
+        gameState.player.avatar.dispose();
         batch.dispose();
         map.dispose();
         renderer.dispose();
@@ -59,14 +58,16 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         renderer.setView(camera);
         renderer.render();
 
+        camera.position.set(gameState.player.getX() * Settings.SCALED_TILE_SIZE,gameState.player.getY() * Settings.SCALED_TILE_SIZE,0);
+        camera.update();
+
         batch.begin();
-        batch.draw(standSouth,player.getX()*Settings.SCALED_TILE_SIZE,player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.draw(gameState.player.avatar,gameState.player.getX()*Settings.SCALED_TILE_SIZE,gameState.player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
         batch.end();
     }
 

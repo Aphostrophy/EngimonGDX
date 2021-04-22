@@ -5,12 +5,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.screen.Splash;
 
+import java.io.IOException;
+
 public class EngimonGame extends Game{
 	private GameScreen gameScreen;
 	private Splash splashScreen;
 
 	public void create() {
-		gameScreen = new GameScreen(this);
+		try {
+			gameScreen = new GameScreen(this);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		splashScreen = new Splash(this);
 		this.setScreen(splashScreen);
 //		this.setScreen(gameScreen);

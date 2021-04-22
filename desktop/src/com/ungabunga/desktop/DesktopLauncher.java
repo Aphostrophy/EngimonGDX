@@ -11,8 +11,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.title = "Engimon game";
-		config.height = 600;
-		config.width = 800;
+		config.height = 720;
+		config.width = 1280;
 		config.vSyncEnabled = true;
 
 		new LwjglApplication(new EngimonGame(), config);
