@@ -58,16 +58,17 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
+        gameState.player.update(delta);
         renderer.setView(camera);
         renderer.render();
 
-        camera.position.set(gameState.player.getX() * Settings.SCALED_TILE_SIZE,gameState.player.getY() * Settings.SCALED_TILE_SIZE,0);
+        camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
         camera.update();
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        batch.draw(gameState.player.avatar,gameState.player.getX()*Settings.SCALED_TILE_SIZE,gameState.player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        batch.draw(gameState.player.avatar,gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
         batch.end();
     }
 
