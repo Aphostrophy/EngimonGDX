@@ -2,28 +2,44 @@ package com.ungabunga.model.controller;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.ungabunga.model.entities.Player;
+import com.ungabunga.model.GameState;
 
 public class PlayerController extends InputAdapter{
-    private Player player;
-    public PlayerController(Player p) {
-        this.player = p;
+    private GameState gameState;
+    public PlayerController(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override
     public boolean keyDown(int keycode) {
 
         if(keycode == Keys.W) {
-            player.moveUp();
+            try{
+                gameState.movePlayerUp();
+            } catch(Exception e){
+                System.out.println(e);
+            }
         }
         if(keycode == Keys.S) {
-            player.moveDown();
+            try{
+                gameState.movePlayerDown();
+            } catch(Exception e){
+                System.out.println(e);
+            }
         }
         if(keycode == Keys.A) {
-            player.moveLeft();
+            try{
+                gameState.movePlayerLeft();
+            } catch(Exception e){
+                System.out.println(e);
+            }
         }
         if(keycode == Keys.D) {
-            player.moveRight();
+            try{
+                gameState.movePlayerRight();
+            } catch(Exception e){
+                System.out.println(e);
+            }
         }
         return false;
     }

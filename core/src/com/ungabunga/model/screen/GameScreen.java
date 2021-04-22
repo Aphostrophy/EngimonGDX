@@ -31,7 +31,7 @@ public class GameScreen extends AbstractScreen {
 
         gameState = new GameState("orz");
 
-        controller = new PlayerController(gameState.player);
+        controller = new PlayerController(gameState);
     }
 
     @Override
