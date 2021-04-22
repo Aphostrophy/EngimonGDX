@@ -64,8 +64,6 @@ public class MainMenu implements Screen {
                         splash.dispose();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    } finally {
-                        splash.dispose();
                     }
                 }
 
