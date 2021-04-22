@@ -1,19 +1,22 @@
 package com.ungabunga.model.entities;
+
+import com.badlogic.gdx.graphics.Texture;
 import com.ungabunga.model.utilities.Pair;
 
 public class Player {
-    String name;
+
+    public Texture avatar;
+
+    public String name;
+
     Pair<Integer,Integer> position;
 
-    public ActiveEngimon activeEngimon;
+    private ActiveEngimon activeEngimon;
 
     public Player(String name){
         this.name = name;
         this.position = new Pair<Integer, Integer>(0,0);
-    }
-
-    public String getName() {
-        return name;
+        this.avatar = new Texture("Avatar/brendan_stand_south.png");
     }
 
     public void setName(String name){
