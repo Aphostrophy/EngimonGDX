@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -35,7 +34,7 @@ public class Splash implements Screen {
         // NANTI LOGO GAMENYA DIGANTIIII!!!!!
         Texture splashTexture = new Texture("Pokemon.png");
         splash = new Sprite(splashTexture);
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("font/white.fnt"));
         text = new GlyphLayout(font, "PRESS SPACE TO CONTINUE!!!");
         splash.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
