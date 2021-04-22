@@ -13,7 +13,6 @@ import com.ungabunga.model.controller.PlayerController;
 
 import java.io.IOException;
 
-
 public class GameScreen extends AbstractScreen {
 
     private GameState gameState;
@@ -31,7 +30,7 @@ public class GameScreen extends AbstractScreen {
 
         gameState = new GameState("orz");
 
-        controller = new PlayerController(gameState.player);
+        controller = new PlayerController(gameState);
     }
 
     @Override
