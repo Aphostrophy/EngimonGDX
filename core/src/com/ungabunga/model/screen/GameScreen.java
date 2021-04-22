@@ -11,10 +11,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.entities.Players;
+import com.ungabunga.model.entities.Player;
 public class GameScreen extends AbstractScreen {
 
-    private Players player;
+    private Player player;
     private PlayerController controller;
     private SpriteBatch batch;
     private Texture standSouth;
@@ -30,7 +30,7 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
 
-        player = new Players(0, 0);
+        player = new Player("orz");
 
         controller = new PlayerController(player);
     }
@@ -62,6 +62,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        System.out.println(delta);
         renderer.setView(camera);
         renderer.render();
 

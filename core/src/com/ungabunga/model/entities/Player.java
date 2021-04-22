@@ -1,5 +1,4 @@
 package com.ungabunga.model.entities;
-import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.utilities.Pair;
 
 public class Player {
@@ -19,6 +18,14 @@ public class Player {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public int getX(){
+        return this.position.getFirst();
+    }
+
+    public int getY(){
+        return this.position.getSecond();
     }
 
     public void moveUp() {
