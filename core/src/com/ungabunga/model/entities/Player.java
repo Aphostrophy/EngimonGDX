@@ -15,6 +15,12 @@ public class Player {
 
     private ActiveEngimon activeEngimon;
 
+    private float srcX,srcY;
+    private float destX,destY;
+    private float worldX,worldY;
+    private float animTimer;
+    private float ANIM_TIMER = 0.5f;
+
     public enum AVATAR_STATE{
         WALKING,
         STANDING,
@@ -26,7 +32,11 @@ public class Player {
     public Player(String name){
         this.name = name;
         this.position = new Pair<Integer, Integer>(0,0);
+        this.worldX = 0;
+        this.worldY = 0;
         this.avatar = new Texture("Avatar/brendan_stand_south.png");
+
+        this.state = AVATAR_STATE.STANDING;
     }
 
     public void setName(String name){
@@ -41,24 +51,41 @@ public class Player {
         return this.position.getSecond();
     }
 
+    public float getWorldX(){
+        return this.worldX;
+    }
+
+    public float getWorldY(){
+        return this.worldY;
+    }
+
+    private void move(int dx,int dy){
+        this.position.setFirst(this.getX()+dx);
+        this.position.setSecond(this.getY()+dy);
+    }
+
     public void moveUp() {
-        int y = this.position.getSecond();
-        this.position.setSecond(y+1);
+        if(state == AVATAR_STATE.STANDING){
+            move(0,1);
+        }
     }
 
     public void moveDown() {
-        int y = this.position.getSecond();
-        this.position.setSecond(y-1);
+        if(state == AVATAR_STATE.STANDING){
+            move(0,-1);
+        }
     }
 
     public void moveLeft() {
-        int x = this.position.getFirst();
-        this.position.setFirst(x-1);
+        if(state == AVATAR_STATE.STANDING){
+            move(-1,0);
+        }
     }
 
     public void moveRight() {
-        int x = this.position.getFirst();
-        this.position.setFirst(x+1);
+        if(state == AVATAR_STATE.STANDING){
+            move(1,0);
+        }
     }
 
     public Engimon getActiveEngimon(){
