@@ -1,10 +1,13 @@
 package com.ungabunga.model.screen;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ungabunga.EngimonGame;
 
@@ -17,18 +20,28 @@ public class MainMenu implements Screen {
 
     private SpriteBatch batch;
 
+    private Sprite heading;
+
+    private Splash splash;
+
     private Texture playButtonActive;
     private Texture playButtonInactive;
     private Texture exitButtonActive;
     private Texture exitButtonInactive;
 
-    public MainMenu(EngimonGame game) {
+    public MainMenu(EngimonGame game, Splash splash) {
         this.game = game;
         this.playButtonActive = new Texture("img/play_button_active.png");
         this.playButtonInactive = new Texture("img/play_button_inactive.png");
         this.exitButtonActive = new Texture("img/exit_button_active.png");
         this.exitButtonInactive = new Texture("img/exit_button_inactive.png");
         this.batch = new SpriteBatch();
+        this.splash = splash;
+
+        // NANTI GANTI LOGONYA DISINI LAGI
+        Texture splashTexture = new Texture("Pokemon.png");
+        this.heading = new Sprite(splashTexture);
+        heading.setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4);
 
         Gdx.input.setInputProcessor(new InputAdapter() {
 
@@ -45,6 +58,7 @@ public class MainMenu implements Screen {
                 //Play game button
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
                     game.setScreen(new GameScreen(game));
+                    splash.dispose();
                 }
 
                 return super.touchUp(screenX, screenY, pointer, button);
@@ -61,10 +75,13 @@ public class MainMenu implements Screen {
     @Override
     public void render(float delta) {
         int x = Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2;
-        Gdx.gl.glClearColor(0, 0, 0,1);
+        Gdx.gl.glClearColor(0, 0, .25f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        
         batch.begin();
+        heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 125);
+        heading.draw(batch);
+
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
             batch.draw(playButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
         } else {
