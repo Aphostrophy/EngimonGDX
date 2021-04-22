@@ -12,7 +12,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ungabunga.EngimonGame;
-import sun.rmi.rmic.Main;
+
+import java.io.IOException;
 
 public class Splash implements Screen {
     private SpriteBatch batch;

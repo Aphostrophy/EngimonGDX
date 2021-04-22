@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ungabunga.EngimonGame;
 
+import java.io.IOException;
+
 public class MainMenu implements Screen {
 
     private static final int BUTTON_WIDTH = 150;
@@ -57,8 +59,14 @@ public class MainMenu implements Screen {
 
                 //Play game button
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
-                    game.setScreen(new GameScreen(game));
-                    splash.dispose();
+                    try {
+                        game.setScreen(new GameScreen(game));
+                        splash.dispose();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        splash.dispose();
+                    }
                 }
 
                 return super.touchUp(screenX, screenY, pointer, button);

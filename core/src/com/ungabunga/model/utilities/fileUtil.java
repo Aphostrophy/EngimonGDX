@@ -1,30 +1,29 @@
 package com.ungabunga.model.utilities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.enums.CellType;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import static com.ungabunga.model.enums.CONSTANTS.*;
 
 public class fileUtil {
     public static MapCell[][] readMapFile() throws IOException {
-        URL url = fileUtil.class.getResource("resources/peta.txt");
-        BufferedReader br = new BufferedReader(new FileReader(url.getPath()));
+        FileHandle handle = Gdx.files.internal("resources/peta.txt");
+        String text = handle.readString();
+        String wordsArray[] = text.split("\\r?\\n");
 
         ArrayList<ArrayList<MapCell>> gameMap= new ArrayList<ArrayList<MapCell>>();
+        int y =0;
 
-        String st;
-        int y = 0;
-        while ((st = br.readLine()) != null){
+        for(String word : wordsArray) {
             ArrayList<MapCell> mapRow = new ArrayList<MapCell>();
-            for(int x=0;x<st.length();x++){
+            for(int x=0;x<word.length();x++){
                 MapCell mapCell = new MapCell(x,y);
-                switch(st.charAt(x)){
+                switch(word.charAt(x)){
                     case GRASSLANDSYMBOL:
                         mapCell.cellType = CellType.GRASSLAND;
                         mapRow.add(mapCell);
@@ -46,6 +45,7 @@ public class fileUtil {
             gameMap.add(mapRow);
             y++;
         }
+
         return gameMap.stream().map(u -> u.toArray(new MapCell[u.size()])).toArray(MapCell[][]::new);
     }
 }

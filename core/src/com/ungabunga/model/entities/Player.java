@@ -7,11 +7,21 @@ public class Player {
 
     public Texture avatar;
 
+    public AVATAR_STATE state;
+
     public String name;
 
     Pair<Integer,Integer> position;
 
     private ActiveEngimon activeEngimon;
+
+    public enum AVATAR_STATE{
+        WALKING,
+        STANDING,
+        SWIMMING,
+        HIKING,
+        SLIDING,
+    }
 
     public Player(String name){
         this.name = name;

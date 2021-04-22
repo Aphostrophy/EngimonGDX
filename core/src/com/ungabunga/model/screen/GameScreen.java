@@ -8,11 +8,15 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.entities.Player;
+
+import java.io.IOException;
+
+
 public class GameScreen extends AbstractScreen {
 
-    private Player player;
+    private GameState gameState;
     private PlayerController controller;
     private SpriteBatch batch;
 
@@ -20,19 +24,19 @@ public class GameScreen extends AbstractScreen {
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
 
-    public GameScreen(EngimonGame app) {
+    public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
         batch = new SpriteBatch();
 
-        player = new Player("orz");
+        gameState = new GameState("orz");
 
-        controller = new PlayerController(player);
+        controller = new PlayerController(gameState.player);
     }
 
     @Override
     public  void dispose() {
-        player.avatar.dispose();
+        gameState.player.avatar.dispose();
         batch.dispose();
         map.dispose();
         renderer.dispose();
@@ -57,13 +61,13 @@ public class GameScreen extends AbstractScreen {
         renderer.setView(camera);
         renderer.render();
 
-        camera.position.set(player.getX() * Settings.SCALED_TILE_SIZE,player.getY() * Settings.SCALED_TILE_SIZE,0);
+        camera.position.set(gameState.player.getX() * Settings.SCALED_TILE_SIZE,gameState.player.getY() * Settings.SCALED_TILE_SIZE,0);
         camera.update();
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        batch.draw(player.avatar,player.getX()*Settings.SCALED_TILE_SIZE,player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        batch.draw(gameState.player.avatar,gameState.player.getX()*Settings.SCALED_TILE_SIZE,gameState.player.getY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
         batch.end();
     }
 
