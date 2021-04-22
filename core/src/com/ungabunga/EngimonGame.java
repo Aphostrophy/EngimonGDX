@@ -9,7 +9,6 @@ import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.screen.Splash;
 
 public class EngimonGame extends Game{
-	private GameScreen gameScreen;
 	private Splash splashScreen;
 
 	private AssetManager assetManager;

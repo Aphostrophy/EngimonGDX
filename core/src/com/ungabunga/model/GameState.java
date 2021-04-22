@@ -3,6 +3,7 @@ package com.ungabunga.model;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
 import java.io.IOException;
@@ -11,8 +12,8 @@ public class GameState {
     public Player player;
     public MapCell[][] map;
 
-    public GameState(String name) throws IOException {
-        this.player = new Player(name);
+    public GameState(String name, AnimationSet animations) throws IOException {
+        this.player = new Player(name, animations);
         this.map = fileUtil.readMapFile();
     }
 
