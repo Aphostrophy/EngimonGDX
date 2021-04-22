@@ -60,26 +60,28 @@ public class Player {
         return this.worldY;
     }
 
-    private void initializeMove(int oldX,int oldY,int dx,int dy){
-        this.srcX = oldX;
-        this.srcY = oldY;
-        this.destX = oldX + dx;
-        this.destY = oldY + dy;
-        this.worldX = oldX;
-        this.worldY = oldY;
-        animTimer = 0f;
-        state = AVATAR_STATE.WALKING;
+    private void initializeMove(int dx,int dy){
+        this.srcX = this.getX();
+        this.srcY = this.getY();
+        this.destX = this.getX() + dx;
+        this.destY = this.getY() + dy;
+        this.worldX = this.getX();
+        this.worldY = this.getY();
+        this.animTimer = 0f;
+        this.state = AVATAR_STATE.WALKING;
     }
 
     private void finishMove(){
-        state = AVATAR_STATE.STANDING;
+        this.state = AVATAR_STATE.STANDING;
+        this.worldX = worldX;
+        this.worldY = worldY;
     }
 
     public void update(float delta){
         if(state == AVATAR_STATE.WALKING) {
-            animTimer += delta;
-            worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
-            worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+            this.animTimer += delta;
+            this.worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
+            this.worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
 
             if(animTimer > ANIM_TIMER){
                 finishMove();
@@ -88,7 +90,7 @@ public class Player {
     }
 
     private void move(int dx,int dy){
-        initializeMove(this.getX(),this.getY(),dx,dy);
+        initializeMove(dx,dy);
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
     }

@@ -1,0 +1,286 @@
+
+avatarTextures.png
+size: 1024, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+brendan_bike_east
+  rotate: false
+  xy: 2, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 0
+brendan_bike_east
+  rotate: false
+  xy: 28, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 1
+brendan_bike_east
+  rotate: false
+  xy: 54, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 2
+brendan_bike_north
+  rotate: false
+  xy: 158, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_bike_north
+  rotate: false
+  xy: 176, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_bike_north
+  rotate: false
+  xy: 194, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_bike_south
+  rotate: false
+  xy: 212, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_bike_south
+  rotate: false
+  xy: 230, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_bike_south
+  rotate: false
+  xy: 248, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_bike_west
+  rotate: false
+  xy: 80, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 0
+brendan_bike_west
+  rotate: false
+  xy: 106, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 1
+brendan_bike_west
+  rotate: false
+  xy: 132, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: 2
+brendan_run_east
+  rotate: false
+  xy: 266, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_run_east
+  rotate: false
+  xy: 284, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_run_east
+  rotate: false
+  xy: 302, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_run_north
+  rotate: false
+  xy: 320, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_run_north
+  rotate: false
+  xy: 338, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_run_north
+  rotate: false
+  xy: 356, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_run_south
+  rotate: false
+  xy: 374, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_run_south
+  rotate: false
+  xy: 392, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_run_south
+  rotate: false
+  xy: 410, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_run_west
+  rotate: false
+  xy: 428, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_run_west
+  rotate: false
+  xy: 446, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_run_west
+  rotate: false
+  xy: 464, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_stand_east
+  rotate: false
+  xy: 482, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_east
+  rotate: false
+  xy: 482, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_north
+  rotate: false
+  xy: 500, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_north
+  rotate: false
+  xy: 500, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_south
+  rotate: false
+  xy: 518, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_south
+  rotate: false
+  xy: 518, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_west
+  rotate: false
+  xy: 536, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_west
+  rotate: false
+  xy: 536, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_walk_east
+  rotate: false
+  xy: 554, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_east
+  rotate: false
+  xy: 572, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_north
+  rotate: false
+  xy: 590, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_north
+  rotate: false
+  xy: 608, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_south
+  rotate: false
+  xy: 626, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_south
+  rotate: false
+  xy: 644, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_west
+  rotate: false
+  xy: 662, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_west
+  rotate: false
+  xy: 680, 2
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2

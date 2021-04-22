@@ -13,7 +13,6 @@ import com.ungabunga.model.controller.PlayerController;
 
 import java.io.IOException;
 
-
 public class GameScreen extends AbstractScreen {
 
     private GameState gameState;

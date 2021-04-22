@@ -43,4 +43,38 @@ public class PlayerController extends InputAdapter{
         }
         return false;
     }
+
+//    @Override
+//    public boolean keyUp(int keycode){
+//
+//        if(keycode == Keys.W) {
+//            try{
+//                gameState.movePlayerUp();
+//            } catch(Exception e){
+//                System.out.println(e);
+//            }
+//        }
+//        if(keycode == Keys.S) {
+//            try{
+//                gameState.movePlayerDown();
+//            } catch(Exception e){
+//                System.out.println(e);
+//            }
+//        }
+//        if(keycode == Keys.A) {
+//            try{
+//                gameState.movePlayerLeft();
+//            } catch(Exception e){
+//                System.out.println(e);
+//            }
+//        }
+//        if(keycode == Keys.D) {
+//            try{
+//                gameState.movePlayerRight();
+//            } catch(Exception e){
+//                System.out.println(e);
+//            }
+//        }
+//        return false;
+//    }
 }
