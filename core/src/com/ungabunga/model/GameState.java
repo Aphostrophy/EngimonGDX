@@ -7,10 +7,7 @@ import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.AnimationSet;
-import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.fileUtil;
-
-import java.io.IOException;
 
 public class GameState {
     public Player player;
@@ -33,12 +30,12 @@ public class GameState {
             }
         }
 
-        for(int i=0;i<map.length;i++){
-            for(int j=0;j<map[i].length;j++){
-                System.out.print(map[i][j].cellType.toString().charAt(0));
-            }
-            System.out.println("");
-        }
+//        for(int i=0;i<map.length;i++){
+//            for(int j=0;j<map[i].length;j++){
+//                System.out.print(map[i][j].cellType.toString().charAt(0));
+//            }
+//            System.out.println("");
+//        }
     }
 
     public void movePlayerUp() throws CellOccupiedException {

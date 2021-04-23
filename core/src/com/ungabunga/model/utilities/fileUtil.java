@@ -1,15 +1,11 @@
 package com.ungabunga.model.utilities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.enums.CellType;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.ungabunga.model.enums.CONSTANTS.*;
 
 public class fileUtil {
     public static MapCell[][] readMapLayer(TiledMapTileLayer TM){
