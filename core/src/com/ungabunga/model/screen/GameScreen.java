@@ -125,7 +125,7 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
 
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.animateText("Hello adventurer!");
+        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 

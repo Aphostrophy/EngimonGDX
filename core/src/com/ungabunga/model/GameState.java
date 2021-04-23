@@ -13,12 +13,12 @@ public class GameState {
     public Player player;
     public MapCell[][] map;
     public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
-        this.player = new Player(name, animations);
-
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
         TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1); // Decoration
 
         this.map = fileUtil.readMapLayer(biomeLayer);
+
+        this.player = new Player(name, animations, map.length/2, map[0].length/2);
 
         for(int y=0;y<decorationLayer.getHeight();y++){
             for(int x=0;x<decorationLayer.getWidth();x++){

@@ -5,6 +5,7 @@ import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.utilities.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Engimon {
@@ -15,6 +16,20 @@ public class Engimon {
     protected List<IElements> elements;
     protected Pair<String, String> parentName, parentSpecies;
     protected List<com.ungabunga.model.entities.Skill> skills;
+
+    public Engimon(Engimon e) {
+        this.id = e.id;
+        this.name = e.name;
+        this.species = e.species;
+        this.slogan = e.slogan;
+        this.elements = e.elements;
+        this.skills = e.skills;
+        this.level = e.level;
+        this.parentName = e.parentName;
+        this.parentSpecies = e.parentSpecies;
+        this.exp = e.exp;
+        this.cumulativeExp = e.cumulativeExp;
+    }
 
     public Engimon(String name, String species, String slogan, int level, List<IElements> elements, List<Skill> skills, Pair<String, String> parentName, Pair<String, String> parentSpecies) {
         this.id = count++;
@@ -30,18 +45,21 @@ public class Engimon {
         this.cumulativeExp = 0;
     }
 
-    public Engimon(Engimon e) {
-        this.id = e.id;
-        this.name = e.name;
-        this.species = e.species;
-        this.slogan = e.slogan;
-        this.elements = e.elements;
-        this.skills = e.skills;
-        this.level = e.level;
-        this.parentName = e.parentName;
-        this.parentSpecies = e.parentSpecies;
-        this.exp = e.exp;
-        this.cumulativeExp = e.cumulativeExp;
+    public Engimon(String species, String slogan, List<IElements> elements, Skill skill){
+        this.id = count++;
+        this.name = species;
+        this.species = species;
+        this.slogan = slogan;
+        this.elements = elements;
+        ArrayList<Skill> skills = new ArrayList<>();
+        skills.add(skill);
+        this.skills = skills;
+        this.level = 1;
+        Pair<String,String> parentSpecies = new Pair<>("Unknown", "Unknown");
+        this.parentName = parentSpecies;
+        this.parentSpecies = parentSpecies;
+        this.exp = 0;
+        this.cumulativeExp = 0;
     }
 
     public int getId() {

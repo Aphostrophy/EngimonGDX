@@ -9,11 +9,14 @@ import com.ungabunga.model.screen.Splash;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.ungabunga.model.utilities.SkinGenerator;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.ungabunga.model.utilities.ResourceProvider;
 
 public class EngimonGame extends Game{
 	private Splash splashScreen;
 	private Skin skin;
 	private AssetManager assetManager;
+
+	private ResourceProvider resourceProvider;
 
 	public void create() {
 		assetManager = new AssetManager();
@@ -23,6 +26,7 @@ public class EngimonGame extends Game{
 		assetManager.finishLoading();
 
 		skin = SkinGenerator.generateSkin(assetManager);
+		resourceProvider = new ResourceProvider();
 		splashScreen = new Splash(this);
 		this.setScreen(splashScreen);
 	}
