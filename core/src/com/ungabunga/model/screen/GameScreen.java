@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -49,6 +50,8 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
     private DialogueBox dialogueBox;
+
+
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -68,7 +71,6 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_west"),
                 atlas.findRegion("brendan_stand_east")
         );
-
 
 
         map = new TmxMapLoader().load("Maps/Map.tmx");
@@ -95,6 +97,7 @@ public class GameScreen extends AbstractScreen {
         InventoryActive.setSize(70, 70);
 
         initUI();
+
     }
 
     @Override
