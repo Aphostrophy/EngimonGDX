@@ -49,8 +49,6 @@ public class MainMenu implements Screen {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                System.out.println(Gdx.input.getX());
-                System.out.println(Gdx.input.getY());
                 //Exit button
                 int x = Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2;
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 4 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 4) {

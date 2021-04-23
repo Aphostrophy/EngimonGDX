@@ -6,11 +6,14 @@ import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.screen.components.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
 public class GameState {
     public Player player;
+    public InventoryUI inventoryUI;
+    public boolean isInventoryOpen;
     public MapCell[][] map;
     public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
@@ -19,6 +22,9 @@ public class GameState {
         this.map = fileUtil.readMapLayer(biomeLayer);
 
         this.player = new Player(name, animations, map.length/2, map[0].length/2);
+
+        this.inventoryUI = new InventoryUI();
+        this.isInventoryOpen = false;
 
         for(int y=0;y<decorationLayer.getHeight();y++){
             for(int x=0;x<decorationLayer.getWidth();x++){
@@ -29,13 +35,6 @@ public class GameState {
                 }
             }
         }
-
-//        for(int i=0;i<map.length;i++){
-//            for(int j=0;j<map[i].length;j++){
-//                System.out.print(map[i][j].cellType.toString().charAt(0));
-//            }
-//            System.out.println("");
-//        }
     }
 
     public void movePlayerUp() throws CellOccupiedException {
@@ -84,5 +83,10 @@ public class GameState {
                 throw new CellOccupiedException("Cell occupied!");
             }
         }
+    }
+
+    public void toggleInventory(boolean isOpen) {
+        this.inventoryUI.setVisible(isOpen);
+        this.isInventoryOpen = isOpen;
     }
 }

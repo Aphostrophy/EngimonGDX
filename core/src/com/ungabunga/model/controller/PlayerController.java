@@ -1,18 +1,23 @@
 package com.ungabunga.model.controller;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTIONS;
+import com.ungabunga.model.screen.components.InventoryUI;
 
 public class PlayerController extends InputAdapter{
     private GameState gameState;
     private DIRECTIONS direction;
     private AVATAR_STATE state;
+    private boolean isInventoryOpen;
 
     public PlayerController(GameState gameState) {
         this.gameState = gameState;
+        this.isInventoryOpen = false;
     }
 
     @Override
@@ -33,6 +38,10 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.D) {
             direction = DIRECTIONS.RIGHT;
             state = AVATAR_STATE.WALKING;
+        }
+        if(keycode == Input.Keys.I) {
+            gameState.toggleInventory(!isInventoryOpen);
+            isInventoryOpen = !isInventoryOpen;
         }
         return false;
     }
