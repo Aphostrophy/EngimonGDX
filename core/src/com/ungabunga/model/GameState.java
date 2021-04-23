@@ -61,9 +61,8 @@ public class GameState {
         if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
             int spawnX = ThreadLocalRandom.current().nextInt(0,map.length);
             int spawnY = ThreadLocalRandom.current().nextInt(0,map.length);
-            while(map[spawnY][spawnX].cellType == CellType.BLOCKED){
-                spawnX = ThreadLocalRandom.current().nextInt(0,map.length);
-                spawnY = ThreadLocalRandom.current().nextInt(0,map.length);
+            if(map[spawnY][spawnX].cellType == CellType.BLOCKED || map[spawnY][spawnX].occupier!=null){
+                return;
             }
             Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map[spawnY][spawnX].cellType);
             map[spawnY][spawnX].occupier = new WildEngimon(wildEngimon);
