@@ -23,32 +23,32 @@
  </tile>
  <tile id="134">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
  <tile id="135">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
  <tile id="136">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
  <tile id="137">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
  <tile id="138">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
  <tile id="139">
   <properties>
-   <property name="Biome" value="Water"/>
+   <property name="Biome" value="Sea"/>
   </properties>
  </tile>
 </tileset>
