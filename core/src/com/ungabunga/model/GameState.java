@@ -1,10 +1,13 @@
 package com.ungabunga.model;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
+import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.AnimationSet;
+import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.fileUtil;
 
 import java.io.IOException;
@@ -12,9 +15,31 @@ import java.io.IOException;
 public class GameState {
     public Player player;
     public MapCell[][] map;
-    public GameState(String name, AnimationSet animations, TiledMapTileLayer TM) {
+    public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
         this.player = new Player(name, animations);
-        this.map = fileUtil.readMapLayer(TM);
+
+        TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Tile");
+        TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Decoration");
+//        for(int y=0;y<decorationLayer.getHeight();y++){
+//            for(int x=0;x<decorationLayer.getWidth();x++){
+//                if(decorationLayer.getCell(x,y) != null){
+//                    System.out.println(decorationLayer.getCell(x,y));
+//                }
+//            }
+//        }
+
+        this.map = fileUtil.readMapLayer(biomeLayer);
+
+        for(int y=0;y<decorationLayer.getHeight();y++){
+            for(int x=0;x<decorationLayer.getWidth();x++){
+                if(decorationLayer.getCell(x,y) != null){
+                    if(decorationLayer.getCell(x,y).getTile().getProperties().containsKey("Blocked")){
+                        this.map[y][x].cellType = CellType.BLOCKED;
+                    }
+                }
+            }
+        }
+
         for(int i=0;i<map.length;i++){
             for(int j=0;j<map[i].length;j++){
                 System.out.print(map[i][j].cellType.toString().charAt(0));

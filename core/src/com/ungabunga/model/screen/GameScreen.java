@@ -50,9 +50,7 @@ public class GameScreen extends AbstractScreen {
 
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
-        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("Tile");
-
-        gameState = new GameState("orz", playerAnimations,layer);
+        gameState = new GameState("orz", playerAnimations,map);
 
         controller = new PlayerController(gameState);
     }
