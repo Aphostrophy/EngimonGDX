@@ -116,20 +116,27 @@ public class Breeder {
     }
 
     public void BreedFinishing(Engimon ParentA, Engimon ParentB, Engimon child, Inventory<Engimon> inventory) {
-        // cuma buat mastiin childnya kebreed
-        System.out.println("Nama: " + child.getName());
-        System.out.println("Lvl. " + child.getLevel());
-        System.out.println("Species: " + child.getSpecies());
-        System.out.println("Parent:");
-        System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-        System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-        System.out.println("Skills: ");
-        for (Skill s : child.getSkills()) {
-            System.out.println("- " + s.getSkillName());
+
+        try{
+            // insert to inventory here
+            inventory.insertToInventory(child, inventory.getFilledSlot());
+            reduceLevel(ParentA, ParentB);
+
+            // cuma buat mastiin childnya kebreed
+            System.out.println("Nama: " + child.getName());
+            System.out.println("Lvl. " + child.getLevel());
+            System.out.println("Species: " + child.getSpecies());
+            System.out.println("Parent:");
+            System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+            System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+            System.out.println("Skills: ");
+            for (Skill s : child.getSkills()) {
+                System.out.println("- " + s.getSkillName());
+            }
+
+        } catch(Exception e){
+            System.out.println(e);
         }
-        // insert to inventory here
-        inventory.insertToInventory(child, inventory.getFilledSlot());
-        reduceLevel(ParentA, ParentB);
     }
 
 
