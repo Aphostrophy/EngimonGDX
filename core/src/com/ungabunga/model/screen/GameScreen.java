@@ -2,12 +2,10 @@ package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -33,6 +31,12 @@ public class GameScreen extends AbstractScreen {
     private GameState gameState;
     private PlayerController controller;
     private SpriteBatch batch;
+    private SpriteBatch HUDBatch;
+
+    private Sprite BreederMenuInactive;
+    private Sprite BreederMenuActive;
+    private Sprite InventoryInactive;
+    private Sprite InventoryActive;
 
     private TiledMap map;
 
@@ -51,6 +55,7 @@ public class GameScreen extends AbstractScreen {
         gameViewport = new ScreenViewport();
 
         batch = new SpriteBatch();
+        HUDBatch = new SpriteBatch();
 
         TextureAtlas atlas = app.getAssetManager().get("pic/packed/avatarTextures.atlas", TextureAtlas.class);
         AnimationSet playerAnimations = new AnimationSet(
@@ -71,6 +76,24 @@ public class GameScreen extends AbstractScreen {
         gameState = new GameState("orz", playerAnimations,map);
 
         controller = new PlayerController(gameState);
+
+        // nanti diganti yg bagusan dikit icon breedernya
+        Texture splashTexture = new Texture("img/breeder_icon_inactive.png");
+        this.BreederMenuInactive = new Sprite(splashTexture);
+        BreederMenuInactive.setSize(80, 80);
+
+        splashTexture = new Texture("img/breeder_icon_active.png");
+        this.BreederMenuActive = new Sprite(splashTexture);
+        BreederMenuActive.setSize(80, 80);
+
+        splashTexture = new Texture("img/inventory_inactive.png");
+        this.InventoryInactive = new Sprite(splashTexture);
+        InventoryInactive.setSize(70, 70);
+
+        splashTexture = new Texture("img/inventory_active.png");
+        this.InventoryActive = new Sprite(splashTexture);
+        InventoryActive.setSize(70, 70);
+
         initUI();
     }
 
@@ -115,6 +138,26 @@ public class GameScreen extends AbstractScreen {
         batch.end();
 
         uiStage.draw();
+
+
+        HUDBatch.begin();
+        if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+            BreederMenuActive.setCenter(65, Gdx.graphics.getHeight() - 55);
+            BreederMenuActive.draw(HUDBatch);
+        } else {
+            BreederMenuInactive.setCenter(65, Gdx.graphics.getHeight() - 55);
+            BreederMenuInactive.draw(HUDBatch);
+        }
+
+        if (Gdx.input.getX() < 220 && Gdx.input.getX() > 130 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+            InventoryActive.setCenter(160, Gdx.graphics.getHeight() - 55);
+            InventoryActive.draw(HUDBatch);
+        } else {
+            InventoryInactive.setCenter(160, Gdx.graphics.getHeight() - 55);
+            InventoryInactive.draw(HUDBatch);
+        }
+        HUDBatch.end();
+
     }
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
