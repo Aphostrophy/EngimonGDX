@@ -6,7 +6,7 @@ import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
-import com.ungabunga.model.screen.components.InventoryUI;
+import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
@@ -23,7 +23,6 @@ public class GameState {
 
         this.player = new Player(name, animations, map.length/2, map[0].length/2);
 
-        this.inventoryUI = new InventoryUI();
         this.isInventoryOpen = false;
 
         for(int y=0;y<decorationLayer.getHeight();y++){
@@ -86,7 +85,6 @@ public class GameState {
     }
 
     public void toggleInventory(boolean isOpen) {
-        this.inventoryUI.setVisible(isOpen);
         this.isInventoryOpen = isOpen;
     }
 }

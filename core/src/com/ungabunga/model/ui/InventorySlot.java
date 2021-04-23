@@ -1,4 +1,4 @@
-package com.ungabunga.model.screen.components;
+package com.ungabunga.model.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;

@@ -1,13 +1,9 @@
-package com.ungabunga.model.screen.components;
+package com.ungabunga.model.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 
@@ -19,15 +15,13 @@ public class InventoryUI extends Window {
 
     private int lengthSlotRow = 10;
     private Table inventorySlotTable;
-    private Table playerSlotsTable;
-    private Table equipSlots;
     private DragAndDrop dragAndDrop;
     private Array<Actor> inventoryActors;
 
     private final int slotWidth = 64;
     private final int slotHeight = 64;
 
-    public InventoryUI(){
+    public InventoryUI(Skin skin){
         super("Inventory", new Skin(Gdx.files.internal("skins/statusui.json"), new TextureAtlas("skins/statusui.atlas")), "solidbackground");
 
         dragAndDrop = new DragAndDrop();

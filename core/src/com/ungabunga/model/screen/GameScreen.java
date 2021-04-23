@@ -18,7 +18,9 @@ import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.entities.Inventory;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 
 import java.io.IOException;
@@ -30,7 +32,6 @@ public class GameScreen extends AbstractScreen {
     private GameState gameState;
     private PlayerController controller;
     private SpriteBatch batch;
-    private Stage stage;
     private SpriteBatch HUDBatch;
     private Sprite BreederMenuInactive;
     private Sprite BreederMenuActive;
@@ -48,6 +49,8 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
     private DialogueBox dialogueBox;
+    private InventoryUI inventoryUI;
+
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -77,8 +80,6 @@ public class GameScreen extends AbstractScreen {
         controller = new PlayerController(gameState);
 
         camera = new OrthographicCamera();
-
-        stage = new Stage(gameViewport);
 
         // nanti diganti yg bagusan dikit icon breedernya
         Texture splashTexture = new Texture("img/breeder_icon_inactive.png");
@@ -125,7 +126,6 @@ public class GameScreen extends AbstractScreen {
     public  void render(float delta) {
         controller.update(delta);
         gameState.player.update(delta);
-        stage.addActor(gameState.inventoryUI);
 
         renderer.setView(camera);
         renderer.render();
@@ -137,11 +137,9 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        if(gameState.isInventoryOpen) {
-            stage.draw();
-        } else {
-            batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
-        }
+
+        batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+
         batch.end();
 
         uiStage.draw();
@@ -178,7 +176,6 @@ public class GameScreen extends AbstractScreen {
         dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
-
     }
     @Override
     public  void resize(int width, int height) {
