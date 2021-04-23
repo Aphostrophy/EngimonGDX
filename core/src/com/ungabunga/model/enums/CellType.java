@@ -6,4 +6,5 @@ public enum CellType {
     GRASSLAND,
     TUNDRA,
     BLOCKED,
+    INVALID,
 }

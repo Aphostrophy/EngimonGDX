@@ -12,44 +12,6 @@ import java.util.ArrayList;
 import static com.ungabunga.model.enums.CONSTANTS.*;
 
 public class fileUtil {
-    public static MapCell[][] readMapFile() throws IOException {
-        FileHandle handle = Gdx.files.internal("resources/peta.txt");
-        String text = handle.readString();
-        String wordsArray[] = text.split("\\r?\\n");
-
-        ArrayList<ArrayList<MapCell>> gameMap= new ArrayList<ArrayList<MapCell>>();
-        int y =0;
-
-        for(String word : wordsArray) {
-            ArrayList<MapCell> mapRow = new ArrayList<MapCell>();
-            for(int x=0;x<word.length();x++){
-                MapCell mapCell = new MapCell(x,y);
-                switch(word.charAt(x)){
-                    case GRASSLANDSYMBOL:
-                        mapCell.cellType = CellType.GRASSLAND;
-                        mapRow.add(mapCell);
-                        break;
-                    case MOUNTAINSSYMBOL:
-                        mapCell.cellType = CellType.MOUNTAINS;
-                        mapRow.add(mapCell);
-                        break;
-                    case SEASYMBOL:
-                        mapCell.cellType = CellType.SEA;
-                        mapRow.add(mapCell);
-                        break;
-                    case TUNDRASYMBOL:
-                        mapCell.cellType = CellType.TUNDRA;
-                        mapRow.add(mapCell);
-                        break;
-                }
-            }
-            gameMap.add(mapRow);
-            y++;
-        }
-
-        return gameMap.stream().map(u -> u.toArray(new MapCell[u.size()])).toArray(MapCell[][]::new);
-    }
-
     public static MapCell[][] readMapLayer(TiledMapTileLayer TM){
         ArrayList<ArrayList<MapCell>> gameMap= new ArrayList<ArrayList<MapCell>>();
         System.out.println("Masuk");
@@ -72,7 +34,7 @@ public class fileUtil {
                 else if(TM.getCell(x,y).getTile().getProperties().containsKey("Biome") && TM.getCell(x,y).getTile().getProperties().get("Biome").equals("Tundra")){
                     mapCell.cellType = CellType.TUNDRA;
                 } else{
-                    mapCell.cellType = CellType.BLOCKED;
+                    mapCell.cellType = CellType.INVALID;
                 }
                 mapRow.add(mapCell);
             }
