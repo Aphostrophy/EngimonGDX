@@ -7,9 +7,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ResourceProvider {
     CopyOnWriteArrayList<? extends Engimon> engimon;
-    CopyOnWriteArrayList<Skill> skillItems;
+    CopyOnWriteArrayList<Skill> skills;
 
     public ResourceProvider(){
-        this.engimon = fileUtil.readEngimonCSV();
+        this.skills = fileUtil.readSkillCSV();
+        this.engimon = fileUtil.readEngimonCSV(this);
+    }
+
+    public Skill getSkill(String name){
+        for(Skill skill : this.skills){
+            if(skill.getSkillName().equals(name)){
+                return skill;
+            }
+        }
+        return null;
     }
 }
