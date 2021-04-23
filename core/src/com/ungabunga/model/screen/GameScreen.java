@@ -26,6 +26,7 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
 
     private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
 
@@ -46,7 +47,9 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
 
-        gameState = new GameState("orz", playerAnimations);
+        map = new TmxMapLoader().load("Maps/Map.tmx");
+
+        gameState = new GameState("orz", playerAnimations,map);
 
         controller = new PlayerController(gameState);
     }
@@ -104,8 +107,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void show() {
-        map = new TmxMapLoader().load("Maps/Map.tmx");
-
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(controller);

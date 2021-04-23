@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.screen.Splash;
 
 public class EngimonGame extends Game{
