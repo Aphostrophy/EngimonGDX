@@ -30,7 +30,7 @@ public class OptionBox extends Table {
         arrow.setVisible(false);
 
         uiContainer.add(arrow).expand().align(Align.left);
-        uiContainer.add(optionLabel).expand().align(Align.left).space(5f);
+        uiContainer.add(optionLabel).expand().align(Align.left).space(8f);
         uiContainer.row();
 
         calcArrowVisibility();
