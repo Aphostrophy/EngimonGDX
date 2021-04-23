@@ -20,13 +20,6 @@ public class GameState {
 
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Tile");
         TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Decoration");
-//        for(int y=0;y<decorationLayer.getHeight();y++){
-//            for(int x=0;x<decorationLayer.getWidth();x++){
-//                if(decorationLayer.getCell(x,y) != null){
-//                    System.out.println(decorationLayer.getCell(x,y));
-//                }
-//            }
-//        }
 
         this.map = fileUtil.readMapLayer(biomeLayer);
 
@@ -52,7 +45,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y+1<map.length){
-            if(map[y+1][x].occupier==null){
+            if(map[y+1][x].occupier==null && map[y+1][x].cellType!=CellType.BLOCKED){
                 player.moveUp();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -64,7 +57,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y-1>=0){
-            if(map[y-1][x].occupier==null){
+            if(map[y-1][x].occupier==null && map[y-1][x].cellType!=CellType.BLOCKED){
                 player.moveDown();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -76,7 +69,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x-1>=0){
-            if(map[y][x-1].occupier==null){
+            if(map[y][x-1].occupier==null && map[y][x-1].cellType!=CellType.BLOCKED){
                 player.moveLeft();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -88,7 +81,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x+1<map[y].length){
-            if(map[y][x+1].occupier==null){
+            if(map[y][x+1].occupier==null && map[y][x+1].cellType!=CellType.BLOCKED){
                 player.moveRight();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
