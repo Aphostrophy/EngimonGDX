@@ -18,8 +18,11 @@ import com.badlogic.gdx.utils.Align;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.dialogue.Dialogue;
+import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
@@ -55,6 +58,10 @@ public class GameScreen extends AbstractScreen {
     private Table root;
     private DialogueBox dialogueBox;
     private OptionBox optionBox;
+    private Dialogue dialogue;
+    private DialogueController dialogueController;
+    private OptionBoxController debugController;
+    private OptionBox debugBox;
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -81,7 +88,7 @@ public class GameScreen extends AbstractScreen {
 
         gameState = new GameState("orz", playerAnimations,map);
 
-        controller = new PlayerController(gameState);
+//        controller = new PlayerController(gameState);
 
         camera = new OrthographicCamera();
 
@@ -106,10 +113,32 @@ public class GameScreen extends AbstractScreen {
 
         initUI();
         multiplexer = new InputMultiplexer();
+
         controller = new PlayerController(gameState);
-        optionBoxController = new OptionBoxController(optionBox);
-        multiplexer.addProcessor(0,controller);
-        multiplexer.addProcessor(1,optionBoxController);
+//        optionBoxController = new OptionBoxController(optionBox);
+        dialogueController = new DialogueController(dialogueBox,optionBox);
+        multiplexer.addProcessor(0, dialogueController);
+        multiplexer.addProcessor(1,controller);
+
+//        multiplexer.addProcessor(1,optionBoxController);
+
+        dialogue = new Dialogue();
+
+        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
+        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
+        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
+        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 3);
+
+        a.makeLinear(b.getId());
+        b.addChoice("Iblis",2);
+        b.addChoice("Setan",3);
+
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
+        dialogue.addNode(d);
+
+        dialogueController.startDialogue(dialogue);
 
     }
 
@@ -131,7 +160,12 @@ public class GameScreen extends AbstractScreen {
     }
 
     public  void update(float delta) {
-
+        dialogueController.update(delta);
+        if (!dialogueBox.isVisible()) {
+            camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
+            camera.update();
+        }
+        uiStage.act(delta);
     }
 
     @Override
@@ -188,17 +222,20 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+        dialogueBox.setVisible(false);
+//        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         optionBox = new OptionBox(getApp().getSkin());
-        optionBox.addOption("Option 1");
-        optionBox.addOption("Option 2");
-        optionBox.addOption("Option 3");
+        optionBox.setVisible(false);
+//        optionBox.addOption("Option 1");
+//        optionBox.addOption("Option 2");
+//        optionBox.addOption("Option 3");
 
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable).expand().align(Align.bottom);
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+
 
     }
     @Override
