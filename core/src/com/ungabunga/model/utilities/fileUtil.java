@@ -14,7 +14,7 @@ import static com.ungabunga.model.enums.CONSTANTS.*;
 public class fileUtil {
     public static MapCell[][] readMapLayer(TiledMapTileLayer TM){
         ArrayList<ArrayList<MapCell>> gameMap= new ArrayList<ArrayList<MapCell>>();
-        System.out.println("Masuk");
+
         for(int y=0;y<TM.getHeight();y++){
             ArrayList<MapCell> mapRow = new ArrayList<MapCell>();
             for(int x=0;x<TM.getWidth();x++){
@@ -25,8 +25,8 @@ public class fileUtil {
                 else if(TM.getCell(x,y).getTile().getProperties().containsKey("Biome") && TM.getCell(x,y).getTile().getProperties().get("Biome").equals("Grassland")){
                     mapCell.cellType = CellType.GRASSLAND;
                 }
-                else if(TM.getCell(x,y).getTile().getProperties().containsKey("Biome") && TM.getCell(x,y).getTile().getProperties().get("Biome").equals("Mountains")){
-                    mapCell.cellType = CellType.MOUNTAINS;
+                else if(TM.getCell(x,y).getTile().getProperties().containsKey("Biome") && TM.getCell(x,y).getTile().getProperties().get("Biome").equals("Mountain")){
+                    mapCell.cellType = CellType.MOUNTAIN;
                 }
                 else if(TM.getCell(x,y).getTile().getProperties().containsKey("Biome") && TM.getCell(x,y).getTile().getProperties().get("Biome").equals("Sea")){
                     mapCell.cellType = CellType.SEA;
@@ -40,7 +40,7 @@ public class fileUtil {
             }
             gameMap.add(mapRow);
         }
-        System.out.println("Keluar");
+
         return gameMap.stream().map(u -> u.toArray(new MapCell[u.size()])).toArray(MapCell[][]::new);
     }
 }

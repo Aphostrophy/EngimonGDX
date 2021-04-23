@@ -12,13 +12,14 @@ import java.io.IOException;
 public class GameState {
     public Player player;
     public MapCell[][] map;
-    public GameState(String name, AnimationSet animations, TiledMapTileLayer TM) throws IOException {
+    public GameState(String name, AnimationSet animations, TiledMapTileLayer TM) {
         this.player = new Player(name, animations);
         this.map = fileUtil.readMapLayer(TM);
         for(int i=0;i<map.length;i++){
             for(int j=0;j<map[i].length;j++){
-                System.out.println(map[i][j].cellType);
+                System.out.print(map[i][j].cellType.toString().charAt(0));
             }
+            System.out.println("");
         }
     }
 

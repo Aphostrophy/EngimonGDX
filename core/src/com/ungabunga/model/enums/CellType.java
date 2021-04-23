@@ -1,7 +1,7 @@
 package com.ungabunga.model.enums;
 
 public enum CellType {
-    MOUNTAINS,
+    MOUNTAIN,
     SEA,
     GRASSLAND,
     TUNDRA,
