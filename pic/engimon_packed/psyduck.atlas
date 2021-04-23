@@ -1,0 +1,90 @@
+
+psyduck.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+psyduck_standing_east
+  rotate: false
+  xy: 86, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: -1
+psyduck_walking_east
+  rotate: false
+  xy: 86, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: 0
+psyduck_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: -1
+psyduck_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: 0
+psyduck_standing_south
+  rotate: false
+  xy: 23, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: -1
+psyduck_walking_south
+  rotate: false
+  xy: 23, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: 0
+psyduck_standing_west
+  rotate: false
+  xy: 101, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: -1
+psyduck_walking_west
+  rotate: false
+  xy: 101, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: 0
+psyduck_walking_east
+  rotate: false
+  xy: 116, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: 1
+psyduck_walking_north
+  rotate: false
+  xy: 44, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: 1
+psyduck_walking_south
+  rotate: false
+  xy: 65, 2
+  size: 19, 20
+  orig: 19, 20
+  offset: 0, 0
+  index: 1
+psyduck_walking_west
+  rotate: false
+  xy: 131, 3
+  size: 13, 19
+  orig: 13, 19
+  offset: 0, 0
+  index: 1
