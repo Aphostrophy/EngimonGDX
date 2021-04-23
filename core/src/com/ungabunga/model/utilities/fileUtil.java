@@ -1,10 +1,17 @@
 package com.ungabunga.model.utilities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.enums.CellType;
+import com.ungabunga.model.enums.IElements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class fileUtil {
@@ -38,5 +45,33 @@ public class fileUtil {
         }
 
         return gameMap.stream().map(u -> u.toArray(new MapCell[u.size()])).toArray(MapCell[][]::new);
+    }
+
+    public static CopyOnWriteArrayList<Engimon> readEngimonCSV(){
+        CopyOnWriteArrayList<Engimon> engimons = new CopyOnWriteArrayList<>();
+
+        HashMap<String,IElements> elementsHashMap = new HashMap<>();
+        elementsHashMap.put("Fire",IElements.FIRE);
+
+        FileHandle handle = Gdx.files.internal("resources/engimon.csv");
+        String text = handle.readString();
+        String linesArray[] = text.split("\\r?\\n");
+
+        for(String line : linesArray){
+            System.out.println(line);
+            String words[] = line.split(",");
+            String elements[] = words[1].split("/");
+            ArrayList<IElements> iElements = new ArrayList<>();
+            for(String element : elements){
+                iElements.add(elementsHashMap.get(element));
+            }
+            System.out.println(iElements.size());
+            for(String word : words){
+                System.out.println(word);
+            }
+//            engimons.add(new Engimon(words[0],words[3]));
+        }
+
+        return engimons;
     }
 }
