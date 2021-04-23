@@ -19,6 +19,7 @@ public class PlayerController extends InputAdapter{
     public boolean keyDown(int keycode) {
 
         if(keycode == Keys.W) {
+            System.out.println("WOI W");
             direction = DIRECTIONS.UP;
             state = AVATAR_STATE.WALKING;
         }

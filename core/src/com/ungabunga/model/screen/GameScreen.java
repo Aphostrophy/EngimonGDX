@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,10 +19,11 @@ import com.badlogic.gdx.utils.Align;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
-
 
 
 import java.io.IOException;
@@ -31,8 +33,11 @@ import static com.ungabunga.Settings.ANIM_TIMER;
 public class GameScreen extends AbstractScreen {
 
     private GameState gameState;
+
+    private InputMultiplexer multiplexer;
     private PlayerController controller;
     private SpriteBatch batch;
+    private OptionBoxController optionBoxController;
 
     private TiledMap map;
 
@@ -44,7 +49,8 @@ public class GameScreen extends AbstractScreen {
 
     private Stage uiStage;
     private Table root;
-    private DialogueBox dialogueBox;
+//    private DialogueBox dialogueBox;
+    private OptionBox optionBox;
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -70,15 +76,20 @@ public class GameScreen extends AbstractScreen {
 
         gameState = new GameState("orz", playerAnimations,map);
 
-        controller = new PlayerController(gameState);
         initUI();
+        multiplexer = new InputMultiplexer();
+        controller = new PlayerController(gameState);
+        optionBoxController = new OptionBoxController(optionBox);
+        multiplexer.addProcessor(0,controller);
+        multiplexer.addProcessor(1,optionBoxController);
+
     }
 
     @Override
     public  void dispose() {
-        batch.dispose();
-        map.dispose();
-        renderer.dispose();
+//        batch.dispose();
+//        map.dispose();
+//        renderer.dispose();
     }
 
     @Override
@@ -119,15 +130,22 @@ public class GameScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
-
+//        uiStage.setDebugAll(true);
         root = new Table();
         root.setFillParent(true);
         uiStage.addActor(root);
+        Table dialogTable = new Table();
+//        dialogueBox =  new DialogueBox(getApp().getSkin());
+//        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
-        dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+        optionBox = new OptionBox(getApp().getSkin());
+        optionBox.addOption("Option 1");
+        optionBox.addOption("Option 2");
+        optionBox.addOption("Option 3");
 
-        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+        dialogTable.add(optionBox);
+        root.add(dialogTable).expand().align(Align.bottom);
+//        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 
     }
     @Override
@@ -148,7 +166,7 @@ public class GameScreen extends AbstractScreen {
     public  void show() {
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        Gdx.input.setInputProcessor(controller);
+        Gdx.input.setInputProcessor(multiplexer);
 
         camera = new OrthographicCamera();
     }
