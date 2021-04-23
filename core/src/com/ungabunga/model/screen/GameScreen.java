@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,8 +18,10 @@ import com.badlogic.gdx.utils.Align;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
 
 import java.io.IOException;
@@ -28,8 +31,11 @@ import static com.ungabunga.Settings.ANIM_TIMER;
 public class GameScreen extends AbstractScreen {
 
     private GameState gameState;
+
+    private InputMultiplexer multiplexer;
     private PlayerController controller;
     private SpriteBatch batch;
+    private OptionBoxController optionBoxController;
     private Stage stage;
     private SpriteBatch HUDBatch;
     private Sprite BreederMenuInactive;
@@ -48,6 +54,7 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
     private DialogueBox dialogueBox;
+    private OptionBox optionBox;
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -98,6 +105,12 @@ public class GameScreen extends AbstractScreen {
         InventoryActive.setSize(70, 70);
 
         initUI();
+        multiplexer = new InputMultiplexer();
+        controller = new PlayerController(gameState);
+        optionBoxController = new OptionBoxController(optionBox);
+        multiplexer.addProcessor(0,controller);
+        multiplexer.addProcessor(1,optionBoxController);
+
     }
 
     @Override
@@ -169,15 +182,23 @@ public class GameScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
-
+//        uiStage.setDebugAll(true);
         root = new Table();
         root.setFillParent(true);
         uiStage.addActor(root);
-
+        Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
-        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+        optionBox = new OptionBox(getApp().getSkin());
+        optionBox.addOption("Option 1");
+        optionBox.addOption("Option 2");
+        optionBox.addOption("Option 3");
+
+        dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
+        dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
+        root.add(dialogTable).expand().align(Align.bottom);
+//        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 
     }
     @Override
@@ -198,7 +219,9 @@ public class GameScreen extends AbstractScreen {
     public  void show() {
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        Gdx.input.setInputProcessor(controller);
+        Gdx.input.setInputProcessor(multiplexer);
+
+        camera = new OrthographicCamera();
     }
 
 }
