@@ -46,7 +46,7 @@ public class Player {
         this.stateTimer = 0f;
         this.animations = animations;
 
-        this.inventoryUI = new InventoryUI();
+//        this.inventoryUI = new InventoryUI();
     }
 
     public void setName(String name){

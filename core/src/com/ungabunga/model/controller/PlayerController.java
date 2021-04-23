@@ -12,7 +12,7 @@ public class PlayerController extends InputAdapter{
     private GameState gameState;
     private DIRECTIONS direction;
     private AVATAR_STATE state;
-    private boolean isInventoryOpen;
+    public boolean isInventoryOpen;
 
     public PlayerController(GameState gameState) {
         this.gameState = gameState;
@@ -21,6 +21,9 @@ public class PlayerController extends InputAdapter{
 
     @Override
     public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.I) {
+            isInventoryOpen = !isInventoryOpen;
+        }
         if(isInventoryOpen) {
             return false;
         }
@@ -40,17 +43,12 @@ public class PlayerController extends InputAdapter{
             direction = DIRECTIONS.RIGHT;
             state = AVATAR_STATE.WALKING;
         }
-        if(keycode == Input.Keys.I) {
-            gameState.toggleInventory(!isInventoryOpen);
-            isInventoryOpen = !isInventoryOpen;
-        }
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (Gdx.input.getX() < 220 && Gdx.input.getX() > 130 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
-            gameState.toggleInventory(!isInventoryOpen);
             isInventoryOpen = !isInventoryOpen;
         }
         return super.touchUp(screenX, screenY, pointer, button);

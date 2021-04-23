@@ -6,14 +6,11 @@ import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
-import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
 public class GameState {
     public Player player;
-    public InventoryUI inventoryUI;
-    public boolean isInventoryOpen;
     public MapCell[][] map;
     public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
@@ -22,8 +19,6 @@ public class GameState {
         this.map = fileUtil.readMapLayer(biomeLayer);
 
         this.player = new Player(name, animations, map.length/2, map[0].length/2);
-
-        this.isInventoryOpen = false;
 
         for(int y=0;y<decorationLayer.getHeight();y++){
             for(int x=0;x<decorationLayer.getWidth();x++){
@@ -82,9 +77,5 @@ public class GameState {
                 throw new CellOccupiedException("Cell occupied!");
             }
         }
-    }
-
-    public void toggleInventory(boolean isOpen) {
-        this.isInventoryOpen = isOpen;
     }
 }
