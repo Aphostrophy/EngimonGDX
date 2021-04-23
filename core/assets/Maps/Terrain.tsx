@@ -11,6 +11,11 @@
    <property name="Biome" value="Grassland"/>
   </properties>
  </tile>
+ <tile id="14">
+  <properties>
+   <property name="Biome" value="Grassland"/>
+  </properties>
+ </tile>
  <tile id="16">
   <properties>
    <property name="Biome" value="Grassland"/>
