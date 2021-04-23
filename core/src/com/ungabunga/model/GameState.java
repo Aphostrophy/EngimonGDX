@@ -18,8 +18,8 @@ public class GameState {
     public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
         this.player = new Player(name, animations);
 
-        TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Tile");
-        TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get("Decoration");
+        TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
+        TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1); // Decoration
 
         this.map = fileUtil.readMapLayer(biomeLayer);
 
