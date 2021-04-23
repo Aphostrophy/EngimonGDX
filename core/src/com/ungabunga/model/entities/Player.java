@@ -34,11 +34,11 @@ public class Player {
 
     private AnimationSet animations;
 
-    public Player(String name, AnimationSet animations){
+    public Player(String name, AnimationSet animations,int x,int y){
         this.name = name;
-        this.position = new Pair<Integer, Integer>(0,0);
-        this.worldX = 0;
-        this.worldY = 0;
+        this.position = new Pair<Integer, Integer>(x,y);
+        this.worldX = x;
+        this.worldY = y;
 
         this.state = AVATAR_STATE.STANDING;
         this.direction = DIRECTIONS.DOWN;

@@ -4,22 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.entities.Inventory;
-import com.ungabunga.model.screen.components.InventoryUI;
+import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
 
 import java.io.IOException;
@@ -32,13 +31,30 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
     private SpriteBatch batch;
     private Stage stage;
+    private SpriteBatch HUDBatch;
+    private Sprite BreederMenuInactive;
+    private Sprite BreederMenuActive;
+    private Sprite InventoryInactive;
+    private Sprite InventoryActive;
 
     private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
 
+    private Viewport gameViewport;
+    private int uiScale = 2;
+
+    private Stage uiStage;
+    private Table root;
+    private DialogueBox dialogueBox;
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
+
+        gameViewport = new ScreenViewport();
+
+        batch = new SpriteBatch();
+        HUDBatch = new SpriteBatch();
 
         TextureAtlas atlas = app.getAssetManager().get("pic/packed/avatarTextures.atlas", TextureAtlas.class);
         AnimationSet playerAnimations = new AnimationSet(
@@ -52,17 +68,36 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_east")
         );
 
-        batch = new SpriteBatch();
 
-        gameState = new GameState("orz", playerAnimations);
+
+        map = new TmxMapLoader().load("Maps/Map.tmx");
+
+        gameState = new GameState("orz", playerAnimations,map);
 
         controller = new PlayerController(gameState);
 
         camera = new OrthographicCamera();
 
-        Viewport viewport = new ScreenViewport(camera);
+        stage = new Stage(gameViewport);
 
-        stage = new Stage(viewport);
+        // nanti diganti yg bagusan dikit icon breedernya
+        Texture splashTexture = new Texture("img/breeder_icon_inactive.png");
+        this.BreederMenuInactive = new Sprite(splashTexture);
+        BreederMenuInactive.setSize(80, 80);
+
+        splashTexture = new Texture("img/breeder_icon_active.png");
+        this.BreederMenuActive = new Sprite(splashTexture);
+        BreederMenuActive.setSize(80, 80);
+
+        splashTexture = new Texture("img/inventory_inactive.png");
+        this.InventoryInactive = new Sprite(splashTexture);
+        InventoryInactive.setSize(70, 70);
+
+        splashTexture = new Texture("img/inventory_active.png");
+        this.InventoryActive = new Sprite(splashTexture);
+        InventoryActive.setSize(70, 70);
+
+        initUI();
     }
 
     @Override
@@ -97,6 +132,8 @@ public class GameScreen extends AbstractScreen {
 
         camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
         camera.update();
+        uiStage.act(delta);
+        gameViewport.apply();
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
@@ -106,12 +143,49 @@ public class GameScreen extends AbstractScreen {
             batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
         }
         batch.end();
-    }
 
+        uiStage.draw();
+
+
+        HUDBatch.begin();
+        if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+            BreederMenuActive.setCenter(65, Gdx.graphics.getHeight() - 55);
+            BreederMenuActive.draw(HUDBatch);
+        } else {
+            BreederMenuInactive.setCenter(65, Gdx.graphics.getHeight() - 55);
+            BreederMenuInactive.draw(HUDBatch);
+        }
+
+        if (Gdx.input.getX() < 220 && Gdx.input.getX() > 130 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+            InventoryActive.setCenter(160, Gdx.graphics.getHeight() - 55);
+            InventoryActive.draw(HUDBatch);
+        } else {
+            InventoryInactive.setCenter(160, Gdx.graphics.getHeight() - 55);
+            InventoryInactive.draw(HUDBatch);
+        }
+        HUDBatch.end();
+
+    }
+    private void initUI() {
+        uiStage = new Stage(new ScreenViewport());
+        uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
+
+        root = new Table();
+        root.setFillParent(true);
+        uiStage.addActor(root);
+
+        dialogueBox =  new DialogueBox(getApp().getSkin());
+        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+
+        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+
+    }
     @Override
     public  void resize(int width, int height) {
         camera.viewportHeight = height;
         camera.viewportWidth = width;
+        uiStage.getViewport().update(width/uiScale, height/uiScale,true);
+        gameViewport.update(width, height);
         camera.update();
     }
 
@@ -122,8 +196,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void show() {
-        map = new TmxMapLoader().load("Maps/Map.tmx");
-
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(controller);
