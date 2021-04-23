@@ -4,5 +4,6 @@ public enum CellType {
     MOUNTAINS,
     SEA,
     GRASSLAND,
-    TUNDRA
+    TUNDRA,
+    BLOCKED,
 }

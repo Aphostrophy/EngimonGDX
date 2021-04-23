@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.ungabunga.EngimonGame;
@@ -26,6 +27,7 @@ public class GameScreen extends AbstractScreen {
     private SpriteBatch batch;
 
     private TiledMap map;
+
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
 
@@ -46,7 +48,11 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
 
-        gameState = new GameState("orz", playerAnimations);
+        map = new TmxMapLoader().load("Maps/Map.tmx");
+
+        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("Tile");
+
+        gameState = new GameState("orz", playerAnimations,layer);
 
         controller = new PlayerController(gameState);
     }
@@ -104,8 +110,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void show() {
-        map = new TmxMapLoader().load("Maps/Map.tmx");
-
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(controller);

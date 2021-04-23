@@ -1,5 +1,6 @@
 package com.ungabunga.model;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.exceptions.CellOccupiedException;
@@ -11,10 +12,14 @@ import java.io.IOException;
 public class GameState {
     public Player player;
     public MapCell[][] map;
-
-    public GameState(String name, AnimationSet animations) throws IOException {
+    public GameState(String name, AnimationSet animations, TiledMapTileLayer TM) throws IOException {
         this.player = new Player(name, animations);
-        this.map = fileUtil.readMapFile();
+        this.map = fileUtil.readMapLayer(TM);
+        for(int i=0;i<map.length;i++){
+            for(int j=0;j<map[i].length;j++){
+                System.out.println(map[i][j].cellType);
+            }
+        }
     }
 
     public void movePlayerUp() throws CellOccupiedException {
