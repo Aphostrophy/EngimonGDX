@@ -1,6 +1,8 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,10 +11,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.entities.Inventory;
+import com.ungabunga.model.screen.components.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 
 import java.io.IOException;
@@ -24,6 +31,7 @@ public class GameScreen extends AbstractScreen {
     private GameState gameState;
     private PlayerController controller;
     private SpriteBatch batch;
+    private Stage stage;
 
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -49,6 +57,12 @@ public class GameScreen extends AbstractScreen {
         gameState = new GameState("orz", playerAnimations);
 
         controller = new PlayerController(gameState);
+
+        camera = new OrthographicCamera();
+
+        Viewport viewport = new ScreenViewport(camera);
+
+        stage = new Stage(viewport);
     }
 
     @Override
@@ -76,6 +90,7 @@ public class GameScreen extends AbstractScreen {
     public  void render(float delta) {
         controller.update(delta);
         gameState.player.update(delta);
+        stage.addActor(gameState.inventoryUI);
 
         renderer.setView(camera);
         renderer.render();
@@ -85,8 +100,11 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-
-        batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        if(gameState.isInventoryOpen) {
+            stage.draw();
+        } else {
+            batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        }
         batch.end();
     }
 
@@ -109,8 +127,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(controller);
-
-        camera = new OrthographicCamera();
     }
 
 }

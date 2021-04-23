@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTIONS;
+import com.ungabunga.model.screen.components.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 
@@ -12,6 +13,8 @@ import static com.ungabunga.Settings.ANIM_TIMER;
 
 public class Player {
     private ActiveEngimon activeEngimon;
+
+    private InventoryUI inventoryUI;
 
     public AVATAR_STATE state;
 
@@ -43,6 +46,8 @@ public class Player {
         this.animTimer = 0f;
         this.stateTimer = 0f;
         this.animations = animations;
+
+        this.inventoryUI = new InventoryUI();
     }
 
     public void setName(String name){
