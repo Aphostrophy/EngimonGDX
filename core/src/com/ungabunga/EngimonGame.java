@@ -40,6 +40,9 @@ public class EngimonGame extends Game{
 	public AssetManager getAssetManager(){
 		return assetManager;
 	}
+	public ResourceProvider getResourceProvider(){
+		return this.resourceProvider;
+	}
 	public Skin getSkin() {
 		return skin;
 	}

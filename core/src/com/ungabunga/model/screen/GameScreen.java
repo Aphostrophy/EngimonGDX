@@ -81,7 +81,7 @@ public class GameScreen extends AbstractScreen {
 
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
-        gameState = new GameState("orz", playerAnimations,map);
+        gameState = new GameState("orz", playerAnimations,map, app);
 
         controller = new PlayerController(gameState);
 
@@ -136,6 +136,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public  void render(float delta) {
         controller.update(delta);
+        gameState.update(delta);
         gameState.player.update(delta);
         inventoryUI.setVisible(controller.isInventoryOpen);
 
@@ -150,6 +151,13 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
+        for(int y=0;y<gameState.map.length;y++){
+            for(int x=0;x<gameState.map[y].length;x++){
+                if(gameState.map[y][x].occupier != null){
+                    batch.draw(gameState.player.getSprite(), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                }
+            }
+        }
         batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
 
         batch.end();

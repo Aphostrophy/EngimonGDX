@@ -35,7 +35,7 @@ public class Player {
 
     public Player(String name, AnimationSet animations,int x,int y){
         this.name = name;
-        this.position = new Pair<Integer, Integer>(x,y);
+        this.position = new Pair<>(x, y);
         this.worldX = x;
         this.worldY = y;
 

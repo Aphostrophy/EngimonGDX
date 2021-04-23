@@ -2,23 +2,39 @@ package com.ungabunga.model;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.ungabunga.EngimonGame;
+import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Player;
+import com.ungabunga.model.entities.WildEngimon;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class GameState {
     public Player player;
     public MapCell[][] map;
-    public GameState(String name, AnimationSet animations, TiledMap tiledMap) {
+
+    private EngimonGame app;
+
+    private float timeDelta;
+
+    private float SPAWN_INTERVAL = 5.0f;
+
+    private int wildEngimonCount;
+
+    public GameState(String name, AnimationSet animations, TiledMap tiledMap, EngimonGame app) {
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
         TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1); // Decoration
 
         this.map = fileUtil.readMapLayer(biomeLayer);
 
         this.player = new Player(name, animations, map.length/2, map[0].length/2);
+
+        this.wildEngimonCount = 0;
 
         for(int y=0;y<decorationLayer.getHeight();y++){
             for(int x=0;x<decorationLayer.getWidth();x++){
@@ -28,6 +44,25 @@ public class GameState {
                     }
                 }
             }
+        }
+
+        this.app = app;
+        this.timeDelta = 0;
+    }
+
+    public void update(float delta){
+        timeDelta += delta;
+        if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
+            int spawnX = ThreadLocalRandom.current().nextInt(0,map.length);
+            int spawnY = ThreadLocalRandom.current().nextInt(0,map.length);
+            if(map[spawnY][spawnX].cellType == CellType.BLOCKED || map[spawnY][spawnX].occupier!=null){
+                return;
+            }
+            Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map[spawnY][spawnX].cellType);
+            map[spawnY][spawnX].occupier = new WildEngimon(wildEngimon);
+
+            wildEngimonCount++;
+            timeDelta = 0;
         }
     }
 
@@ -77,5 +112,13 @@ public class GameState {
                 throw new CellOccupiedException("Cell occupied!");
             }
         }
+    }
+
+    public int getWildEngimonCount(){
+        return this.wildEngimonCount;
+    }
+
+    public void setWildEngimonCount(int count){
+        this.wildEngimonCount=count;
     }
 }
