@@ -6,16 +6,21 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.ungabunga.model.screen.Splash;
+import com.ungabunga.model.utilities.ResourceProvider;
 
 public class EngimonGame extends Game{
 	private Splash splashScreen;
 
 	private AssetManager assetManager;
 
+	private ResourceProvider resourceProvider;
+
 	public void create() {
 		assetManager = new AssetManager();
 		assetManager.load("pic/packed/avatarTextures.atlas", TextureAtlas.class);
 		assetManager.finishLoading();
+
+		resourceProvider = new ResourceProvider();
 
 		splashScreen = new Splash(this);
 		this.setScreen(splashScreen);
