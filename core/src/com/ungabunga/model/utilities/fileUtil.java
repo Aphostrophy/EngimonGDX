@@ -56,12 +56,8 @@ public class fileUtil {
         String linesArray[] = text.split("\\r?\\n");
 
         for(String line : linesArray){
-            System.out.println(line);
             String words[] = line.split(",");
 
-            for(String word : words){
-                System.out.println(word);
-            }
             engimons.add(new Engimon(words[0],words[3],StringToElements(words[1]), resourceProvider.getSkill(words[2])));
         }
 

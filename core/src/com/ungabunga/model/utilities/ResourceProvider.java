@@ -27,13 +27,16 @@ public class ResourceProvider {
         return null;
     }
 
-    public Engimon randomizeEngimon(CellType biome){
+    public Engimon randomizeEngimon(CellType biomes){
         ArrayList<Engimon> candidates = new ArrayList<>();
         for(Engimon engimon: this.engimon){
-            if(engimon.getElements().contains(biome)){
+            if(engimon.getElements().contains(biomes)){
                 candidates.add(engimon);
             }
         }
-        return null;
+        if(candidates.size()==0){
+            return null;
+        }
+        return candidates.get(ThreadLocalRandom.current().nextInt() % candidates.size());
     }
 }
