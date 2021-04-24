@@ -1,0 +1,90 @@
+
+ponyta.png
+size: 256, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ponyta_standing_east
+  rotate: false
+  xy: 72, 36
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+ponyta_standing_north
+  rotate: false
+  xy: 141, 9
+  size: 15, 25
+  orig: 15, 25
+  offset: 0, 0
+  index: -1
+ponyta_standing_south
+  rotate: false
+  xy: 124, 34
+  size: 15, 28
+  orig: 15, 28
+  offset: 0, 0
+  index: -1
+ponyta_standing_west
+  rotate: false
+  xy: 72, 8
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+ponyta_walking_east
+  rotate: false
+  xy: 2, 35
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: 0
+ponyta_walking_east
+  rotate: false
+  xy: 2, 6
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: 1
+ponyta_walking_north
+  rotate: false
+  xy: 124, 6
+  size: 15, 26
+  orig: 15, 26
+  offset: 0, 0
+  index: 0
+ponyta_walking_north
+  rotate: false
+  xy: 141, 36
+  size: 15, 26
+  orig: 15, 26
+  offset: 0, 0
+  index: 1
+ponyta_walking_south
+  rotate: false
+  xy: 107, 33
+  size: 15, 29
+  orig: 15, 29
+  offset: 0, 0
+  index: 0
+ponyta_walking_south
+  rotate: false
+  xy: 107, 2
+  size: 15, 29
+  orig: 15, 29
+  offset: 0, 0
+  index: 1
+ponyta_walking_west
+  rotate: false
+  xy: 37, 35
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: 0
+ponyta_walking_west
+  rotate: false
+  xy: 37, 6
+  size: 33, 27
+  orig: 33, 27
+  offset: 0, 0
+  index: 1

@@ -8,6 +8,10 @@ public class Skill {
     private int basePower, masteryLevel, masteryExp;
     private List<IElements> elements;
 
+    public Skill(){
+
+    }
+
     public Skill(String skillName, List<IElements> elements, int basePower, int masteryLevel) {
         this.skillName = skillName;
         this.elements = elements;

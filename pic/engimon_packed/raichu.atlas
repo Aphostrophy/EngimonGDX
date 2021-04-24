@@ -1,0 +1,90 @@
+
+raichu.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+raichu_standing_east
+  rotate: false
+  xy: 78, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+raichu_walking_east
+  rotate: false
+  xy: 78, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: 0
+raichu_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+raichu_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: 1
+raichu_standing_south
+  rotate: false
+  xy: 21, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: -1
+raichu_walking_south
+  rotate: false
+  xy: 21, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: 0
+raichu_standing_west
+  rotate: false
+  xy: 94, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+raichu_walking_west
+  rotate: false
+  xy: 94, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: 1
+raichu_walking_east
+  rotate: false
+  xy: 110, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: 1
+raichu_walking_north
+  rotate: false
+  xy: 40, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: 0
+raichu_walking_south
+  rotate: false
+  xy: 59, 2
+  size: 17, 16
+  orig: 17, 16
+  offset: 0, 0
+  index: 1
+raichu_walking_west
+  rotate: false
+  xy: 126, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: 0

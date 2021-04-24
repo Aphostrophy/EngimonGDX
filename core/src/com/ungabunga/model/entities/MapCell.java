@@ -13,6 +13,10 @@ public class MapCell {
 
     public LivingEngimon occupier;
 
+    public MapCell(){
+
+    }
+
     public MapCell(int x, int y){
         this.x = x;
         this.y = y;

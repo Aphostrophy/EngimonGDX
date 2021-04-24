@@ -1,9 +1,8 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -23,10 +22,14 @@ import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
-
+import org.lwjgl.Sys;
+import java.util.Arrays;
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
 
@@ -37,7 +40,7 @@ public class GameScreen extends AbstractScreen {
     private InputMultiplexer multiplexer;
     private PlayerController controller;
     private SpriteBatch batch;
-    private Stage stage;
+
     private SpriteBatch HUDBatch;
     private Sprite BreederMenuInactive;
     private Sprite BreederMenuActive;
@@ -54,10 +57,17 @@ public class GameScreen extends AbstractScreen {
 
     private Stage uiStage;
     private Table root;
-    private DialogueBox dialogueBox,dialogueCommand;
+    private DialogueBox dialogueBox;
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
+
+    private Table inventoryWrapper;
+
+    private InventoryUI inventoryUI;
+
+
+
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -78,15 +88,13 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_east")
         );
 
-
-
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
-        gameState = new GameState("orz", playerAnimations,map);
+        gameState = new GameState("orz", playerAnimations,map, app);
+
+        controller = new PlayerController(gameState);
 
         camera = new OrthographicCamera();
-
-        stage = new Stage(gameViewport);
 
         // nanti diganti yg bagusan dikit icon breedernya
         Texture splashTexture = new Texture("img/breeder_icon_inactive.png");
@@ -107,13 +115,9 @@ public class GameScreen extends AbstractScreen {
 
         initUI();
         multiplexer = new InputMultiplexer();
-
-        controller = new PlayerController(gameState);
-
         dialogueController = new DialogueController(dialogueBox,optionBox);
-        multiplexer.addProcessor(0, controller);
+        multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1, dialogueController);
-
 
         dialogue = new Dialogue();
         DialogueNode command = new DialogueNode("To walk, use W A S D.\n Use Arrow UP and DOWN for option. \n and Use ENTER for next text.", 0);
@@ -134,7 +138,6 @@ public class GameScreen extends AbstractScreen {
         dialogue.addNode(d);
 
         dialogueController.startDialogue(dialogue);
-
     }
 
     @Override
@@ -166,8 +169,17 @@ public class GameScreen extends AbstractScreen {
     public  void render(float delta) {
         controller.update(delta);
         dialogueController.update(delta);
+        gameState.update(delta);
         gameState.player.update(delta);
-        stage.addActor(gameState.inventoryUI);
+        inventoryUI.setVisible(controller.isInventoryOpen);
+
+        if (controller.isBreederOpen) {
+            try {
+                getApp().setScreen(new BreederScreen(getApp(), controller));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         renderer.setView(camera);
         renderer.render();
@@ -179,15 +191,19 @@ public class GameScreen extends AbstractScreen {
 
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
-        if(gameState.isInventoryOpen) {
-            stage.draw();
-        } else {
-            batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+
+        for(int y=0;y<gameState.map.length();y++){
+            for(int x=0;x<gameState.map.get(y).length();x++){
+                if(gameState.map.get(y).get(x).occupier != null){
+                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map.get(y).get(x).occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                }
+            }
         }
+        batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+
         batch.end();
 
         uiStage.draw();
-
 
         HUDBatch.begin();
         if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
@@ -213,22 +229,26 @@ public class GameScreen extends AbstractScreen {
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
 //        uiStage.setDebugAll(true);
         root = new Table();
+        inventoryWrapper = new Table();
         root.setFillParent(true);
+        inventoryWrapper.setFillParent(true);
         uiStage.addActor(root);
+        uiStage.addActor(inventoryWrapper);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-//        dialogueCommand = new DialogueBox(getApp().getSkin());
-
         dialogueBox.setVisible(false);
+
         optionBox = new OptionBox(getApp().getSkin());
         optionBox.setVisible(false);
-        dialogTable.add(dialogueCommand).expand().align(Align.left).space(8f).row();
+
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable).expand().align(Align.bottom).pad(8f);
 
-
+        inventoryUI = new InventoryUI(getApp().getSkin());
+        inventoryWrapper.add(inventoryUI).expand().align(Align.center);
     }
+
     @Override
     public  void resize(int width, int height) {
         camera.viewportHeight = height;
@@ -248,8 +268,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        camera = new OrthographicCamera();
     }
 
 }

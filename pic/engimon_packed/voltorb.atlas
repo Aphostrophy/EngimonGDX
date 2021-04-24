@@ -1,0 +1,90 @@
+
+voltorb.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+voltorb_standing_east
+  rotate: false
+  xy: 2, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+voltorb_walking_east
+  rotate: false
+  xy: 2, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: 0
+voltorb_standing_north
+  rotate: false
+  xy: 74, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+voltorb_walking_north
+  rotate: false
+  xy: 74, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: 0
+voltorb_standing_south
+  rotate: false
+  xy: 108, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
+voltorb_walking_south
+  rotate: false
+  xy: 108, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: 0
+voltorb_standing_west
+  rotate: false
+  xy: 20, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: -1
+voltorb_walking_west
+  rotate: false
+  xy: 20, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: 0
+voltorb_walking_east
+  rotate: false
+  xy: 38, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: 1
+voltorb_walking_north
+  rotate: false
+  xy: 91, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: 1
+voltorb_walking_south
+  rotate: false
+  xy: 125, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: 1
+voltorb_walking_west
+  rotate: false
+  xy: 56, 3
+  size: 16, 20
+  orig: 16, 20
+  offset: 0, 0
+  index: 1

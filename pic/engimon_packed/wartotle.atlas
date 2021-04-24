@@ -1,0 +1,90 @@
+
+wartotle.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+wartotle_standing_east
+  rotate: false
+  xy: 31, 35
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+wartotle_walking_east
+  rotate: false
+  xy: 31, 35
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: 0
+wartotle_standing_north
+  rotate: false
+  xy: 58, 34
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: -1
+wartotle_walking_north
+  rotate: false
+  xy: 58, 34
+  size: 23, 27
+  orig: 23, 27
+  offset: 0, 0
+  index: 0
+wartotle_standing_south
+  rotate: false
+  xy: 58, 4
+  size: 19, 28
+  orig: 19, 28
+  offset: 0, 0
+  index: -1
+wartotle_walking_south
+  rotate: false
+  xy: 58, 4
+  size: 19, 28
+  orig: 19, 28
+  offset: 0, 0
+  index: 0
+wartotle_standing_west
+  rotate: false
+  xy: 31, 7
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: -1
+wartotle_walking_west
+  rotate: false
+  xy: 31, 7
+  size: 25, 26
+  orig: 25, 26
+  offset: 0, 0
+  index: 0
+wartotle_walking_east
+  rotate: false
+  xy: 2, 35
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: 1
+wartotle_walking_north
+  rotate: false
+  xy: 83, 35
+  size: 23, 26
+  orig: 23, 26
+  offset: 0, 0
+  index: 1
+wartotle_walking_south
+  rotate: false
+  xy: 79, 2
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: 1
+wartotle_walking_west
+  rotate: false
+  xy: 2, 7
+  size: 27, 26
+  orig: 27, 26
+  offset: 0, 0
+  index: 1
