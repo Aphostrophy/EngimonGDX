@@ -13,12 +13,11 @@ import com.ungabunga.model.entities.Inventory;
 public class InventoryUI extends Table {
 
     private final static int ROW = 5;
-    private final static int COLUMN = 10;
+    private final static int COLUMN = 7;
     private final int slotWidth = 72;
     private final int slotHeight = 72;
-    private Bag bag;
 
-    public InventoryUI(Skin skin){
+    public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType){
        super(skin);
        this.setBackground("dialoguebox");
 
@@ -26,7 +25,7 @@ public class InventoryUI extends Table {
        for(int i = 1; i <= ROW; i++) {
            for(int j = 1; j <= COLUMN; j++) {
                Texture texture = new Texture(Gdx.files.internal("Avatar/brendan_bike_east_0.png"));
-               InventoryItem item = new InventoryItem(texture, InventoryItem.ItemType.ENGIMON, count.toString());
+               InventoryItem item = new InventoryItem(texture, itemType, count.toString());
                InventorySlot inventorySlot = new InventorySlot(skin, item, 10);
                inventorySlot.addListener(new ClickListener() {
                    @Override

@@ -173,7 +173,7 @@ public class GameScreen extends AbstractScreen {
 
         if(controller.isInventoryOpen) {
             try {
-                getApp().setScreen(new InventoryScreen(getApp(), controller));
+                getApp().setScreen(new InventoryScreen(getApp(), controller, gameState.getPlayerInventory()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
