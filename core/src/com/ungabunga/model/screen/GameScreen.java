@@ -19,6 +19,7 @@ import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
+import com.ungabunga.model.controller.InteractionController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
@@ -59,6 +60,7 @@ public class GameScreen extends AbstractScreen {
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
+    private InteractionController interactionController;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -108,8 +110,11 @@ public class GameScreen extends AbstractScreen {
         initUI();
         multiplexer = new InputMultiplexer();
         dialogueController = new DialogueController(dialogueBox,optionBox);
-        multiplexer.addProcessor(0,controller);
+        interactionController = new InteractionController(dialogueController,gameState);
+
+        multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
+        multiplexer.addProcessor(2, interactionController);
 
         dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
@@ -148,8 +153,6 @@ public class GameScreen extends AbstractScreen {
     }
 
     public  void update(float delta) {
-        controller.update(delta);
-        dialogueController.update(delta);
         camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
         camera.update();
         uiStage.act(delta);
@@ -159,7 +162,7 @@ public class GameScreen extends AbstractScreen {
     public  void render(float delta) {
         controller.update(delta);
         dialogueController.update(delta);
-//        dialogueCommand.update(delta);
+
         gameState.update(delta);
         gameState.player.update(delta);
 
