@@ -1,0 +1,90 @@
+
+glalie.png
+size: 128, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+glalie_standing_east
+  rotate: false
+  xy: 2, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: -1
+glalie_walking_east
+  rotate: false
+  xy: 2, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 0
+glalie_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: -1
+glalie_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 0
+glalie_standing_south
+  rotate: false
+  xy: 20, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: -1
+glalie_walking_south
+  rotate: false
+  xy: 20, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 0
+glalie_standing_west
+  rotate: false
+  xy: 20, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: -1
+glalie_walking_west
+  rotate: false
+  xy: 20, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 0
+glalie_walking_east
+  rotate: false
+  xy: 38, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 1
+glalie_walking_north
+  rotate: false
+  xy: 38, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 1
+glalie_walking_south
+  rotate: false
+  xy: 56, 17
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 1
+glalie_walking_west
+  rotate: false
+  xy: 56, 2
+  size: 16, 13
+  orig: 16, 13
+  offset: 0, 0
+  index: 1

@@ -1,0 +1,90 @@
+
+ninetales.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ninetales_standing_east
+  rotate: false
+  xy: 2, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+ninetales_walking_east
+  rotate: false
+  xy: 2, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: 0
+ninetales_standing_north
+  rotate: false
+  xy: 144, 2
+  size: 15, 25
+  orig: 15, 25
+  offset: 0, 0
+  index: -1
+ninetales_walking_north
+  rotate: false
+  xy: 144, 2
+  size: 15, 25
+  orig: 15, 25
+  offset: 0, 0
+  index: 0
+ninetales_standing_south
+  rotate: false
+  xy: 106, 4
+  size: 17, 23
+  orig: 17, 23
+  offset: 0, 0
+  index: -1
+ninetales_walking_south
+  rotate: false
+  xy: 106, 4
+  size: 17, 23
+  orig: 17, 23
+  offset: 0, 0
+  index: 0
+ninetales_standing_west
+  rotate: false
+  xy: 28, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: -1
+ninetales_walking_west
+  rotate: false
+  xy: 28, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: 0
+ninetales_walking_east
+  rotate: false
+  xy: 54, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: 1
+ninetales_walking_north
+  rotate: false
+  xy: 161, 2
+  size: 15, 25
+  orig: 15, 25
+  offset: 0, 0
+  index: 1
+ninetales_walking_south
+  rotate: false
+  xy: 125, 4
+  size: 17, 23
+  orig: 17, 23
+  offset: 0, 0
+  index: 1
+ninetales_walking_west
+  rotate: false
+  xy: 80, 4
+  size: 24, 23
+  orig: 24, 23
+  offset: 0, 0
+  index: 1

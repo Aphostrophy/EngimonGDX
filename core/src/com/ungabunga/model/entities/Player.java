@@ -1,11 +1,11 @@
 package com.ungabunga.model.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.enums.AVATAR_STATE;
-import com.ungabunga.model.enums.DIRECTIONS;
-import com.ungabunga.model.screen.components.InventoryUI;
+import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.save.Save;
+import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 
@@ -22,7 +22,7 @@ public class Player {
 
     Pair<Integer,Integer> position;
 
-    private DIRECTIONS direction;
+    private DIRECTION direction;
 
     private float srcX,srcY;
     private float destX,destY;
@@ -36,18 +36,26 @@ public class Player {
 
     public Player(String name, AnimationSet animations,int x,int y){
         this.name = name;
-        this.position = new Pair<Integer, Integer>(x,y);
+        this.position = new Pair<>(x, y);
         this.worldX = x;
         this.worldY = y;
 
         this.state = AVATAR_STATE.STANDING;
-        this.direction = DIRECTIONS.DOWN;
+        this.direction = DIRECTION.DOWN;
 
         this.animTimer = 0f;
         this.stateTimer = 0f;
         this.animations = animations;
 
-        this.inventoryUI = new InventoryUI();
+//        this.inventoryUI = new InventoryUI();
+    }
+
+    public void loadSave(Save save){
+        this.name = save.playerName;
+        this.position.setFirst(save.playerPosX);
+        this.position.setSecond(save.playerPosY);
+        this.worldX = save.playerPosX;
+        this.worldY = save.playerPosY;
     }
 
     public void setName(String name){
@@ -98,16 +106,16 @@ public class Player {
                 stateTimer -= (animTimer - ANIM_TIMER);
                 finishMove();
                 if(moveFrameRequest){
-                    if(direction == DIRECTIONS.UP){
+                    if(direction == DIRECTION.UP){
                         moveUp();
                     }
-                    if(direction == DIRECTIONS.DOWN){
+                    if(direction == DIRECTION.DOWN){
                         moveDown();
                     }
-                    if(direction == DIRECTIONS.LEFT){
+                    if(direction == DIRECTION.LEFT){
                         moveLeft();
                     }
-                    if(direction == DIRECTIONS.RIGHT){
+                    if(direction == DIRECTION.RIGHT){
                         moveRight();
                     }
                 } else{
@@ -126,10 +134,10 @@ public class Player {
 
     public void moveUp() {
         if(state == AVATAR_STATE.STANDING){
-            direction = DIRECTIONS.UP;
+            direction = DIRECTION.UP;
             move(0,1);
         } else{
-            if(direction == DIRECTIONS.UP){
+            if(direction == DIRECTION.UP){
                 moveFrameRequest = true;
             }
         }
@@ -137,10 +145,10 @@ public class Player {
 
     public void moveDown() {
         if(state == AVATAR_STATE.STANDING){
-            direction = DIRECTIONS.DOWN;
+            direction = DIRECTION.DOWN;
             move(0,-1);
         } else{
-            if(direction == DIRECTIONS.DOWN){
+            if(direction == DIRECTION.DOWN){
                 moveFrameRequest = true;
             }
         }
@@ -148,10 +156,10 @@ public class Player {
 
     public void moveLeft() {
         if(state == AVATAR_STATE.STANDING){
-            direction = DIRECTIONS.LEFT;
+            direction = DIRECTION.LEFT;
             move(-1,0);
         } else{
-            if(direction == DIRECTIONS.LEFT){
+            if(direction == DIRECTION.LEFT){
                 moveFrameRequest = true;
             }
         }
@@ -159,10 +167,10 @@ public class Player {
 
     public void moveRight() {
         if(state == AVATAR_STATE.STANDING){
-            direction = DIRECTIONS.RIGHT;
+            direction = DIRECTION.RIGHT;
             move(1,0);
         } else{
-            if(direction == DIRECTIONS.RIGHT){
+            if(direction == DIRECTION.RIGHT){
                 moveFrameRequest = true;
             }
         }
@@ -175,20 +183,32 @@ public class Player {
         return animations.getStanding(direction);
     }
 
-    public Engimon getActiveEngimon(){
+    public ActiveEngimon getActiveEngimon(){
         try{
-            return (Engimon) this.activeEngimon;
+            return this.activeEngimon;
         } catch(Exception e){
             System.out.println(e);
             return null;
         }
     }
 
-    public void setActiveEngimon(PlayerEngimon PE){
-        this.activeEngimon = new ActiveEngimon(PE, this);
+    public void setActiveEngimon(ActiveEngimon AE){
+        this.activeEngimon = AE;
+    }
+
+    public void removeActiveEngimon(){
+        this.activeEngimon = null;
     }
 
     public Pair<Integer,Integer> getPosition(){
         return this.position;
+    }
+
+    public DIRECTION getDirection(){
+        return this.direction;
+    }
+
+    public AVATAR_STATE getState(){
+        return this.state;
     }
 }

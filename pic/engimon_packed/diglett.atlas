@@ -1,0 +1,90 @@
+
+diglett.png
+size: 128, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+diglett_standing_east
+  rotate: false
+  xy: 2, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: -1
+diglett_walking_east
+  rotate: false
+  xy: 2, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: 1
+diglett_standing_north
+  rotate: false
+  xy: 70, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+diglett_walking_north
+  rotate: false
+  xy: 70, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 1
+diglett_standing_south
+  rotate: false
+  xy: 83, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: -1
+diglett_walking_south
+  rotate: false
+  xy: 83, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 1
+diglett_standing_west
+  rotate: false
+  xy: 19, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: -1
+diglett_walking_west
+  rotate: false
+  xy: 19, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: 1
+diglett_walking_east
+  rotate: false
+  xy: 36, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: 0
+diglett_walking_north
+  rotate: false
+  xy: 96, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 0
+diglett_walking_south
+  rotate: false
+  xy: 109, 2
+  size: 11, 16
+  orig: 11, 16
+  offset: 0, 0
+  index: 0
+diglett_walking_west
+  rotate: false
+  xy: 53, 2
+  size: 15, 16
+  orig: 15, 16
+  offset: 0, 0
+  index: 0

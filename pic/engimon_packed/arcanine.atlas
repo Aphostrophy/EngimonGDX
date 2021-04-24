@@ -1,0 +1,90 @@
+
+arcanine.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+arcanine_standing_east
+  rotate: false
+  xy: 70, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: -1
+arcanine_walking_east
+  rotate: false
+  xy: 70, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: 0
+arcanine_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: -1
+arcanine_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: 0
+arcanine_standing_south
+  rotate: false
+  xy: 19, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: -1
+arcanine_walking_south
+  rotate: false
+  xy: 19, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: 0
+arcanine_standing_west
+  rotate: false
+  xy: 87, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: -1
+arcanine_walking_west
+  rotate: false
+  xy: 87, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: 0
+arcanine_walking_east
+  rotate: false
+  xy: 104, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: 1
+arcanine_walking_north
+  rotate: false
+  xy: 36, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: 1
+arcanine_walking_south
+  rotate: false
+  xy: 53, 2
+  size: 15, 18
+  orig: 15, 18
+  offset: 0, 0
+  index: 1
+arcanine_walking_west
+  rotate: false
+  xy: 121, 3
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: 1

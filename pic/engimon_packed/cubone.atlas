@@ -1,0 +1,90 @@
+
+cubone.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+cubone_standing_east
+  rotate: false
+  xy: 82, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+cubone_walking_east
+  rotate: false
+  xy: 82, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: 0
+cubone_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: -1
+cubone_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: 0
+cubone_standing_south
+  rotate: false
+  xy: 22, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: -1
+cubone_walking_south
+  rotate: false
+  xy: 22, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: 0
+cubone_standing_west
+  rotate: false
+  xy: 102, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: -1
+cubone_walking_west
+  rotate: false
+  xy: 102, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: 0
+cubone_walking_east
+  rotate: false
+  xy: 122, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: 1
+cubone_walking_north
+  rotate: false
+  xy: 42, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: 1
+cubone_walking_south
+  rotate: false
+  xy: 62, 2
+  size: 18, 20
+  orig: 18, 20
+  offset: 0, 0
+  index: 1
+cubone_walking_west
+  rotate: false
+  xy: 142, 3
+  size: 18, 19
+  orig: 18, 19
+  offset: 0, 0
+  index: 1

@@ -1,5 +1,7 @@
 package com.ungabunga.model.entities;
 
+import com.ungabunga.model.enums.AVATAR_STATE;
+import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.utilities.Pair;
 
@@ -10,11 +12,19 @@ yang memiliki posisi
 
 public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     Pair<Integer,Integer> position;
+    DIRECTION direction;
+    AVATAR_STATE state;
 
-    public ActiveEngimon(PlayerEngimon PE, Player P){
+    public ActiveEngimon(){
+
+    }
+
+    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y){
         super(PE);
         Pair<Integer,Integer> playerPosition = P.getPosition();
-        this.position = new Pair<Integer,Integer>(0,0);
+        this.position = new Pair<Integer,Integer>(x,y);
+        this.direction = P.getDirection();
+        this.state = P.getState();
     }
 
     @Override
@@ -60,5 +70,24 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     @Override
     public void reduceLives() {
         this.remainingLives--;
+    }
+
+    @Override
+    public DIRECTION getDirection() {
+        return this.direction;
+    }
+
+    @Override
+    public AVATAR_STATE getState(){return this.state;}
+
+    @Override
+    public String getEngimonSpecies(){return this.getSpecies();}
+    
+    public int getX(){
+        return this.position.getFirst();
+    }
+
+    public int getY(){
+        return this.position.getSecond();
     }
 }

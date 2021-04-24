@@ -1,0 +1,90 @@
+
+pikachu.png
+size: 128, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+pikachu_standing_east
+  rotate: false
+  xy: 2, 78
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+pikachu_walking_east
+  rotate: false
+  xy: 2, 78
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: 0
+pikachu_standing_north
+  rotate: false
+  xy: 36, 8
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: -1
+pikachu_walking_north
+  rotate: false
+  xy: 36, 8
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: 0
+pikachu_standing_south
+  rotate: false
+  xy: 2, 40
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: -1
+pikachu_walking_south
+  rotate: false
+  xy: 2, 40
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: 0
+pikachu_standing_west
+  rotate: false
+  xy: 38, 78
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: -1
+pikachu_walking_west
+  rotate: false
+  xy: 38, 78
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: 0
+pikachu_walking_east
+  rotate: false
+  xy: 36, 42
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: 1
+pikachu_walking_snorth
+  rotate: false
+  xy: 72, 44
+  size: 30, 32
+  orig: 30, 32
+  offset: 0, 0
+  index: 1
+pikachu_walking_south
+  rotate: false
+  xy: 2, 2
+  size: 32, 36
+  orig: 32, 36
+  offset: 0, 0
+  index: 1
+pikachu_walking_west
+  rotate: false
+  xy: 74, 78
+  size: 34, 34
+  orig: 34, 34
+  offset: 0, 0
+  index: 1

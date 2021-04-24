@@ -1,0 +1,90 @@
+
+dugtrio.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+dugtrio_standing_east
+  rotate: false
+  xy: 94, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+dugtrio_walking_east
+  rotate: false
+  xy: 94, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: 0
+dugtrio_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: -1
+dugtrio_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: 0
+dugtrio_standing_south
+  rotate: false
+  xy: 25, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: -1
+dugtrio_walking_south
+  rotate: false
+  xy: 25, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: 0
+dugtrio_standing_west
+  rotate: false
+  xy: 114, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+dugtrio_walking_west
+  rotate: false
+  xy: 114, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: 0
+dugtrio_walking_east
+  rotate: false
+  xy: 134, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: 1
+dugtrio_walking_north
+  rotate: false
+  xy: 48, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: 1
+dugtrio_walking_south
+  rotate: false
+  xy: 71, 2
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: 1
+dugtrio_walking_west
+  rotate: false
+  xy: 154, 3
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: 1

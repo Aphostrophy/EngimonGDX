@@ -13,10 +13,8 @@ public class OptionBoxController extends InputAdapter{
     @Override
     public boolean keyUp(int keycode) {
         if(keycode == Keys.UP) {
-            System.out.println("WOI i");
             box.moveUp();
         } else if(keycode == Keys.DOWN) {
-            System.out.println("WOI k");
             box.moveDown();
         } else if(keycode == Keys.ENTER) {
             box.makeNotVisible();
