@@ -8,7 +8,6 @@ import com.ungabunga.model.entities.MapCell;
 import com.ungabunga.model.entities.Skill;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Copy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +43,6 @@ public class fileUtil {
             }
             gameMap.add(mapRow);
         }
-
         return gameMap.stream().map(u -> u.toArray(new MapCell[u.size()])).toArray(MapCell[][]::new);
     }
 
