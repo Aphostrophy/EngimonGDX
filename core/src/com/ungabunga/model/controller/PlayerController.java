@@ -6,11 +6,11 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
-import com.ungabunga.model.enums.DIRECTIONS;
+import com.ungabunga.model.enums.DIRECTION;
 
 public class PlayerController extends InputAdapter{
     private GameState gameState;
-    private DIRECTIONS direction;
+    private DIRECTION direction;
     private AVATAR_STATE state;
     public boolean isInventoryOpen;
 
@@ -28,19 +28,19 @@ public class PlayerController extends InputAdapter{
             return false;
         }
         if(keycode == Keys.W) {
-            direction = DIRECTIONS.UP;
+            direction = DIRECTION.UP;
             state = AVATAR_STATE.WALKING;
         }
         if(keycode == Keys.S) {
-            direction = DIRECTIONS.DOWN;
+            direction = DIRECTION.DOWN;
             state = AVATAR_STATE.WALKING;
         }
         if(keycode == Keys.A) {
-            direction = DIRECTIONS.LEFT;
+            direction = DIRECTION.LEFT;
             state = AVATAR_STATE.WALKING;
         }
         if(keycode == Keys.D) {
-            direction = DIRECTIONS.RIGHT;
+            direction = DIRECTION.RIGHT;
             state = AVATAR_STATE.WALKING;
         }
         return false;
@@ -72,28 +72,28 @@ public class PlayerController extends InputAdapter{
     }
 
     public void update(float delta){
-        if(direction == DIRECTIONS.UP && state!=AVATAR_STATE.STANDING){
+        if(direction == DIRECTION.UP && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerUp();
             } catch(Exception e){
                 System.out.println(e);
             }
         }
-        else if(direction == DIRECTIONS.DOWN && state!=AVATAR_STATE.STANDING){
+        else if(direction == DIRECTION.DOWN && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerDown();
             } catch(Exception e){
                 System.out.println(e);
             }
         }
-        else if(direction == DIRECTIONS.LEFT && state!=AVATAR_STATE.STANDING){
+        else if(direction == DIRECTION.LEFT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerLeft();
             } catch(Exception e){
                 System.out.println(e);
             }
         }
-        else if(direction == DIRECTIONS.RIGHT && state!=AVATAR_STATE.STANDING){
+        else if(direction == DIRECTION.RIGHT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerRight();
             } catch(Exception e){

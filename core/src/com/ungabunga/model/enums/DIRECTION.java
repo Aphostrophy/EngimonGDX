@@ -1,6 +1,6 @@
 package com.ungabunga.model.enums;
 
-public enum DIRECTIONS {
+public enum DIRECTION {
     UP,
     DOWN,
     LEFT,

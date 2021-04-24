@@ -1,18 +1,15 @@
 package com.ungabunga.model.utilities;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.LivingEngimon;
 import com.ungabunga.model.entities.Skill;
-import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.CellType;
-import com.ungabunga.model.enums.DIRECTIONS;
+import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.enums.IElements;
 
 import java.util.HashMap;
@@ -84,6 +81,18 @@ public class ResourceProvider {
                 atlas.findRegion("arcanine_standing_east")
         );
 
+        atlas = assetManager.get("pic/engimon_packed/blastoise.atlas", TextureAtlas.class);
+        blastoiseAnimationSet = new AnimationSet(
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("blastoise_walking_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("blastoise_walking_north"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("blastoise_walking_west"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("blastoise_walking_east"),Animation.PlayMode.LOOP_PINGPONG),
+                atlas.findRegion("blastoise_standing_south"),
+                atlas.findRegion("blastoise_standing_north"),
+                atlas.findRegion("blastoise_standing_west"),
+                atlas.findRegion("blastoise_standing_east")
+        );
+
         this.skills = fileUtil.readSkillCSV();
         this.engimon = fileUtil.readEngimonCSV(this);
 
@@ -126,6 +135,6 @@ public class ResourceProvider {
     }
 
     public TextureRegion getSprite(LivingEngimon engimon){
-        return arcanineAnimationSet.getStanding(DIRECTIONS.DOWN);
+        return blastoiseAnimationSet.getStanding(engimon.getDirection());
     }
 }
