@@ -90,6 +90,7 @@ public class ResourceProvider {
        assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/vulpix.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
+       assetManager.load("pic/packed/SkillLogo.atlas", TextureAtlas.class);
 
         assetManager.finishLoading();
 
