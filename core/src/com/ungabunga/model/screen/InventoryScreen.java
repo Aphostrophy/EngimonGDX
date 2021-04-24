@@ -67,12 +67,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isInventoryOpen) {
-            try {
-                getApp().setScreen(new GameScreen(getApp()));
-                this.dispose();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            getApp().setScreen(gameScreen);
+            this.dispose();
         }
 
         uiStage.act(delta);
