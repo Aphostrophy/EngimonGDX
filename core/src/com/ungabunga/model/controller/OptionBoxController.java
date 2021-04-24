@@ -18,6 +18,8 @@ public class OptionBoxController extends InputAdapter{
         } else if(keycode == Keys.DOWN) {
             System.out.println("WOI k");
             box.moveDown();
+        } else if(keycode == Keys.ENTER) {
+            box.makeNotVisible();
         }
         return false;
     }
