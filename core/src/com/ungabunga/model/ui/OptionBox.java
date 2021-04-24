@@ -13,7 +13,7 @@ public class OptionBox extends Table {
     private int selectIdx = 0;
     private List<Image> arrows = new ArrayList<Image>();
     private List<Label> options = new ArrayList<Label>();
-
+    boolean visible;
     private Table uiContainer;
 
     public OptionBox(Skin skin) {
@@ -72,5 +72,17 @@ public class OptionBox extends Table {
                 this.arrows.get(i).setVisible(false);
             }
         }
+    }
+    public void makeVisible() {
+        this.setVisible(true);
+        this.visible = true;
+    }
+    public void makeNotVisible() {
+        this.setVisible(false);
+        this.clearChoice();
+        this.visible = false;
+    }
+    public boolean getVisible() {
+        return this.visible;
     }
 }
