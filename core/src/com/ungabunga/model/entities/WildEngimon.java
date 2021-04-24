@@ -9,7 +9,6 @@ import com.ungabunga.model.utilities.Pair;
 public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
     int remainingLives;
-    int turnsBeforeMoving;
 
     DIRECTION direction;
     AVATAR_STATE state;
@@ -22,7 +21,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
-        this.turnsBeforeMoving = CONSTANTS.TURNSTOMOVE;
 
         this.direction = DIRECTION.DOWN;
         this.state = AVATAR_STATE.STANDING;
@@ -77,10 +75,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public void reduceLives() {
         this.remainingLives--;
-    }
-
-    public int getTurnsBeforeMoving(){
-        return turnsBeforeMoving;
     }
 
     @Override

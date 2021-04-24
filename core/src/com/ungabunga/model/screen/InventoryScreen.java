@@ -24,7 +24,11 @@ import com.ungabunga.model.ui.InventoryUI;
 
 import java.io.IOException;
 
+
 public class InventoryScreen extends AbstractScreen implements Screen {
+
+    private GameScreen gameScreen;
+
     private PlayerController controller;
 
     private Stage uiStage;
@@ -42,10 +46,11 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private Table sortSkillItemButton;
     private Table title;
 
-    public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag) throws IOException {
+    public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
         super(app);
         this.controller = controller;
         this.bag = bag;
+        this.gameScreen = gameScreen;
         initUI();
     }
 
