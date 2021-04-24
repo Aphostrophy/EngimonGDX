@@ -94,6 +94,7 @@ public class GameState {
                 this.map.get(y).set(x, save.map[y][x]);
             }
         }
+        this.wildEngimonCount = save.wildEngimonCount;
     }
 
     public void movePlayerUp() throws CellOccupiedException {

@@ -10,6 +10,8 @@ public class Save {
     public int playerPosY;
     public MapCell[][] map;
 
+    public int wildEngimonCount;
+
     public Save(){
 
     }
@@ -27,5 +29,7 @@ public class Save {
             }
         }
         this.map = map;
+
+        this.wildEngimonCount = gameState.getWildEngimonCount();
     }
 }
