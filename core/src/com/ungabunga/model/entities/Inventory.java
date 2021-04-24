@@ -76,10 +76,10 @@ public class Inventory<T> {
         }
     }
 
-
     public void deleteFromInventory(Engimon engimon) {
         this.items.remove(((T)engimon));
     }
+
     public void deleteFromInventory(SkillItem skillitem){
         int i;
 
@@ -96,7 +96,6 @@ public class Inventory<T> {
             this.items.remove(((T)skillitem));
         }
     }
-
 
     public int getSkillItemAmount() {
         int sum = 0;
@@ -124,7 +123,7 @@ public class Inventory<T> {
 
     public void displaySkillItem() {
         // Output : 0. Mangga, 1
-        System.out.println("List Engimon :" );
+        System.out.println("List SkillItem :" );
         int i ,count = 0;
         for (i = 0; i < this.neff; i++)
         {
@@ -172,7 +171,6 @@ public class Inventory<T> {
         Collections.sort(this.items,compareByPower);
     }
 
-
     public String getEngimonElementInString(Engimon engimon){
         ArrayList<String> result = new ArrayList<>();
         for (IElements elemen : engimon.getElements()){
@@ -181,6 +179,32 @@ public class Inventory<T> {
         return String.join("/",result);
     }
 
+    public T getItemByIndex(int index){
+        return this.items.get(index);
+    }
 
+    public int getEngimonIndexByID(int id) throws EngimonNotFound{
+        int i;
+        for (i = 0; i < this.neff; i++)
+        {
+            if (((Engimon) this.items.get(i)).getId() == id)
+            {
+                return i;
+            }
+        }
+        throw new EngimonNotFound("Engimon Tidak Ditemukan");
+    }
+
+    public int getSkillItemIndexByName(String name) throws SkillItemNotFound{
+        int i;
+        for (i = 0; i < this.neff; i++)
+        {
+            if (((SkillItem) this.items.get(i)).getName().equals(name))
+            {
+                return i;
+            }
+        }
+        throw new SkillItemNotFound("SkillItem Tidak Ditemukan");
+    }
 
 }
