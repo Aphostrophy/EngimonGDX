@@ -30,10 +30,10 @@ public class DialogueController extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         if(Obox.isVisible()) {
-            if(keycode == Keys.I) {
+            if(keycode == Keys.O) {
                 Obox.moveUp();
                 return true;
-            } else if(keycode == Keys.K) {
+            } else if(keycode == Keys.L) {
                 Obox.moveDown();
                 return true;
             }
@@ -85,5 +85,7 @@ public class DialogueController extends InputAdapter {
             }
         }
     }
-
+    public boolean isDialogueShowing() {
+        return Dbox.isVisible();
+    }
 }

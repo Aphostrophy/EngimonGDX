@@ -118,9 +118,9 @@ public class GameScreen extends AbstractScreen {
 //        optionBoxController = new OptionBoxController(optionBox);
         dialogueController = new DialogueController(dialogueBox,optionBox);
         multiplexer.addProcessor(0, dialogueController);
-        multiplexer.addProcessor(1,controller);
+//        multiplexer.addProcessor(1,controller);
 
-//        multiplexer.addProcessor(1,optionBoxController);
+        multiplexer.addProcessor(1,optionBoxController);
 
         dialogue = new Dialogue();
 
@@ -138,7 +138,7 @@ public class GameScreen extends AbstractScreen {
         dialogue.addNode(c);
         dialogue.addNode(d);
 
-        dialogueController.startDialogue(dialogue);
+//        dialogueController.startDialogue(dialogue);
 
     }
 
@@ -222,14 +222,14 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.setVisible(false);
-//        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+//        dialogueBox.setVisible(true);
+        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         optionBox = new OptionBox(getApp().getSkin());
-        optionBox.setVisible(false);
-//        optionBox.addOption("Option 1");
-//        optionBox.addOption("Option 2");
-//        optionBox.addOption("Option 3");
+//        optionBox.setVisible(true);
+        optionBox.addOption("Option 1");
+        optionBox.addOption("Option 2");
+        optionBox.addOption("Option 3");
 
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
@@ -258,7 +258,7 @@ public class GameScreen extends AbstractScreen {
 
         Gdx.input.setInputProcessor(multiplexer);
 
-        camera = new OrthographicCamera();
+//        camera = new OrthographicCamera();
     }
 
 }
