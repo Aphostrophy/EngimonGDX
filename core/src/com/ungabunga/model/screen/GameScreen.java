@@ -110,6 +110,7 @@ public class GameScreen extends AbstractScreen {
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
+        multiplexer.addProcessor(2, uiStage);
     }
 
     @Override
@@ -232,8 +233,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        camera = new OrthographicCamera();
     }
 
 }
