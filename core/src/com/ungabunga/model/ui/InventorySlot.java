@@ -10,17 +10,20 @@ import com.badlogic.gdx.utils.Scaling;
 public class InventorySlot extends Stack {
     private Stack defaultBackground;
     private Label numItemsLabel;
-    private int numItemsVal = 0;
+    private int numItemsVal;
     private String name;
     private InventoryItem.ItemType itemType;
 
-    public InventorySlot(Skin skin, InventoryItem item){
+    public InventorySlot(Skin skin, InventoryItem item, int numItemsVal){
         defaultBackground = new Stack();
         Image image = new Image(skin, "optionbox");
+
+        this.numItemsVal = numItemsVal;
 
         numItemsLabel = new Label(String.valueOf(numItemsVal), skin);
         numItemsLabel.setAlignment(Align.bottomRight);
         numItemsLabel.setColor(1, 0, 0, 1);
+        numItemsLabel.setFontScale(2);
 
         defaultBackground.add(image);
 
@@ -28,7 +31,6 @@ public class InventorySlot extends Stack {
         numItemsLabel.setName("numitems");
 
         itemType = item.getItemType();
-        item.setSize(40, 40);
         defaultBackground.add(item);
 
         this.name = item.getName();

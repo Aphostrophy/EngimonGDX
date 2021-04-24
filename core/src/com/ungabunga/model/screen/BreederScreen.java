@@ -98,11 +98,11 @@ public class BreederScreen implements Screen {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        Engimon a = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
-        Engimon b = new Engimon("X", "X", "X",100, elmt2, skills, parents, parents);
+        Engimon a = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
+        Engimon b = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
 
-        ParentA = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
-        ParentB = new Engimon("X", "X", "X",100, elmt2, skills, parents, parents);
+//        ParentA = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
+//        ParentB = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
         try {
             inventory.insertToInventory(a, inventory.getFilledSlot());
             inventory.insertToInventory(b, inventory.getFilledSlot());
@@ -173,7 +173,7 @@ public class BreederScreen implements Screen {
         title.add(bg).width(500);
 
         dialogueBox =  new DialogueBox(app.getSkin());
-        dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
+        dialogueBox.animateText("Pilih dua Engimon untuk dibreed!");
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -225,10 +225,14 @@ public class BreederScreen implements Screen {
         root.add(breederWrapper).top().align(Align.center).row();
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                try {
-                    app.setScreen(new ChildEngimonScreen(app, controller, ParentA, ParentB, inventory));
-                } catch (IOException e){
-                    e.printStackTrace();
+                if (parentA.isParentFilled() && parentB.isParentFilled()) {
+                    try {
+                        app.setScreen(new ChildEngimonScreen(app, controller, parentA.getParentEngimon(), parentB.getParentEngimon(), inventory));
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    root.add(dialogTable);
                 }
             }
         });
