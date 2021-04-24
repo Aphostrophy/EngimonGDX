@@ -7,10 +7,10 @@ import com.ungabunga.model.enums.DIRECTION;
 
 public interface LivingEngimon {
 
-    public void moveUp() throws FeatureNotImplementedException;
-    public void moveDown() throws FeatureNotImplementedException;
-    public void moveLeft() throws FeatureNotImplementedException;
-    public void moveRight() throws FeatureNotImplementedException;
+    public void moveUp();
+    public void moveDown();
+    public void moveLeft();
+    public void moveRight();
 
     public void repositionOnCellConflict() throws FeatureNotImplementedException;
 

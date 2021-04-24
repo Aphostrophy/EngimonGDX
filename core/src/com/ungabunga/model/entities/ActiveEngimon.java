@@ -28,23 +28,27 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     }
 
     @Override
-    public void moveUp() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void moveUp()  {
+        int y = position.getSecond();
+        position.setSecond(y+1);
     }
 
     @Override
-    public void moveDown() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void moveDown() {
+        int y = position.getSecond();
+        position.setSecond(y-1);
     }
 
     @Override
-    public void moveLeft() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void moveLeft() {
+        int x = position.getFirst();
+        position.setFirst(x-1);
     }
 
     @Override
-    public void moveRight() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void moveRight() {
+        int x = position.getFirst();
+        position.setFirst(x+1);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class GameState {
                 return;
             }
             Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
-            map.get(spawnY).get(spawnX).occupier = new WildEngimon(wildEngimon);
+            map.get(spawnY).get(spawnX).occupier = new WildEngimon(wildEngimon,this);
 
             wildEngimonCount++;
             timeDelta = 0;

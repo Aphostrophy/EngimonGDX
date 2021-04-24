@@ -1,5 +1,6 @@
 package com.ungabunga.model.entities;
 
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
@@ -10,6 +11,8 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
     int remainingLives;
 
+    GameState gameState;
+
     DIRECTION direction;
     AVATAR_STATE state;
 
@@ -17,33 +20,39 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     }
 
-    public WildEngimon(Engimon E){
+    public WildEngimon(Engimon E, GameState gameState){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
+
+        this.gameState = gameState;
 
         this.direction = DIRECTION.DOWN;
         this.state = AVATAR_STATE.STANDING;
     }
 
     @Override
-    public void moveUp() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
+    public void moveUp()  {
+        int y = position.getSecond();
+        position.setSecond(y+1);
     }
 
     @Override
-    public void moveDown() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
+    public void moveDown() {
+        int y = position.getSecond();
+        position.setSecond(y-1);
     }
 
     @Override
-    public void moveLeft() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
+    public void moveLeft() {
+        int x = position.getFirst();
+        position.setFirst(x-1);
     }
 
     @Override
-    public void moveRight() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
+    public void moveRight() {
+        int x = position.getFirst();
+        position.setFirst(x+1);
     }
 
 
