@@ -9,13 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
 
-public class BreederSlot extends Stack {
+public class ParentSlot extends Stack {
     private Stack defaultBackground;
 
-    public BreederSlot(Skin skin){
+    public ParentSlot(Skin skin){
         defaultBackground = new Stack();
         Image image = new Image(skin, "optionbox");
+
         defaultBackground.add(image);
+
         defaultBackground.setName("background");
 
         this.add(defaultBackground);

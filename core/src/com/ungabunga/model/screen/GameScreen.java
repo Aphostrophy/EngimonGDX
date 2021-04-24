@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -110,6 +111,26 @@ public class GameScreen extends AbstractScreen {
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
+
+        Gdx.input.setInputProcessor(new InputAdapter() {
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+                    System.out.println("ok");
+                    try {
+                        app.setScreen(new BreederScreen(app));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+                return super.touchUp(screenX, screenY, pointer, button);
+            }
+
+        });
     }
 
     @Override
@@ -208,6 +229,7 @@ public class GameScreen extends AbstractScreen {
 
         inventoryUI = new InventoryUI(getApp().getSkin());
         inventoryWrapper.add(inventoryUI).expand().align(Align.center);
+
 //        root.row();
 //        root.add(inventoryUI).expand().align(Align.center).pad(5f);
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);

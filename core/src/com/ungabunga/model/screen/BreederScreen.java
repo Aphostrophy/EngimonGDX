@@ -2,11 +2,13 @@ package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -29,8 +31,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BreederScreen extends AbstractScreen {
-//    private EngimonGame app;
+public class BreederScreen implements Screen {
+    private EngimonGame app;
 
     private Sprite ParentABox;
     private Sprite ParentBBox;
@@ -50,13 +52,14 @@ public class BreederScreen extends AbstractScreen {
     private DialogueBox dialogueBox;
     private Table inventoryWrapper;
     private Table breederWrapper;
+    private Table parentLabel;
 
     private InventoryUI inventoryUI;
-    private BreederSlot ParentASlot;
-    private BreederSlot ParentBSlot;
+    private ParentSlot ParentASlot;
+    private ParentSlot ParentBSlot;
 
     public BreederScreen(EngimonGame app) throws IOException {
-        super(app);
+        this.app = app;
         batch = new SpriteBatch();
         newOffspring = false;
 
@@ -94,7 +97,6 @@ public class BreederScreen extends AbstractScreen {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 if (Gdx.input.getX() > Gdx.graphics.getWidth() / 3 - 50 && Gdx.input.getX() < Gdx.graphics.getWidth() / 3 + 155 && Gdx.graphics.getHeight() - Gdx.input.getY() > 5*Gdx.graphics.getHeight() / 8 + 5 && Gdx.graphics.getHeight() - Gdx.input.getY() < 5*Gdx.graphics.getHeight() / 8 + 70) {
-                    dialogueBox.setVisible(true);
                     Breeder.Breed(ParentA, ParentB, inventory);
                 }
 
@@ -165,42 +167,54 @@ public class BreederScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
 
+
 //        uiStage.setDebugAll(true);
         root = new Table();
 
+
         inventoryWrapper = new Table();
         breederWrapper = new Table();
+        parentLabel = new Table();
 
         root.setFillParent(true);
         inventoryWrapper.setFillParent(true);
         breederWrapper.setFillParent(true);
+        parentLabel.setFillParent(true);
 
         root = new Table();
         root.setFillParent(true);
         uiStage.addActor(root);
         Table dialogTable = new Table();
-        dialogueBox =  new DialogueBox(getApp().getSkin());
+        dialogueBox =  new DialogueBox(app.getSkin());
         dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
 
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable).expand().align(Align.bottom);
 
-
         uiStage.addActor(inventoryWrapper);
         uiStage.addActor(breederWrapper);
+        uiStage.addActor(parentLabel);
 
-        BreederEngimonUI breederEngimonUI = new BreederEngimonUI(getApp().getSkin());
-        inventoryWrapper.add(breederEngimonUI).expand().align(Align.topRight);
+        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin());
+        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin());
+
+        Label labelA = new Label("Parent A", app.getSkin());
+        Label labelB = new Label("Parent B", app.getSkin());
+        parentA.add(labelA);
+        parentB.add(labelB);
+
+        inventoryWrapper.add(parentA).expand().align(Align.topLeft);
+        inventoryWrapper.add(parentB).expand().align(Align.topLeft).space(8f);
 //        root.row();
 //        root.add(inventoryUI).expand().align(Align.center).pad(5f);
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 
 //        TextButton breed = new TextButton("                Breed                ", getApp().getSkin(), "optionbox");
-        ParentASlot = new BreederSlot(getApp().getSkin());
-        ParentBSlot = new BreederSlot(getApp().getSkin());
-        breederWrapper.add(ParentASlot).size(300, 300).expand().align(Align.topLeft);
+//        ParentASlot = new ParentSlot(getApp().getSkin());
+//        ParentBSlot = new ParentSlot(getApp().getSkin());
+//        breederWrapper.add(ParentASlot).size(300, 300).expand().align(Align.topLeft);
 //        breederWrapper.add(breed).size(300, 300).expand().align(Align.center);
-        breederWrapper.add(ParentBSlot).size(300, 300).expand().align(Align.topLeft).space(8f);
+//        breederWrapper.add(ParentBSlot).size(300, 300).expand().align(Align.topLeft).space(8f);
 
         dialogueBox.setVisible(newOffspring);
     }
