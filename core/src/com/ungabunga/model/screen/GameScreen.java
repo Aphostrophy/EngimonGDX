@@ -110,15 +110,22 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(1, dialogueController);
 
         Dialogue dialogue = new Dialogue();
-        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
-        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
-        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
-        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 3);
+
+//        DialogueNode a = new DialogueNode("To walk, use W A S D." +
+//                "\n Use Arrow UP and DOWN for option. " +
+//                        "\n and Use ENTER for next text." +
+//                        "\n Press B for Battle", 0);
+        DialogueNode a = new DialogueNode("Welcome to Engimon, Curse of The Marcello Pokemon God" +
+                "\n Press Enter to close this message",0);
+        DialogueNode b = new DialogueNode("Use UP and DOWN arrow to select choices, would you like to skip the tutorial?", 1);
+        DialogueNode c = new DialogueNode("To walk, use W A S D." +
+                "\n Press H to restart the tutorial. " +
+                        "\n Press B for Battle", 2);
+        DialogueNode d = new DialogueNode("Enjoy the game!", 3);
 
         a.makeLinear(b.getId());
-        b.addChoice("Iblis",2);
-        b.addChoice("Setan",3);
-
+        b.addChoice("Yes",3);
+        b.addChoice("No",2);
 
         dialogue.addNode(a);
         dialogue.addNode(b);
@@ -222,22 +229,10 @@ public class GameScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
-        uiStage.setDebugAll(true);
         root = new Table();
         root.setFillParent(true);
 
-        Table dialogTable1 = new Table();
-        dialogTable1.setFillParent(true);
         uiStage.addActor(root);
-        uiStage.addActor(dialogTable1);
-
-
-        dialogueCommand = new DialogueBox(getApp().getSkin());
-        dialogueCommand.animateText("To walk, use W A S D." +
-                "\n Use Arrow UP and DOWN for option. " +
-                "\n and Use ENTER for next text." +
-                "\n Press B for Battle");
-        dialogTable1.add(dialogueCommand).expand().align(Align.top);
 
         Table dialogTable2 = new Table();
 
