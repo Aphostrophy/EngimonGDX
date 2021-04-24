@@ -169,8 +169,18 @@ public class Engimon {
         }
     }
 
-    public void displayInfo() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Blom diimplementasiin krn bingung ama GUI-nya");
+    public void displayInfo() {
+        System.out.println("======BASIC INFO======");
+        System.out.println("ID \t\t:\t" + this.id);
+        System.out.println("Name \t\t:\t" + this.name);
+        System.out.println("Species \t:\t" + this.species);
+        System.out.println("Level \t\t:\t" + this.level);
+        System.out.println("Exp \t\t:\t" + this.exp);
+        System.out.println("Cumulative Exp \t:\t" + this.cumulativeExp);
+        System.out.println("Parents \t:\t");
+        System.out.println("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")");
+        System.out.println("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")");
+        System.out.println("Slogan \t:\t" + this.slogan);
     }
 
     public void displaySkills() throws FeatureNotImplementedException {

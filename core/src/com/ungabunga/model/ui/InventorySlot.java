@@ -1,26 +1,23 @@
 package com.ungabunga.model.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 
 public class InventorySlot extends Stack {
     private Stack defaultBackground;
     private Label numItemsLabel;
     private int numItemsVal;
-    private String name;
+    private int idx;
     private InventoryItem.ItemType itemType;
 
-    public InventorySlot(Skin skin, InventoryItem item, int numItemsVal){
+    public InventorySlot(Skin skin, InventoryItem item, int numItemsVal, int idx){
         defaultBackground = new Stack();
         Image image = new Image(skin, "optionbox");
 
+        this.idx = idx;
         this.numItemsVal = numItemsVal;
 
         numItemsLabel = new Label(String.valueOf(numItemsVal), skin);
@@ -39,21 +36,25 @@ public class InventorySlot extends Stack {
         if(item != null) {
             itemType = item.getItemType();
             defaultBackground.add(item);
-
-            this.name = item.getName();
         }
 
         this.add(defaultBackground);
         this.add(numItemsLabel);
     }
 
-    @Override
-    public String getName() {
-        return name;
+    public int getNumItemsVal() {
+        return numItemsVal;
     }
 
-    @Override
-    public void setName(String name) {
-        this.name = name;
+    public void setNumItemsVal(int numItemsVal) {
+        this.numItemsVal = numItemsVal;
+    }
+
+    public InventoryItem.ItemType getItemType() {
+        return itemType;
+    }
+
+    public int getIdx() {
+        return idx;
     }
 }
