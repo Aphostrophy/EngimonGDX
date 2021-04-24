@@ -30,16 +30,16 @@ public class DialogueController extends InputAdapter {
     @Override
     public boolean keyUp(int keycode) {
         if(Obox.isVisible()) {
-            if(keycode == Keys.O) {
+            if(keycode == Keys.UP) {
                 Obox.moveUp();
                 return true;
-            } else if(keycode == Keys.L) {
+            } else if(keycode == Keys.DOWN) {
                 Obox.moveDown();
                 return true;
             }
         }
-        if(traverser != null && keycode == Keys.X && Dbox.isFinished()) {
-            if(traverser.getType() == DialogueNode.NODE_TYPE.END) {
+        if(traverser != null && keycode == Keys.ENTER && Dbox.isFinished()) {
+            if(traverser.getType() == NODE_TYPE.END) {
                 traverser = null;
                 Dbox.setVisible(false);
             }
@@ -77,7 +77,7 @@ public class DialogueController extends InputAdapter {
     private void progress(int idx) {
         Obox.setVisible(false);
         DialogueNode next = traverser.getNext(idx);
-
+        Dbox.animateText(next.getText());
         if (next.getType() == NODE_TYPE.MULT) {
             Obox.clearChoice();
             for(String str : next.getLabels()) {

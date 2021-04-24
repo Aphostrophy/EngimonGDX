@@ -26,14 +26,16 @@ public class OptionBox extends Table {
         Label optionLabel = new Label(opt, this.getSkin());
         options.add(optionLabel);
         Image arrow  = new Image(this.getSkin(), "arrow");
-        arrows.add(arrow);
         arrow.setVisible(false);
+        arrows.add(arrow);
 
-        uiContainer.add(arrow).expand().align(Align.left);
+        if (arrow == arrows.get(selectIdx)) {
+            arrow.setVisible(true);
+        }
+
+        uiContainer.add(arrow).expand().align(Align.left).space(5f);
         uiContainer.add(optionLabel).expand().align(Align.left).space(8f);
         uiContainer.row();
-
-        calcArrowVisibility();
     }
 
     public void moveUp() {

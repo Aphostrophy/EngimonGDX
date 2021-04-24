@@ -39,7 +39,7 @@ public class DialogueBox extends Table{
         }
     }
 
-    private void setText(String s) {
+    public void setText(String s) {
         if(!s.contains("\n")) {
             s += "\n";
         }

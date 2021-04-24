@@ -19,7 +19,6 @@ import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
-import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
@@ -38,7 +37,6 @@ public class GameScreen extends AbstractScreen {
     private InputMultiplexer multiplexer;
     private PlayerController controller;
     private SpriteBatch batch;
-    private OptionBoxController optionBoxController;
     private Stage stage;
     private SpriteBatch HUDBatch;
     private Sprite BreederMenuInactive;
@@ -56,12 +54,10 @@ public class GameScreen extends AbstractScreen {
 
     private Stage uiStage;
     private Table root;
-    private DialogueBox dialogueBox;
+    private DialogueBox dialogueBox,dialogueCommand;
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
-    private OptionBoxController debugController;
-    private OptionBox debugBox;
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -87,8 +83,6 @@ public class GameScreen extends AbstractScreen {
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
         gameState = new GameState("orz", playerAnimations,map);
-
-//        controller = new PlayerController(gameState);
 
         camera = new OrthographicCamera();
 
@@ -117,26 +111,29 @@ public class GameScreen extends AbstractScreen {
         controller = new PlayerController(gameState);
 
         dialogueController = new DialogueController(dialogueBox,optionBox);
-        multiplexer.addProcessor(0, dialogueController);
-        multiplexer.addProcessor(1,controller);
+        multiplexer.addProcessor(0, controller);
+        multiplexer.addProcessor(1, dialogueController);
+
 
         dialogue = new Dialogue();
+        DialogueNode command = new DialogueNode("To walk, use W A S D.\n Use Arrow UP and DOWN for option. \n and Use ENTER for next text.", 0);
+        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 1);
+        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 2);
+        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 3);
+        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 4);
 
-        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
-        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
-        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
-        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 3);
-
+        command.makeLinear(a.getId());
         a.makeLinear(b.getId());
-        b.addChoice("Iblis",2);
-        b.addChoice("Setan",3);
+        b.addChoice("Iblis",3);
+        b.addChoice("Setan",4);
 
+        dialogue.addNode(command);
         dialogue.addNode(a);
         dialogue.addNode(b);
         dialogue.addNode(c);
         dialogue.addNode(d);
 
-//        dialogueController.startDialogue(dialogue);
+        dialogueController.startDialogue(dialogue);
 
     }
 
@@ -158,23 +155,17 @@ public class GameScreen extends AbstractScreen {
     }
 
     public  void update(float delta) {
+        controller.update(delta);
         dialogueController.update(delta);
-        if (!dialogueBox.isVisible()) {
-            camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
-            camera.update();
-        }
+        camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
+        camera.update();
         uiStage.act(delta);
-        if (dialogue.isFinished() && !optionBox.isVisible()) {
-            optionBox.clearChoices();
-            optionBox.addOption("YES");
-            optionBox.addOption("NO");
-            optionBox.setVisible(true);
-        }
     }
 
     @Override
     public  void render(float delta) {
         controller.update(delta);
+        dialogueController.update(delta);
         gameState.player.update(delta);
         stage.addActor(gameState.inventoryUI);
 
@@ -226,19 +217,15 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.setVisible(false);
-//        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+//        dialogueCommand = new DialogueBox(getApp().getSkin());
 
+        dialogueBox.setVisible(false);
         optionBox = new OptionBox(getApp().getSkin());
         optionBox.setVisible(false);
-//        optionBox.addOption("Option 1");
-//        optionBox.addOption("Option 2");
-//        optionBox.addOption("Option 3");
-
+        dialogTable.add(dialogueCommand).expand().align(Align.left).space(8f).row();
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
-        root.add(dialogTable).expand().align(Align.bottom);
-//        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+        root.add(dialogTable).expand().align(Align.bottom).pad(8f);
 
 
     }
