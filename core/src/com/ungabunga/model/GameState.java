@@ -14,13 +14,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class GameState {
-    private EngimonGame app;
+    public EngimonGame app;
 
     public Player player;
     public AtomicReferenceArray<AtomicReferenceArray<MapCell>> map;
 
-    public Inventory<PlayerEngimon> playerEngimonInventory;
-    public Inventory<SkillItem> playerSkillItemInventory;
+    private Bag playerInventory;
 
     private float timeDelta;
 
@@ -75,15 +74,6 @@ public class GameState {
             wildEngimonCount++;
             timeDelta = 0;
 
-            // Nyoba doang nanti hapus di bawah ini
-            if(player.getActiveEngimon()==null){
-                try{
-                    System.out.println("Active Engimon spawned");
-                    spawnActiveEngimon(new PlayerEngimon(this.app.getResourceProvider().getEngimon("Blastoise")));
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
         }
     }
 

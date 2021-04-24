@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.entities.PlayerEngimon;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
@@ -60,10 +61,19 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
         }
+        if(keycode == Keys.P){
+            if(gameState.player.getActiveEngimon()==null){
+                try{
+                    System.out.println("Active Engimon spawned");
+                    gameState.spawnActiveEngimon(new PlayerEngimon(gameState.app.getResourceProvider().getEngimon("Blastoise")));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
         if(keycode == Keys.F5){
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);
-            System.out.println(json.prettyPrint(new Save(gameState)));
             FileHandle file = Gdx.files.local("mysave.json");
             file.writeString(json.toJson(new Save(gameState)), false);
         }
