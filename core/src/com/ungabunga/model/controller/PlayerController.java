@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Json;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.save.Save;
 
 public class PlayerController extends InputAdapter{
     private GameState gameState;
@@ -49,8 +50,7 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.F5){
             Json json = new Json();
-            System.out.println(json.prettyPrint(gameState.player));
-            System.out.println(json.prettyPrint(gameState.playerEngimonInventory));
+            System.out.println(json.prettyPrint(new Save(gameState)));
         }
         return false;
     }
