@@ -222,14 +222,14 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-//        dialogueBox.setVisible(true);
-        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+        dialogueBox.setVisible(false);
+//        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         optionBox = new OptionBox(getApp().getSkin());
-//        optionBox.setVisible(true);
-        optionBox.addOption("Option 1");
-        optionBox.addOption("Option 2");
-        optionBox.addOption("Option 3");
+        optionBox.setVisible(false);
+//        optionBox.addOption("Option 1");
+//        optionBox.addOption("Option 2");
+//        optionBox.addOption("Option 3");
 
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
