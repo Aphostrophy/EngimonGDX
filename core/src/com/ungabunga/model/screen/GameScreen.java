@@ -175,7 +175,7 @@ public class GameScreen extends AbstractScreen {
         for(int y=0;y<gameState.map.length;y++){
             for(int x=0;x<gameState.map[y].length;x++){
                 if(gameState.map[y][x].occupier != null){
-                    batch.draw(gameState.player.getSprite(), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map[y][x].occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }

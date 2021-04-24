@@ -1,6 +1,8 @@
 package com.ungabunga.model.utilities;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +21,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.ungabunga.Settings.ANIM_TIMER;
+
 public class ResourceProvider {
 
     AssetManager assetManager;
@@ -26,6 +30,22 @@ public class ResourceProvider {
     CopyOnWriteArrayList<Skill> skills;
 
     HashMap<IElements, CellType> mapElementToBiome;
+
+    AnimationSet arcanineAnimationSet;
+    AnimationSet blastoiseAnimationSet;
+    AnimationSet cuboneAnimationSet;
+    AnimationSet diglettAnimationSet;
+    AnimationSet glaceonAnimationSet;
+    AnimationSet glalieAnimationSet;
+    AnimationSet magmarAnimationSet;
+    AnimationSet mareepAnimationSet;
+    AnimationSet ninetalesAnimationSet;
+    AnimationSet psyduckAnimationSet;
+    AnimationSet raichuAnimationSet;
+    AnimationSet sharkAnimationSet;
+    AnimationSet tongkolAnimationSet;
+    AnimationSet voltorbAnimationSet;
+    AnimationSet wartortleAnimationSet;
 
     public ResourceProvider(){
         this.assetManager = new AssetManager();
@@ -51,6 +71,18 @@ public class ResourceProvider {
         assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
 
         assetManager.finishLoading();
+
+        TextureAtlas atlas = assetManager.get("pic/engimon_packed/arcanine.atlas", TextureAtlas.class);
+        arcanineAnimationSet = new AnimationSet(
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("arcanine_walking_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("arcanine_walking_north"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("arcanine_walking_west"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("arcanine_walking_east"),Animation.PlayMode.LOOP_PINGPONG),
+                atlas.findRegion("arcanine_standing_south"),
+                atlas.findRegion("arcanine_standing_north"),
+                atlas.findRegion("arcanine_standing_west"),
+                atlas.findRegion("arcanine_standing_east")
+        );
 
         this.skills = fileUtil.readSkillCSV();
         this.engimon = fileUtil.readEngimonCSV(this);
@@ -93,7 +125,7 @@ public class ResourceProvider {
         return candidates.get(x);
     }
 
-//    public TextureRegion getSprite(LivingEngimon engimon, AVATAR_STATE state, DIRECTIONS directions){
-//
-//    }
+    public TextureRegion getSprite(LivingEngimon engimon){
+        return arcanineAnimationSet.getStanding(DIRECTIONS.DOWN);
+    }
 }
