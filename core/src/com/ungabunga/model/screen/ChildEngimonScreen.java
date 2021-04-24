@@ -178,7 +178,6 @@ public class ChildEngimonScreen implements Screen {
                 for (Skill s : child.getSkills()) {
                     System.out.println("- " + s.getSkillName());
                 }
-                System.out.println("heyyy");
 //                System.out.println("Breeding is in progress...");
                 controller.finishBreeding();
             }

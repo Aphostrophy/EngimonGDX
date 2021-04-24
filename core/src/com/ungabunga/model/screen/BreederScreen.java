@@ -23,6 +23,7 @@ import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.ui.*;
 import com.ungabunga.model.utilities.Pair;
 import org.lwjgl.Sys;
@@ -98,8 +99,17 @@ public class BreederScreen implements Screen {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        ParentA = new Engimon("X", "X", "X",1, elmt, skills, parents, parents);
-        ParentB = new Engimon("X", "X", "X",1, elmt2, skills, parents, parents);
+        Engimon a = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
+        Engimon b = new Engimon("X", "X", "X",100, elmt2, skills, parents, parents);
+
+        ParentA = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
+        ParentB = new Engimon("X", "X", "X",100, elmt2, skills, parents, parents);
+        try {
+            inventory.insertToInventory(a, inventory.getFilledSlot());
+            inventory.insertToInventory(b, inventory.getFilledSlot());
+        } catch (FullInventoryException e) {
+            controller.finishBreeding();
+        }
 
         initUI();
 
@@ -221,23 +231,6 @@ public class BreederScreen implements Screen {
                 } catch (IOException e){
                     e.printStackTrace();
                 }
-//                root.add(dialogTable);
-//                root.add(nameWrapper);
-//                Engimon child = Breeder.Breed(ParentA, ParentB, "yolo", inventory);
-//                // cuma buat mastiin childnya kebreed
-//                System.out.println("Nama: " + child.getName());
-//                System.out.println("Lvl. " + child.getLevel());
-//                System.out.println("Species: " + child.getSpecies());
-//                System.out.println("Parent:");
-//                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-//                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-//                System.out.print("Skills: \n.");
-//
-//                for (Skill s : child.getSkills()) {
-//                    System.out.println("- " + s.getSkillName());
-//                }
-//                System.out.println("heyyy");
-////                System.out.println("Breeding is in progress...");
             }
         });
 
