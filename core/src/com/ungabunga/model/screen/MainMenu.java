@@ -38,9 +38,10 @@ public class MainMenu implements Screen {
         this.splash = splash;
 
         // NANTI GANTI LOGONYA DISINI LAGI
-        Texture splashTexture = new Texture("Pokemon.png");
+        Texture splashTexture = new Texture("LOGO.png");
         this.heading = new Sprite(splashTexture);
-        heading.setSize(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/4);
+
+        heading.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
         Gdx.input.setInputProcessor(new InputAdapter() {
 
