@@ -6,6 +6,7 @@ import com.ungabunga.EngimonGame;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.save.Save;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
@@ -18,8 +19,8 @@ public class GameState {
     public Player player;
     public AtomicReferenceArray<AtomicReferenceArray<MapCell>> map;
 
-    private Inventory<PlayerEngimon> playerEngimonInventory;
-    private Inventory<SkillItem> playerSkillItemInventory;
+    public Inventory<PlayerEngimon> playerEngimonInventory;
+    public Inventory<SkillItem> playerSkillItemInventory;
 
     private float timeDelta;
 
@@ -82,6 +83,15 @@ public class GameState {
                 } catch(Exception e){
                     e.printStackTrace();
                 }
+            }
+        }
+    }
+
+    public void loadSave(Save save){
+        player.loadSave(save);
+        for(int y=0;y<save.map.length;y++){
+            for(int x=0;x<save.map[0].length;x++){
+                this.map.get(y).set(x, save.map[y][x]);
             }
         }
     }
