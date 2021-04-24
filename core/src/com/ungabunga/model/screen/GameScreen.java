@@ -23,7 +23,9 @@ import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
+import org.lwjgl.Sys;
 
+import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.IOException;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
@@ -107,30 +109,11 @@ public class GameScreen extends AbstractScreen {
 
         initUI();
         multiplexer = new InputMultiplexer();
-        controller = new PlayerController(gameState);
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
 
-        Gdx.input.setInputProcessor(new InputAdapter() {
 
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
-                    System.out.println("ok");
-                    try {
-                        app.setScreen(new BreederScreen(app));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-
-                return super.touchUp(screenX, screenY, pointer, button);
-            }
-
-        });
     }
 
     @Override
@@ -160,6 +143,14 @@ public class GameScreen extends AbstractScreen {
         gameState.update(delta);
         gameState.player.update(delta);
         inventoryUI.setVisible(controller.isInventoryOpen);
+
+        if (controller.isBreederOpen) {
+            try {
+                getApp().setScreen(new BreederScreen(getApp(), controller));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         renderer.setView(camera);
         renderer.render();
@@ -255,8 +246,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        camera = new OrthographicCamera();
     }
 
 }

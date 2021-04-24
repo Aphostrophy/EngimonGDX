@@ -82,4 +82,10 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public int getTurnsBeforeMoving(){
         return turnsBeforeMoving;
     }
+
+    @Override
+    public String getEngimonSpecies(){return this.getSpecies();}
+
+    @Override
+    public AVATAR_STATE getState(){return this.state;}
 }
