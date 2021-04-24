@@ -1,0 +1,90 @@
+
+vulpix.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+vulpix_standing_east
+  rotate: false
+  xy: 35, 36
+  size: 30, 24
+  orig: 30, 24
+  offset: 0, 0
+  index: -1
+vulpix_walking_east
+  rotate: false
+  xy: 35, 36
+  size: 30, 24
+  orig: 30, 24
+  offset: 0, 0
+  index: 0
+vulpix_standing_north
+  rotate: false
+  xy: 67, 33
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: -1
+vulpix_walking_north
+  rotate: false
+  xy: 67, 33
+  size: 25, 27
+  orig: 25, 27
+  offset: 0, 0
+  index: 0
+vulpix_standing_south
+  rotate: false
+  xy: 67, 2
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: -1
+vulpix_walking_south
+  rotate: false
+  xy: 67, 2
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: 0
+vulpix_standing_west
+  rotate: false
+  xy: 35, 10
+  size: 30, 24
+  orig: 30, 24
+  offset: 0, 0
+  index: -1
+vulpix_walking_west
+  rotate: false
+  xy: 35, 10
+  size: 30, 24
+  orig: 30, 24
+  offset: 0, 0
+  index: 0
+vulpix_walking_east
+  rotate: false
+  xy: 2, 36
+  size: 31, 24
+  orig: 31, 24
+  offset: 0, 0
+  index: 1
+vulpix_walking_north
+  rotate: false
+  xy: 94, 33
+  size: 24, 27
+  orig: 24, 27
+  offset: 0, 0
+  index: 1
+vulpix_walking_south
+  rotate: false
+  xy: 91, 2
+  size: 22, 29
+  orig: 22, 29
+  offset: 0, 0
+  index: 1
+vulpix_walking_west
+  rotate: false
+  xy: 2, 10
+  size: 31, 24
+  orig: 31, 24
+  offset: 0, 0
+  index: 1
