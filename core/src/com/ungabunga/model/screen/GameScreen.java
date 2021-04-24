@@ -16,13 +16,14 @@ import com.badlogic.gdx.utils.Align;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.controller.OptionBoxController;
+import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.dialogue.Dialogue;
+import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
 
@@ -34,7 +35,6 @@ public class GameScreen extends AbstractScreen {
     private PlayerController controller;
     private SpriteBatch batch;
 
-    private OptionBoxController optionBoxController;
     private SpriteBatch HUDBatch;
     private Sprite BreederMenuInactive;
     private Sprite BreederMenuActive;
@@ -54,6 +54,8 @@ public class GameScreen extends AbstractScreen {
     private DialogueBox dialogueBox;
 
     private OptionBox optionBox;
+    private Dialogue dialogue;
+    private DialogueController dialogueController;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -102,9 +104,29 @@ public class GameScreen extends AbstractScreen {
 
         initUI();
         multiplexer = new InputMultiplexer();
-        optionBoxController = new OptionBoxController(optionBox);
+        dialogueController = new DialogueController(dialogueBox,optionBox);
         multiplexer.addProcessor(0,controller);
-        multiplexer.addProcessor(1,optionBoxController);
+        multiplexer.addProcessor(1, dialogueController);
+
+        dialogue = new Dialogue();
+        DialogueNode command = new DialogueNode("To walk, use W A S D.\n Use Arrow UP and DOWN for option. \n and Use ENTER for next text.", 0);
+        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 1);
+        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 2);
+        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 3);
+        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 4);
+
+        command.makeLinear(a.getId());
+        a.makeLinear(b.getId());
+        b.addChoice("Iblis",3);
+        b.addChoice("Setan",4);
+
+        dialogue.addNode(command);
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
+        dialogue.addNode(d);
+
+        dialogueController.startDialogue(dialogue);
     }
 
     @Override
@@ -125,12 +147,17 @@ public class GameScreen extends AbstractScreen {
     }
 
     public  void update(float delta) {
-
+        controller.update(delta);
+        dialogueController.update(delta);
+        camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
+        camera.update();
+        uiStage.act(delta);
     }
 
     @Override
     public  void render(float delta) {
         controller.update(delta);
+        dialogueController.update(delta);
         gameState.update(delta);
         gameState.player.update(delta);
 
@@ -202,24 +229,14 @@ public class GameScreen extends AbstractScreen {
         uiStage.addActor(root);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
+        dialogueBox.setVisible(false);
 
         optionBox = new OptionBox(getApp().getSkin());
-        ArrayList<String> items = new ArrayList<String>();
-        items.add("A");
-        items.add("B");
-        items.add("C");
-        optionBox.addAllOption(items);
+        optionBox.setVisible(false);
+
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
-        root.add(dialogTable).expand().align(Align.bottom);
-
-//        inventoryUI = new InventoryUI(getApp().getSkin());
-//        inventoryWrapper.add(inventoryUI).expand().align(Align.center);
-
-//        root.row();
-//        root.add(inventoryUI).expand().align(Align.center).pad(5f);
-//        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
+        root.add(dialogTable).expand().align(Align.bottom).pad(8f);
     }
 
     @Override

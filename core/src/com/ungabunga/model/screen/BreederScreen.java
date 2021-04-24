@@ -19,10 +19,10 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.ui.*;
 import com.ungabunga.model.utilities.Pair;
 import org.lwjgl.Sys;
@@ -52,11 +52,16 @@ public class BreederScreen implements Screen {
 
 
     private Stage uiStage;
-    private Table root;
+
     private DialogueBox dialogueBox;
+
+    private TextField childName;
+
+    private Table root;
     private Table topBar;
     private Table breederWrapper;
     private Table breedButton;
+    private Table nameWrapper;
     private Table parentLabel;
     private Table dialogTable;
     private Table backButton;
@@ -93,8 +98,17 @@ public class BreederScreen implements Screen {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        ParentA = new Engimon("X", "X", "X",1, elmt, skills, parents, parents);
-        ParentB = new Engimon("X", "X", "X",1, elmt2, skills, parents, parents);
+        Engimon a = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
+        Engimon b = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
+
+//        ParentA = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
+//        ParentB = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
+        try {
+            inventory.insertToInventory(a, inventory.getFilledSlot());
+            inventory.insertToInventory(b, inventory.getFilledSlot());
+        } catch (FullInventoryException e) {
+            controller.finishBreeding();
+        }
 
         initUI();
 
@@ -153,13 +167,13 @@ public class BreederScreen implements Screen {
         breedButton = new Table();
         backButton = new Table();
         title = new Table();
-
+        nameWrapper = new Table();
 
         Image bg = new Image(new Texture("img/breeder_title.png"));
         title.add(bg).width(500);
 
         dialogueBox =  new DialogueBox(app.getSkin());
-        dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
+        dialogueBox.animateText("Pilih dua Engimon untuk dibreed!");
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -179,7 +193,15 @@ public class BreederScreen implements Screen {
         topBar.add(backButton).align(Align.topLeft);
         topBar.add(title);
 
+        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.font = app.getSkin().getFont("font");
+        textFieldStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
+        childName = new TextField(" ", textFieldStyle);
+        childName.setPosition(24,73);
+        childName.setSize(88, 14);
+        nameWrapper.setBackground(app.getSkin().getDrawable("dialoguebox"));
+        nameWrapper.add(childName).width(uiStage.getWidth()).height(uiStage.getHeight()/3).space(11f);
 
 //        uiStage.addActor(dialogTable);
 //        uiStage.addActor(inventoryWrapper);
@@ -187,8 +209,8 @@ public class BreederScreen implements Screen {
 
         uiStage.addActor(root);
 
-        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin());
-        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin());
+        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), inventory);
+        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), inventory);
 
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());
@@ -203,22 +225,15 @@ public class BreederScreen implements Screen {
         root.add(breederWrapper).top().align(Align.center).row();
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                root.add(dialogTable);
-                Engimon child = Breeder.Breed(ParentA, ParentB, "yolo", inventory);
-                // cuma buat mastiin childnya kebreed
-                System.out.println("Nama: " + child.getName());
-                System.out.println("Lvl. " + child.getLevel());
-                System.out.println("Species: " + child.getSpecies());
-                System.out.println("Parent:");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.print("Skills: \n.");
-
-                for (Skill s : child.getSkills()) {
-                    System.out.println("- " + s.getSkillName());
+                if (parentA.isParentFilled() && parentB.isParentFilled()) {
+                    try {
+                        app.setScreen(new ChildEngimonScreen(app, controller, parentA.getParentEngimon(), parentB.getParentEngimon(), inventory));
+                    } catch (IOException e){
+                        e.printStackTrace();
+                    }
+                } else {
+                    root.add(dialogTable);
                 }
-                System.out.println("heyyy");
-//                System.out.println("Breeding is in progress...");
             }
         });
 

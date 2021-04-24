@@ -33,9 +33,6 @@ public class PlayerController extends InputAdapter{
         if(keycode == Input.Keys.I) {
             isInventoryOpen = !isInventoryOpen;
         }
-        if(keycode == Input.Keys.B) {
-            isBreederOpen = !isBreederOpen;
-        }
         if(isInventoryOpen) {
             return false;
         }

@@ -84,6 +84,7 @@ public class GameState {
                 this.map.get(y).set(x, save.map[y][x]);
             }
         }
+        this.playerInventory = save.playerInventory;
         this.wildEngimonCount = save.wildEngimonCount;
     }
 
@@ -173,5 +174,9 @@ public class GameState {
             map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             player.removeActiveEngimon();
         }
+    }
+
+    public Bag getPlayerInventory(){
+        return this.playerInventory;
     }
 }

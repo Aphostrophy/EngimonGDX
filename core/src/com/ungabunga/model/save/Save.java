@@ -1,6 +1,7 @@
 package com.ungabunga.model.save;
 
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.entities.Bag;
 import com.ungabunga.model.entities.MapCell;
 
 public class Save {
@@ -9,6 +10,8 @@ public class Save {
     public int playerPosX;
     public int playerPosY;
     public MapCell[][] map;
+
+    public Bag playerInventory;
 
     public int wildEngimonCount;
 
@@ -31,5 +34,7 @@ public class Save {
         this.map = map;
 
         this.wildEngimonCount = gameState.getWildEngimonCount();
+
+        this.playerInventory = gameState.getPlayerInventory();
     }
 }
