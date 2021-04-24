@@ -5,11 +5,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
+import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.utilities.AnimationSet;
+import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.fileUtil;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 
@@ -40,7 +44,24 @@ public class GameState {
             atomicMap.set(y,atomicRow);
         }
 
+        ArrayList<IElements> elmt = new ArrayList<IElements>();
+        elmt.add(IElements.FIRE);
+        ArrayList<IElements> elmt2 = new ArrayList<IElements>();
+        elmt2.add(IElements.ELECTRIC);
+        ArrayList<Skill> skills = new ArrayList<Skill>();
+        Pair<String, String> parents = new Pair<String, String>("A", "B");
+
+        Engimon a = new Engimon("Test", "Pikachu", "X",100, elmt, skills, parents, parents);
+        Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
+
         this.playerInventory = new Bag();
+
+        try {
+            this.playerInventory.insertToBag(new PlayerEngimon(a));
+            this.playerInventory.insertToBag(new PlayerEngimon(b));
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
 
         this.map = atomicMap;
 

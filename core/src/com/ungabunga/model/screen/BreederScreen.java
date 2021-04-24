@@ -115,9 +115,6 @@ public class BreederScreen implements Screen {
         }
 
         initUI();
-
-
-
     }
 
     @Override

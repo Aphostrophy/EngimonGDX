@@ -41,6 +41,17 @@ public class InventoryUI extends Table {
                    });
                    this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                    idx++;
+               } else {
+                   InventorySlot inventorySlot = new InventorySlot(skin, null, 0);
+                   inventorySlot.addListener(new ClickListener() {
+                       @Override
+                       public void clicked(InputEvent event, float x, float y) {
+                           super.clicked(event, x, y);
+                           InventorySlot slot = (InventorySlot) event.getListenerActor();
+                           System.out.println(slot.getName());
+                       }
+                   });
+                   this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                }
                count++;
            }

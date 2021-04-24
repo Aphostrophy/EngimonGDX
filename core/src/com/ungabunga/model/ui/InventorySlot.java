@@ -24,16 +24,21 @@ public class InventorySlot extends Stack {
         numItemsLabel.setAlignment(Align.bottomRight);
         numItemsLabel.setColor(1, 0, 0, 1);
         numItemsLabel.setFontScale(2);
+        if(numItemsVal <= 1) {
+            numItemsLabel.setVisible(false);
+        }
 
         defaultBackground.add(image);
 
         defaultBackground.setName("background");
         numItemsLabel.setName("numitems");
 
-        itemType = item.getItemType();
-        defaultBackground.add(item);
+        if(item != null) {
+            itemType = item.getItemType();
+            defaultBackground.add(item);
 
-        this.name = item.getName();
+            this.name = item.getName();
+        }
 
         this.add(defaultBackground);
         this.add(numItemsLabel);
