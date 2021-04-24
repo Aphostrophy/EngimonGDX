@@ -115,12 +115,10 @@ public class GameScreen extends AbstractScreen {
         multiplexer = new InputMultiplexer();
 
         controller = new PlayerController(gameState);
-//        optionBoxController = new OptionBoxController(optionBox);
+
         dialogueController = new DialogueController(dialogueBox,optionBox);
         multiplexer.addProcessor(0, dialogueController);
-//        multiplexer.addProcessor(1,controller);
-
-        multiplexer.addProcessor(1,optionBoxController);
+        multiplexer.addProcessor(1,controller);
 
         dialogue = new Dialogue();
 
@@ -166,6 +164,12 @@ public class GameScreen extends AbstractScreen {
             camera.update();
         }
         uiStage.act(delta);
+        if (dialogue.isFinished() && !optionBox.isVisible()) {
+            optionBox.clearChoices();
+            optionBox.addOption("YES");
+            optionBox.addOption("NO");
+            optionBox.setVisible(true);
+        }
     }
 
     @Override
