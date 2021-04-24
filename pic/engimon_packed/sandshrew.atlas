@@ -20,30 +20,30 @@ sandshrew_walking_east
   index: 0
 sandshrew_standing_north
   rotate: false
-  xy: 2, 2
-  size: 15, 21
-  orig: 15, 21
+  xy: 36, 3
+  size: 15, 20
+  orig: 15, 20
   offset: 0, 0
   index: -1
 sandshrew_walking_north
   rotate: false
-  xy: 2, 2
-  size: 15, 21
-  orig: 15, 21
+  xy: 36, 3
+  size: 15, 20
+  orig: 15, 20
   offset: 0, 0
   index: 0
 sandshrew_standing_south
   rotate: false
-  xy: 36, 3
-  size: 15, 20
-  orig: 15, 20
+  xy: 2, 2
+  size: 15, 21
+  orig: 15, 21
   offset: 0, 0
   index: -1
 sandshrew_walking_south
   rotate: false
-  xy: 36, 3
-  size: 15, 20
-  orig: 15, 20
+  xy: 2, 2
+  size: 15, 21
+  orig: 15, 21
   offset: 0, 0
   index: 0
 sandshrew_standing_west
@@ -69,16 +69,16 @@ sandshrew_walking_east
   index: 1
 sandshrew_walking_north
   rotate: false
-  xy: 19, 2
-  size: 15, 21
-  orig: 15, 21
+  xy: 53, 3
+  size: 15, 20
+  orig: 15, 20
   offset: 0, 0
   index: 1
 sandshrew_walking_south
   rotate: false
-  xy: 53, 3
-  size: 15, 20
-  orig: 15, 20
+  xy: 19, 2
+  size: 15, 21
+  orig: 15, 21
   offset: 0, 0
   index: 1
 sandshrew_walking_west

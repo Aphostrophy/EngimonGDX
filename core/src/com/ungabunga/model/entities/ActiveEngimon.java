@@ -70,4 +70,10 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public DIRECTION getDirection() {
         return this.direction;
     }
+
+    @Override
+    public AVATAR_STATE getState(){return this.state;}
+
+    @Override
+    public String getEngimonSpecies(){return this.getSpecies();}
 }

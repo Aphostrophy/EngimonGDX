@@ -6,44 +6,44 @@ filter: Nearest, Nearest
 repeat: none
 tongkol_standing_east
   rotate: false
-  xy: 74, 2
-  size: 11, 15
-  orig: 11, 15
+  xy: 2, 3
+  size: 16, 14
+  orig: 16, 14
   offset: 0, 0
   index: -1
 tongkol_walking_east
   rotate: false
-  xy: 74, 2
-  size: 11, 15
-  orig: 11, 15
+  xy: 2, 3
+  size: 16, 14
+  orig: 16, 14
   offset: 0, 0
   index: 0
 tongkol_standing_north
   rotate: false
-  xy: 87, 2
+  xy: 74, 2
   size: 11, 15
   orig: 11, 15
   offset: 0, 0
   index: -1
 tongkol_walking_north
   rotate: false
-  xy: 87, 2
+  xy: 74, 2
   size: 11, 15
   orig: 11, 15
   offset: 0, 0
   index: 0
 tongkol_standing_south
   rotate: false
-  xy: 2, 3
-  size: 16, 14
-  orig: 16, 14
+  xy: 87, 2
+  size: 11, 15
+  orig: 11, 15
   offset: 0, 0
   index: -1
 tongkol_walking_south
   rotate: false
-  xy: 2, 3
-  size: 16, 14
-  orig: 16, 14
+  xy: 87, 2
+  size: 11, 15
+  orig: 11, 15
   offset: 0, 0
   index: 0
 tongkol_standing_west
@@ -62,23 +62,16 @@ tongkol_walking_west
   index: 0
 tongkol_walking_east
   rotate: false
-  xy: 100, 2
-  size: 11, 15
-  orig: 11, 15
-  offset: 0, 0
-  index: 1
-tongkol_walking_north
-  rotate: false
-  xy: 113, 2
-  size: 11, 15
-  orig: 11, 15
+  xy: 38, 3
+  size: 16, 14
+  orig: 16, 14
   offset: 0, 0
   index: 1
 tongkol_walking_south
   rotate: false
-  xy: 38, 3
-  size: 16, 14
-  orig: 16, 14
+  xy: 100, 2
+  size: 11, 15
+  orig: 11, 15
   offset: 0, 0
   index: 1
 tongkol_walking_west

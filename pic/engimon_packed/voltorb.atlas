@@ -20,44 +20,44 @@ voltorb_walking_east
   index: 0
 voltorb_standing_north
   rotate: false
-  xy: 74, 3
-  size: 15, 20
-  orig: 15, 20
+  xy: 74, 2
+  size: 15, 21
+  orig: 15, 21
   offset: 0, 0
   index: -1
 voltorb_walking_north
   rotate: false
-  xy: 74, 3
-  size: 15, 20
-  orig: 15, 20
+  xy: 74, 2
+  size: 15, 21
+  orig: 15, 21
   offset: 0, 0
   index: 0
 voltorb_standing_south
   rotate: false
-  xy: 20, 3
-  size: 16, 20
-  orig: 16, 20
+  xy: 108, 3
+  size: 15, 20
+  orig: 15, 20
   offset: 0, 0
   index: -1
 voltorb_walking_south
   rotate: false
-  xy: 20, 3
-  size: 16, 20
-  orig: 16, 20
+  xy: 108, 3
+  size: 15, 20
+  orig: 15, 20
   offset: 0, 0
   index: 0
 voltorb_standing_west
   rotate: false
-  xy: 91, 2
-  size: 15, 21
-  orig: 15, 21
+  xy: 20, 3
+  size: 16, 20
+  orig: 16, 20
   offset: 0, 0
   index: -1
 voltorb_walking_west
   rotate: false
-  xy: 91, 2
-  size: 15, 21
-  orig: 15, 21
+  xy: 20, 3
+  size: 16, 20
+  orig: 16, 20
   offset: 0, 0
   index: 0
 voltorb_walking_east
@@ -69,22 +69,22 @@ voltorb_walking_east
   index: 1
 voltorb_walking_north
   rotate: false
+  xy: 91, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: 1
+voltorb_walking_south
+  rotate: false
   xy: 125, 3
   size: 15, 20
   orig: 15, 20
   offset: 0, 0
   index: 1
-voltorb_walking_south
+voltorb_walking_west
   rotate: false
   xy: 56, 3
   size: 16, 20
   orig: 16, 20
-  offset: 0, 0
-  index: 1
-voltorb_walking_west
-  rotate: false
-  xy: 108, 2
-  size: 15, 21
-  orig: 15, 21
   offset: 0, 0
   index: 1
