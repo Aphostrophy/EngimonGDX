@@ -249,7 +249,7 @@ public class GameScreen extends AbstractScreen {
 
         Gdx.input.setInputProcessor(multiplexer);
 
-//        camera = new OrthographicCamera();
+        camera = new OrthographicCamera();
     }
 
 }
