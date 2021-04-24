@@ -22,7 +22,7 @@ public class OptionBox extends Table {
         uiContainer = new Table();
         this.add(uiContainer).pad(5f);
     }
-    public void addOption(String opt) {
+    public void addOption(String opt){
         Label optionLabel = new Label(opt, this.getSkin());
         options.add(optionLabel);
         Image arrow  = new Image(this.getSkin(), "arrow");
@@ -34,6 +34,22 @@ public class OptionBox extends Table {
         uiContainer.row();
 
         calcArrowVisibility();
+    }
+
+    public void addAllOption(ArrayList<String> opt){
+        for(String s : opt) {
+            Label optionLabel = new Label(s, this.getSkin());
+            options.add(optionLabel);
+            Image arrow  = new Image(this.getSkin(), "arrow");
+            arrows.add(arrow);
+            arrow.setVisible(false);
+
+            uiContainer.add(arrow).expand().align(Align.left);
+            uiContainer.add(optionLabel).expand().align(Align.left).space(8f);
+            uiContainer.row();
+
+            calcArrowVisibility();
+        }
     }
 
     public void moveUp() {

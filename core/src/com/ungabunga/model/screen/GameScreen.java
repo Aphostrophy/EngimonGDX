@@ -24,9 +24,10 @@ import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import org.lwjgl.Sys;
-
+import java.util.Arrays;
 import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
 
@@ -210,10 +211,11 @@ public class GameScreen extends AbstractScreen {
         dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
 
         optionBox = new OptionBox(getApp().getSkin());
-        optionBox.addOption("Option 1");
-        optionBox.addOption("Option 2");
-        optionBox.addOption("Option 3");
-
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("A");
+        items.add("B");
+        items.add("C");
+        optionBox.addAllOption(items);
         dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable).expand().align(Align.bottom);
