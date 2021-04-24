@@ -27,6 +27,8 @@ public class MainMenu implements Screen {
     private Texture playButtonInactive;
     private Texture exitButtonActive;
     private Texture exitButtonInactive;
+    private Texture loadButtonActive;
+    private Texture loadButtonInactive;
 
     public MainMenu(EngimonGame game, Splash splash) {
         this.game = game;
@@ -34,6 +36,8 @@ public class MainMenu implements Screen {
         this.playButtonInactive = new Texture("img/play_button_inactive.png");
         this.exitButtonActive = new Texture("img/exit_button_active.png");
         this.exitButtonInactive = new Texture("img/exit_button_inactive.png");
+        this.loadButtonActive = new Texture("img/load_button_active.png");
+        this.loadButtonInactive = new Texture("img/load_button_inactive.png");
         this.batch = new SpriteBatch();
         this.splash = splash;
 
@@ -97,9 +101,9 @@ public class MainMenu implements Screen {
         }
 
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() * 3 / 8 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() * 3 / 8) {
-            batch.draw(playButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
+            batch.draw(loadButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
         } else {
-            batch.draw(playButtonInactive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
+            batch.draw(loadButtonInactive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
 
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 4 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 4) {
