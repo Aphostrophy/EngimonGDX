@@ -11,6 +11,7 @@ import com.ungabunga.model.entities.Skill;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.enums.IElements;
+import com.ungabunga.model.exceptions.OutOfBoundException;
 
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
@@ -132,6 +133,15 @@ public class ResourceProvider {
         }
         int x = ThreadLocalRandom.current().nextInt(0,candidates.size());
         return candidates.get(x);
+    }
+
+    public Engimon getEngimon(String species) throws OutOfBoundException {
+        for(Engimon engimon: this.engimon){
+            if(engimon.getSpecies().equals(species)){
+                return engimon;
+            }
+        }
+        throw new OutOfBoundException("Engimon not found!");
     }
 
     public TextureRegion getSprite(LivingEngimon engimon){

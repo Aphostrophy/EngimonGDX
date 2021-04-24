@@ -176,7 +176,7 @@ public class Player {
 
     public Engimon getActiveEngimon(){
         try{
-            return (Engimon) this.activeEngimon;
+            return this.activeEngimon;
         } catch(Exception e){
             System.out.println(e);
             return null;
@@ -189,5 +189,13 @@ public class Player {
 
     public Pair<Integer,Integer> getPosition(){
         return this.position;
+    }
+
+    public DIRECTION getDirection(){
+        return this.direction;
+    }
+
+    public AVATAR_STATE getState(){
+        return this.state;
     }
 }

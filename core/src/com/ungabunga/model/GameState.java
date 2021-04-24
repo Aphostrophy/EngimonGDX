@@ -3,10 +3,7 @@ package com.ungabunga.model;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.MapCell;
-import com.ungabunga.model.entities.Player;
-import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.AnimationSet;
@@ -15,10 +12,13 @@ import com.ungabunga.model.utilities.fileUtil;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameState {
+    private EngimonGame app;
+
     public Player player;
     public MapCell[][] map;
 
-    private EngimonGame app;
+    private Inventory<PlayerEngimon> playerEngimonInventory;
+    private Inventory<SkillItem> playerSkillItemInventory;
 
     private float timeDelta;
 
@@ -63,6 +63,16 @@ public class GameState {
 
             wildEngimonCount++;
             timeDelta = 0;
+
+            // Nyoba doang nanti hapus di bawah ini
+            if(player.getActiveEngimon()==null){
+                try{
+                    System.out.println("Active Engimon spawned");
+                    spawnActiveEngimon(new PlayerEngimon(this.app.getResourceProvider().getEngimon("Blastoise")));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -121,4 +131,31 @@ public class GameState {
     public void setWildEngimonCount(int count){
         this.wildEngimonCount=count;
     }
+
+    public void spawnActiveEngimon(PlayerEngimon playerEngimon) throws CellOccupiedException{
+        if(map[player.getY()-1][player.getX()].occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            player.setActiveEngimon(activeEngimon);
+            map[player.getY()-1][player.getX()].occupier = activeEngimon;
+        }
+        else if(map[player.getY()+1][player.getX()].occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            player.setActiveEngimon(activeEngimon);
+            map[player.getY()+1][player.getX()].occupier = activeEngimon;
+        }
+        else if(map[player.getY()][player.getX()-1].occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            player.setActiveEngimon(activeEngimon);
+            map[player.getY()][player.getX()-1].occupier = activeEngimon;
+        }
+        else if(map[player.getY()][player.getX()+1].occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            player.setActiveEngimon(activeEngimon);
+            map[player.getY()][player.getX()+1].occupier = activeEngimon;
+        } else{
+            throw new CellOccupiedException("No place to spawn player engimon");
+        }
+    }
+
+//    public void removePlayerEngimon
 }

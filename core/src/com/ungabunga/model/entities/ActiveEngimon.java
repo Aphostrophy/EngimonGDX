@@ -19,6 +19,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         super(PE);
         Pair<Integer,Integer> playerPosition = P.getPosition();
         this.position = new Pair<Integer,Integer>(0,0);
+        this.direction = P.getDirection();
+        this.state = P.getState();
     }
 
     @Override
