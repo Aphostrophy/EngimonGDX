@@ -1,5 +1,8 @@
 package com.ungabunga.model.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -24,16 +27,21 @@ public class InventorySlot extends Stack {
         numItemsLabel.setAlignment(Align.bottomRight);
         numItemsLabel.setColor(1, 0, 0, 1);
         numItemsLabel.setFontScale(2);
+        if(numItemsVal <= 1) {
+            numItemsLabel.setVisible(false);
+        }
 
         defaultBackground.add(image);
 
         defaultBackground.setName("background");
         numItemsLabel.setName("numitems");
 
-        itemType = item.getItemType();
-        defaultBackground.add(item);
+        if(item != null) {
+            itemType = item.getItemType();
+            defaultBackground.add(item);
 
-        this.name = item.getName();
+            this.name = item.getName();
+        }
 
         this.add(defaultBackground);
         this.add(numItemsLabel);

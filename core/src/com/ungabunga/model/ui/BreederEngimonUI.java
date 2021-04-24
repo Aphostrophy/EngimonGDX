@@ -6,14 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.ungabunga.model.entities.Breeder;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.Inventory;
-import com.ungabunga.model.entities.Skill;
+import com.ungabunga.model.utilities.ResourceProvider;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.EngimonNotFound;
+import com.ungabunga.model.screen.BreederScreen;
 import com.ungabunga.model.screen.ChildEngimonScreen;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.utilities.ResourceProvider;
 import org.lwjgl.Sys;
 
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class BreederEngimonUI extends Table {
     private boolean isParent;
     private ArrayList<Engimon> breedableEngimon;
 
-    public BreederEngimonUI(Skin skin, Inventory<Engimon> inventory){
+    public BreederEngimonUI(Skin skin, Inventory inventory, ResourceProvider provider){
         super(skin);
         this.setBackground("dialoguebox");
         Texture texture = new Texture(Gdx.files.internal("Avatar/brendan_bike_east_0.png"));
@@ -47,24 +47,25 @@ public class BreederEngimonUI extends Table {
         Pair<String, String> parents = new Pair<String, String>("A", "B");
         this.parent = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
 
-        for (int i = 0; i < inventory.getFilledSlot(); i++) {
-            temp = inventory.getItemByIndex(i);
-            breedableEngimon.add(temp);
-            System.out.println(i);
-        }
+//        for (int i = 0; i < inventory.getFilledSlot(); i++) {
+//            temp = inventory.getItemByIndex(i);
+//            breedableEngimon.add(temp);
+//            System.out.println(i);
+//        }
 
         int k = 0;
 
         for(int i = 1; i <= ROW; i++) {
             for(int j = 1; j <= COLUMN; j++) {
                 if (k < inventory.getFilledSlot()) {
-                    BreederSlot breederSlot = new BreederSlot(skin, new BreederItem(texture, breedableEngimon.get(k)), k);
+                    BreederItem item = new BreederItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(k)), (Engimon) inventory.getItemByIndex(k));
+                    BreederSlot breederSlot = new BreederSlot(skin, item, k);
                     this.add(breederSlot).size(slotWidth, slotHeight).pad(2.5f);
                     breederSlot.addListener(new ClickListener() {
                         public void clicked(InputEvent event, float x, float y) {
-                            setParent(inventory.getItemByIndex(breederSlot.getIdx()));
-                            System.out.println("ok");
-                            printParent();
+                            super.clicked(event, x, y);
+                            BreederSlot slot = (BreederSlot) event.getListenerActor();
+                            setParent((Engimon) inventory.getItemByIndex(slot.getIdx()));
                         }
                     });
                     k++;

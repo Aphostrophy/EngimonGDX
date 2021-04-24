@@ -47,4 +47,12 @@ public class Bag {
     public SkillItem getSkillItemByName(String name) throws SkillItemNotFound{
         return skillItemInventory.getItemByIndex(skillItemInventory.getSkillItemIndexByName(name));
     }
+
+    public Inventory<SkillItem> getSkillItemInventory() {
+        return skillItemInventory;
+    }
+
+    public Inventory<PlayerEngimon> getEngimonInventory() {
+        return engimonInventory;
+    }
 }

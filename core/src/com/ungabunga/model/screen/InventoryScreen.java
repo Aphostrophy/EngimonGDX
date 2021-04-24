@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,17 +16,24 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.entities.Bag;
+import com.ungabunga.model.ui.BreederEngimonUI;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.InventoryItem;
 import com.ungabunga.model.ui.InventoryUI;
 
 import java.io.IOException;
 
-public class InventoryScreen implements Screen {
-    private EngimonGame app;
+
+public class InventoryScreen extends AbstractScreen implements Screen {
+
+    private GameScreen gameScreen;
 
     private PlayerController controller;
 
     private Stage uiStage;
+
+    private Bag bag;
 
     private Table root;
     private DialogueBox dialogueBox;
@@ -34,14 +41,16 @@ public class InventoryScreen implements Screen {
     private Table inventoryWrapper;
     private Table dialogTable;
     private Table backButton;
+    private Table bottomBar;
+    private Table sortEngimonButton;
+    private Table sortSkillItemButton;
     private Table title;
 
-    private InventoryUI inventoryUI;
-
-    public InventoryScreen(EngimonGame app, PlayerController controller) throws IOException {
-        this.app = app;
+    public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
+        super(app);
         this.controller = controller;
-        this.inventoryUI = new InventoryUI(app.getSkin());
+        this.bag = bag;
+        this.gameScreen = gameScreen;
         initUI();
     }
 
@@ -58,7 +67,8 @@ public class InventoryScreen implements Screen {
 
         if (!controller.isInventoryOpen) {
             try {
-                app.setScreen(new GameScreen(app));
+                getApp().setScreen(new GameScreen(getApp()));
+                this.dispose();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -79,6 +89,11 @@ public class InventoryScreen implements Screen {
     }
 
     @Override
+    public void update(float delta) {
+
+    }
+
+    @Override
     public void resume() {
 
     }
@@ -90,7 +105,7 @@ public class InventoryScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        uiStage.dispose();
     }
 
     private void initUI() {
@@ -100,26 +115,29 @@ public class InventoryScreen implements Screen {
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
 
         topBar = new Table();
+        bottomBar = new Table();
         inventoryWrapper = new Table();
         dialogTable = new Table();
         backButton = new Table();
+        sortEngimonButton = new Table();
+        sortSkillItemButton = new Table();
         title = new Table();
 
 
-        Image bg = new Image(new Texture("img/breeder_title.png"));
+        Image bg = new Image(new Texture("img/inventory_title.png"));
         title.add(bg).width(500);
 
-        dialogueBox =  new DialogueBox(app.getSkin());
+        dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = app.getSkin().getFont("font");
+        textButtonStyle.font = getApp().getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
         TextButton back = new TextButton("Back", textButtonStyle);
         back.getLabel().setFontScale(2,2);
-        backButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        backButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
         topBar.add(backButton).align(Align.topLeft);
@@ -127,14 +145,49 @@ public class InventoryScreen implements Screen {
 
         uiStage.addActor(root);
 
-        inventoryWrapper.add(inventoryUI).expand().align(Align.center);
+        InventoryUI engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider());
+        InventoryUI skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider());
+
+        Label labelA = new Label("Engimon", getApp().getSkin());
+        Label labelB = new Label("SkillItem", getApp().getSkin());
+        engimonInventory.add(labelA);
+        skillitemInventory.add(labelB);
+
+        inventoryWrapper.add(engimonInventory).expand().align(Align.topLeft);
+        inventoryWrapper.add(skillitemInventory).expand().align(Align.topLeft).space(11f);
+
+        TextButton engimonSort = new TextButton("Sort Engimon", textButtonStyle);
+        engimonSort.getLabel().setFontScale(2,2);
+        sortEngimonButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        sortEngimonButton.add(engimonSort).expand().align(Align.center).width(200).height(25).space(11f);
+
+        TextButton skillitemSort = new TextButton("Sort SkillItem", textButtonStyle);
+        skillitemSort.getLabel().setFontScale(2,2);
+        sortSkillItemButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        sortSkillItemButton.add(skillitemSort).expand().align(Align.center).width(200).height(25).space(11f);
+
+        topBar.add(sortEngimonButton).align(Align.center);
+        topBar.add(sortSkillItemButton).align(Align.center).space(11f);
 
         root.add(topBar).top().fillX().row();
-        root.add(inventoryWrapper).top().align(Align.center).row();
+        root.add(inventoryWrapper).top().fillX().align(Align.center).row();
+        root.add(bottomBar).top().fillX().align(Align.center).row();
 
         back.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 controller.closeInventory();
+            }
+        });
+
+        engimonSort.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Sort Engimon");
+            }
+        });
+
+        skillitemSort.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Sort SkillItem");
             }
         });
     }
