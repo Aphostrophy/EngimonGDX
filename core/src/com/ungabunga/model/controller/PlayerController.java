@@ -8,11 +8,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.entities.LivingEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
+import com.ungabunga.model.entities.WildEngimon;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.BreederScreen;
+import com.ungabunga.model.utilities.Pair;
+
 import java.io.IOException;
 
 public class PlayerController extends InputAdapter{
@@ -65,6 +69,38 @@ public class PlayerController extends InputAdapter{
                     gameState.spawnActiveEngimon(new PlayerEngimon(gameState.app.getResourceProvider().getEngimon("Blastoise")));
                 } catch(Exception e){
                     e.printStackTrace();
+                }
+            }
+        }
+        if (keycode == Keys.T) {
+            if(this.gameState.player.getActiveEngimon()!=null){
+                Pair<Integer,Integer> dir = new Pair<>(0,0);
+                DIRECTION d = this.gameState.player.getDirection();
+                if(d == DIRECTION.UP) {
+                    System.out.println("Lihat atas");
+                    dir = new Pair<>(0,1);
+                } else if(d == DIRECTION.DOWN) {
+                    System.out.println("Lihat bawah");
+                    dir = new Pair<>(0,-1);
+                } else if(d == DIRECTION.RIGHT) {
+                    System.out.println("Lihat kanan");
+                    dir = new Pair<>(1,0);
+                }
+                else if(d == DIRECTION.LEFT) {
+                    System.out.println("Lihat kiri");
+                    dir = new Pair<>(-1,0);
+                }
+                System.out.println("Jessonn");
+                if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() && (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+                    if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
+                        WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+                        if (occupier != null) {
+                            System.out.println(occupier.getName());
+                        }
+                        System.out.println("HAHA");
+                    }
+                } else {
+                    System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
                 }
             }
         }
