@@ -165,14 +165,15 @@ public class ChildEngimonScreen implements Screen {
 
         enter.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
+
                 Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), inventory);
                 // cuma buat mastiin childnya kebreed
                 System.out.println("Nama: " + child.getName());
                 System.out.println("Lvl. " + child.getLevel());
                 System.out.println("Species: " + child.getSpecies());
                 System.out.println("Parent:");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getFirst() + ")");
+                System.out.println("- " + child.getParentName().getSecond() + "(" + child.getParentSpecies().getSecond() + ")");
                 System.out.print("Skills: \n.");
 
                 for (Skill s : child.getSkills()) {
