@@ -54,11 +54,14 @@ public class GameState {
         Engimon a = new Engimon("Test", "Pikachu", "X",100, elmt, skills, parents, parents);
         Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
 
+        SkillItem hehe = new SkillItem("Buffer", 15);
         this.playerInventory = new Bag();
 
         try {
             this.playerInventory.insertToBag(new PlayerEngimon(a));
             this.playerInventory.insertToBag(new PlayerEngimon(b));
+            this.playerInventory.insertToBag(hehe);
+            this.playerInventory.insertToBag(hehe);
         } catch (FullInventoryException e) {
             e.printStackTrace();
         }
