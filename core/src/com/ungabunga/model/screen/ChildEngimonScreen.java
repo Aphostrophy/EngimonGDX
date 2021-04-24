@@ -19,7 +19,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
