@@ -18,8 +18,8 @@ public class GameState {
     public Player player;
     public AtomicReferenceArray<AtomicReferenceArray<MapCell>> map;
 
-    private Inventory<PlayerEngimon> playerEngimonInventory;
-    private Inventory<SkillItem> playerSkillItemInventory;
+    public Inventory<PlayerEngimon> playerEngimonInventory;
+    public Inventory<SkillItem> playerSkillItemInventory;
 
     private float timeDelta;
 

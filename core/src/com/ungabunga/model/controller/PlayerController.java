@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.utils.Json;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
@@ -45,6 +46,11 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
+        }
+        if(keycode == Keys.F5){
+            Json json = new Json();
+            System.out.println(json.prettyPrint(gameState.player));
+            System.out.println(json.prettyPrint(gameState.playerEngimonInventory));
         }
         return false;
     }
