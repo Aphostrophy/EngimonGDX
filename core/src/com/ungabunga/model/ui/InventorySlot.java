@@ -11,6 +11,7 @@ public class InventorySlot extends Stack {
     private Stack defaultBackground;
     private Label numItemsLabel;
     private int numItemsVal = 0;
+    private String name;
     private InventoryItem.ItemType itemType;
 
     public InventorySlot(Skin skin, InventoryItem item){
@@ -27,10 +28,22 @@ public class InventorySlot extends Stack {
         numItemsLabel.setName("numitems");
 
         itemType = item.getItemType();
-        item.setSize(0, 0);
+        item.setSize(40, 40);
         defaultBackground.add(item);
+
+        this.name = item.getName();
 
         this.add(defaultBackground);
         this.add(numItemsLabel);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 }

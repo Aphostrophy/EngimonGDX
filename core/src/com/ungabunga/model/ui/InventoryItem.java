@@ -11,10 +11,12 @@ public class InventoryItem extends Image {
     }
 
     private ItemType itemType;
+    private String name;
 
-    public InventoryItem(Texture texture, ItemType itemType){
+    public InventoryItem(Texture texture, ItemType itemType, String name){
         super(texture);
         this.itemType = itemType;
+        this.name =  name;
     }
 
     public ItemType getItemType() {
@@ -23,5 +25,10 @@ public class InventoryItem extends Image {
 
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }
