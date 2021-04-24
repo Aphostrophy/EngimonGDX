@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.ungabunga.model.entities.Breeder;
 
 public class BreederEngimonUI extends Table {
-    private final static int ROW = 6;
+    private final static int ROW = 5;
     private final static int COLUMN = 4;
     private final int slotWidth = 70;
     private final int slotHeight = 70;
