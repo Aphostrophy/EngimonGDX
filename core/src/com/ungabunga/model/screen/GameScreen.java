@@ -213,6 +213,7 @@ public class GameScreen extends AbstractScreen {
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 
     }
+
     @Override
     public  void resize(int width, int height) {
         camera.viewportHeight = height;
