@@ -246,8 +246,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        camera = new OrthographicCamera();
     }
 
 }
