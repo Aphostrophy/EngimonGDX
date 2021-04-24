@@ -41,6 +41,8 @@ public class BreederScreen implements Screen {
 
     private PlayerController controller;
 
+    private Bag bag;
+
     private Sprite ParentABox;
     private Sprite ParentBBox;
     private Sprite BreedButtonInactive;
@@ -72,9 +74,11 @@ public class BreederScreen implements Screen {
 
 
 
-    public BreederScreen(EngimonGame app, PlayerController controller,GameScreen gameScreen) throws IOException {
+    public BreederScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
         this.app = app;
         this.controller = controller;
+        this.bag = bag;
+
         batch = new SpriteBatch();
 
         this.gameScreen = gameScreen;
@@ -206,8 +210,8 @@ public class BreederScreen implements Screen {
 
         uiStage.addActor(root);
 
-        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), inventory);
-        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), inventory);
+        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), bag.getEngimonInventory(), app.getResourceProvider());
+        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), bag.getEngimonInventory(), app.getResourceProvider());
 
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());

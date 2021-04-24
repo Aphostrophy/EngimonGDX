@@ -165,7 +165,7 @@ public class GameScreen extends AbstractScreen {
 
         if (controller.isBreederOpen) {
             try {
-                getApp().setScreen(new BreederScreen(getApp(), controller,this));
+                getApp().setScreen(new BreederScreen(getApp(), controller, gameState.getPlayerInventory(),this));
             } catch (IOException e) {
                 e.printStackTrace();
             }
