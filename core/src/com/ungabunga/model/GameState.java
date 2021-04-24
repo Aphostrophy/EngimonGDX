@@ -40,6 +40,8 @@ public class GameState {
             atomicMap.set(y,atomicRow);
         }
 
+        this.playerInventory = new Bag();
+
         this.map = atomicMap;
 
         this.player = new Player(name, animations, map.length()/2, map.get(0).length()/2);

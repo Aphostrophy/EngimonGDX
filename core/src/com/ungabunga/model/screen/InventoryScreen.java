@@ -24,9 +24,7 @@ import com.ungabunga.model.ui.InventoryUI;
 
 import java.io.IOException;
 
-public class InventoryScreen implements Screen {
-    private EngimonGame app;
-
+public class InventoryScreen extends AbstractScreen implements Screen {
     private PlayerController controller;
 
     private Stage uiStage;
@@ -45,7 +43,7 @@ public class InventoryScreen implements Screen {
     private Table title;
 
     public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag) throws IOException {
-        this.app = app;
+        super(app);
         this.controller = controller;
         this.bag = bag;
         initUI();
@@ -64,7 +62,7 @@ public class InventoryScreen implements Screen {
 
         if (!controller.isInventoryOpen) {
             try {
-                app.setScreen(new GameScreen(app));
+                getApp().setScreen(new GameScreen(getApp()));
                 this.dispose();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,6 +80,11 @@ public class InventoryScreen implements Screen {
 
     @Override
     public void pause() {
+
+    }
+
+    @Override
+    public void update(float delta) {
 
     }
 
@@ -119,17 +122,17 @@ public class InventoryScreen implements Screen {
         Image bg = new Image(new Texture("img/inventory_title.png"));
         title.add(bg).width(500);
 
-        dialogueBox =  new DialogueBox(app.getSkin());
+        dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = app.getSkin().getFont("font");
+        textButtonStyle.font = getApp().getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
         TextButton back = new TextButton("Back", textButtonStyle);
         back.getLabel().setFontScale(2,2);
-        backButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        backButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
         topBar.add(backButton).align(Align.topLeft);
@@ -137,11 +140,11 @@ public class InventoryScreen implements Screen {
 
         uiStage.addActor(root);
 
-        InventoryUI engimonInventory = new InventoryUI(app.getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON);
-        InventoryUI skillitemInventory = new InventoryUI(app.getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM);
+        InventoryUI engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider());
+        InventoryUI skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider());
 
-        Label labelA = new Label("Engimon", app.getSkin());
-        Label labelB = new Label("SkillItem", app.getSkin());
+        Label labelA = new Label("Engimon", getApp().getSkin());
+        Label labelB = new Label("SkillItem", getApp().getSkin());
         engimonInventory.add(labelA);
         skillitemInventory.add(labelB);
 
@@ -150,12 +153,12 @@ public class InventoryScreen implements Screen {
 
         TextButton engimonSort = new TextButton("Sort Engimon", textButtonStyle);
         engimonSort.getLabel().setFontScale(2,2);
-        sortEngimonButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        sortEngimonButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         sortEngimonButton.add(engimonSort).expand().align(Align.center).width(200).height(25).space(11f);
 
         TextButton skillitemSort = new TextButton("Sort SkillItem", textButtonStyle);
         skillitemSort.getLabel().setFontScale(2,2);
-        sortSkillItemButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        sortSkillItemButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         sortSkillItemButton.add(skillitemSort).expand().align(Align.center).width(200).height(25).space(11f);
 
         topBar.add(sortEngimonButton).align(Align.center);
