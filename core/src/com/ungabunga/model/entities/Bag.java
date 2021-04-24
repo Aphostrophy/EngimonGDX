@@ -52,7 +52,7 @@ public class Bag {
         return skillItemInventory;
     }
 
-    public Inventory<Engimon> getEngimonInventory() {
+    public Inventory<PlayerEngimon> getEngimonInventory() {
         return engimonInventory;
     }
 }

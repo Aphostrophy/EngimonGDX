@@ -27,6 +27,8 @@ import java.io.IOException;
 public class InventoryScreen implements Screen {
     private EngimonGame app;
 
+    private GameScreen gameScreen;
+
     private PlayerController controller;
 
     private Stage uiStage;
@@ -44,10 +46,12 @@ public class InventoryScreen implements Screen {
     private Table sortSkillItemButton;
     private Table title;
 
-    public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag) throws IOException {
+    public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
         this.app = app;
         this.controller = controller;
         this.bag = bag;
+
+        this.gameScreen = gameScreen;
         initUI();
     }
 
@@ -63,12 +67,8 @@ public class InventoryScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isInventoryOpen) {
-            try {
-                app.setScreen(new GameScreen(app));
-                this.dispose();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            app.setScreen(gameScreen);
+            this.dispose();
         }
 
         uiStage.act(delta);
