@@ -43,6 +43,9 @@ public class PlayerController extends InputAdapter{
             direction = DIRECTION.RIGHT;
             state = AVATAR_STATE.WALKING;
         }
+        if(keycode == Keys.R){
+            gameState.removePlayerEngimon();
+        }
         return false;
     }
 

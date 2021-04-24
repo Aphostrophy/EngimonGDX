@@ -134,22 +134,22 @@ public class GameState {
 
     public void spawnActiveEngimon(PlayerEngimon playerEngimon) throws CellOccupiedException{
         if(map[player.getY()-1][player.getX()].occupier==null){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player,player.getX(), player.getY()-1);
             player.setActiveEngimon(activeEngimon);
             map[player.getY()-1][player.getX()].occupier = activeEngimon;
         }
         else if(map[player.getY()+1][player.getX()].occupier==null){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX(), player.getY()+1);
             player.setActiveEngimon(activeEngimon);
             map[player.getY()+1][player.getX()].occupier = activeEngimon;
         }
         else if(map[player.getY()][player.getX()-1].occupier==null){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()-1, player.getY());
             player.setActiveEngimon(activeEngimon);
             map[player.getY()][player.getX()-1].occupier = activeEngimon;
         }
         else if(map[player.getY()][player.getX()+1].occupier==null){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player);
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()+1,player.getY());
             player.setActiveEngimon(activeEngimon);
             map[player.getY()][player.getX()+1].occupier = activeEngimon;
         } else{
@@ -157,5 +157,10 @@ public class GameState {
         }
     }
 
-//    public void removePlayerEngimon
+    public void removePlayerEngimon(){
+        if(player.getActiveEngimon()!=null){
+            map[player.getActiveEngimon().getY()][player.getActiveEngimon().getX()].occupier = null;
+            player.removeActiveEngimon();
+        }
+    }
 }

@@ -174,7 +174,7 @@ public class Player {
         return animations.getStanding(direction);
     }
 
-    public Engimon getActiveEngimon(){
+    public ActiveEngimon getActiveEngimon(){
         try{
             return this.activeEngimon;
         } catch(Exception e){
@@ -183,8 +183,12 @@ public class Player {
         }
     }
 
-    public void setActiveEngimon(PlayerEngimon PE){
-        this.activeEngimon = new ActiveEngimon(PE, this);
+    public void setActiveEngimon(ActiveEngimon AE){
+        this.activeEngimon = AE;
+    }
+
+    public void removeActiveEngimon(){
+        this.activeEngimon = null;
     }
 
     public Pair<Integer,Integer> getPosition(){
