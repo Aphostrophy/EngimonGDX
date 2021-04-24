@@ -4,6 +4,10 @@ public class Pair<T, P> {
     private T first;
     private P second;
 
+    public Pair(){
+
+    }
+
     public Pair( T f, P s ) {
         first = f;
         second = s;

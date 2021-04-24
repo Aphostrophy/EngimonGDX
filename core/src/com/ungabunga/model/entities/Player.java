@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.save.Save;
 import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
@@ -47,6 +48,14 @@ public class Player {
         this.animations = animations;
 
 //        this.inventoryUI = new InventoryUI();
+    }
+
+    public void loadSave(Save save){
+        this.name = save.playerName;
+        this.position.setFirst(save.playerPosX);
+        this.position.setSecond(save.playerPosY);
+        this.worldX = save.playerPosX;
+        this.worldY = save.playerPosY;
     }
 
     public void setName(String name){

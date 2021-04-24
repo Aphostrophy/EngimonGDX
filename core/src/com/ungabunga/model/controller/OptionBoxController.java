@@ -16,6 +16,8 @@ public class OptionBoxController extends InputAdapter{
             box.moveUp();
         } else if(keycode == Keys.DOWN) {
             box.moveDown();
+        } else if(keycode == Keys.ENTER) {
+            box.makeNotVisible();
         }
         return false;
     }

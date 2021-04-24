@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -53,11 +54,14 @@ public class BreederScreen implements Screen {
     private Stage uiStage;
     private Table root;
     private DialogueBox dialogueBox;
+    private Table topBar;
     private Table breederWrapper;
     private Table breedButton;
     private Table parentLabel;
     private Table dialogTable;
     private Table backButton;
+    private Table title;
+    private Table spacer;
 
 
 
@@ -124,30 +128,12 @@ public class BreederScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isBreederOpen) {
-            System.out.println("wwwww");
             try {
                 app.setScreen(new GameScreen(app));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        batch.begin();
-//        ParentABox.setCenter(Gdx.graphics.getWidth() / 4  - 150, 3*Gdx.graphics.getHeight() / 4);
-//        ParentABox.draw(batch);
-//        ParentBBox.setCenter(3 * Gdx.graphics.getWidth() / 4 - 150, 3*Gdx.graphics.getHeight() / 4);
-//        ParentBBox.draw(batch);
-
-
-//        if (Gdx.input.getX() > Gdx.graphics.getWidth() / 3 - 50 && Gdx.input.getX() < Gdx.graphics.getWidth() / 3 + 155 && Gdx.graphics.getHeight() - Gdx.input.getY() > 5*Gdx.graphics.getHeight() / 8 + 5 && Gdx.graphics.getHeight() - Gdx.input.getY() < 5*Gdx.graphics.getHeight() / 8 + 70) {
-//            BreedButtonActive.setCenter(Gdx.graphics.getWidth() / 3 + 55, 5*Gdx.graphics.getHeight() / 8 + 40);
-//            BreedButtonActive.draw(batch);
-//        } else {
-//            BreedButtonInactive.setCenter(Gdx.graphics.getWidth() / 3 + 55, 5*Gdx.graphics.getHeight() / 8 + 40);
-//            BreedButtonInactive.draw(batch);
-//        }
-
-        batch.end();
 
         uiStage.act(delta);
         uiStage.draw();
@@ -160,11 +146,17 @@ public class BreederScreen implements Screen {
         root = new Table();
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
 
+        topBar = new Table();
         breederWrapper = new Table();
         dialogTable = new Table();
         parentLabel = new Table();
         breedButton = new Table();
         backButton = new Table();
+        title = new Table();
+
+
+        Image bg = new Image(new Texture("img/breeder_title.png"));
+        title.add(bg).width(500);
 
         dialogueBox =  new DialogueBox(app.getSkin());
         dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
@@ -182,9 +174,10 @@ public class BreederScreen implements Screen {
         TextButton back = new TextButton("Back", textButtonStyle);
         back.getLabel().setFontScale(2,2);
         backButton.setBackground(app.getSkin().getDrawable("optionbox"));
-        backButton.add(back);
+        backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
-
+        topBar.add(backButton).align(Align.topLeft);
+        topBar.add(title);
 
 
 
@@ -202,17 +195,30 @@ public class BreederScreen implements Screen {
         parentA.add(labelA);
         parentB.add(labelB);
 
-        root.add(backButton);
-
         breederWrapper.add(parentA).expand().align(Align.topLeft);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
         breederWrapper.add(parentB).expand().align(Align.topLeft).space(11f);
 
+        root.add(topBar).top().fillX().row();
         root.add(breederWrapper).top().align(Align.center).row();
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-//                root.add(dialogTable);
-                System.out.println("Breeding is in progress...");
+                root.add(dialogTable);
+                Engimon child = Breeder.Breed(ParentA, ParentB, "yolo", inventory);
+                // cuma buat mastiin childnya kebreed
+                System.out.println("Nama: " + child.getName());
+                System.out.println("Lvl. " + child.getLevel());
+                System.out.println("Species: " + child.getSpecies());
+                System.out.println("Parent:");
+                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+                System.out.print("Skills: \n.");
+
+                for (Skill s : child.getSkills()) {
+                    System.out.println("- " + s.getSkillName());
+                }
+                System.out.println("heyyy");
+//                System.out.println("Breeding is in progress...");
             }
         });
 

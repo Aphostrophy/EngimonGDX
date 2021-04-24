@@ -17,6 +17,10 @@ public class Engimon {
     protected Pair<String, String> parentName, parentSpecies;
     protected List<com.ungabunga.model.entities.Skill> skills;
 
+    public Engimon(){
+
+    }
+
     public Engimon(Engimon e) {
         this.id = e.id;
         this.name = e.name;
