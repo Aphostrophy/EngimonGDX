@@ -109,30 +109,7 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
 
-        Dialogue dialogue = new Dialogue();
-
-//        DialogueNode a = new DialogueNode("To walk, use W A S D." +
-//                "\n Use Arrow UP and DOWN for option. " +
-//                        "\n and Use ENTER for next text." +
-//                        "\n Press B for Battle", 0);
-        DialogueNode a = new DialogueNode("Welcome to Engimon, Curse of The Marcello Pokemon God" +
-                "\n Press Enter to close this message",0);
-        DialogueNode b = new DialogueNode("Use UP and DOWN arrow to select choices, would you like to skip the tutorial?", 1);
-        DialogueNode c = new DialogueNode("To walk, use W A S D." +
-                "\n Press H to restart the tutorial. " +
-                        "\n Press B for Battle", 2);
-        DialogueNode d = new DialogueNode("Enjoy the game!", 3);
-
-        a.makeLinear(b.getId());
-        b.addChoice("Yes",3);
-        b.addChoice("No",2);
-
-        dialogue.addNode(a);
-        dialogue.addNode(b);
-        dialogue.addNode(c);
-        dialogue.addNode(d);
-
-        dialogueController.startDialogue(dialogue);
+        dialogueController.startTutorialDialogue();
     }
 
     @Override

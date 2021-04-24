@@ -72,47 +72,8 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
         }
-        if(keycode == Keys.P){
-            if(gameState.player.getActiveEngimon()==null){
-                try{
-                    System.out.println("Active Engimon spawned");
-                    gameState.spawnActiveEngimon(new PlayerEngimon(gameState.app.getResourceProvider().getEngimon("Blastoise")));
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (keycode == Keys.T) {
-            if(this.gameState.player.getActiveEngimon()!=null){
-                Pair<Integer,Integer> dir = new Pair<>(0,0);
-                DIRECTION d = this.gameState.player.getDirection();
-                if(d == DIRECTION.UP) {
-                    System.out.println("Lihat atas");
-                    dir = new Pair<>(0,1);
-                } else if(d == DIRECTION.DOWN) {
-                    System.out.println("Lihat bawah");
-                    dir = new Pair<>(0,-1);
-                } else if(d == DIRECTION.RIGHT) {
-                    System.out.println("Lihat kanan");
-                    dir = new Pair<>(1,0);
-                }
-                else if(d == DIRECTION.LEFT) {
-                    System.out.println("Lihat kiri");
-                    dir = new Pair<>(-1,0);
-                }
-                System.out.println("Jessonn");
-                if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() && (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
-                    if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
-                        WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
-                        if (occupier != null) {
-                            System.out.println(occupier.getName());
-                        }
-                        System.out.println("HAHA");
-                    }
-                } else {
-                    System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-                }
-            }
+        if (keycode == Keys.B) {
+           battleHandler();
         }
 //        if(keycode == Keys.ENTER){
 //            gameScreen.dialogueBox.setVisible(false);
@@ -198,6 +159,35 @@ public class PlayerController extends InputAdapter{
                 gameState.movePlayerRight();
             } catch(Exception e){
                 gameScreen.dialogueController.startExceptionDialogue(e);
+            }
+        }
+    }
+
+    public void battleHandler(){
+        if(this.gameState.player.getActiveEngimon()!=null){
+            Pair<Integer,Integer> dir = new Pair<>(0,0);
+            DIRECTION d = this.gameState.player.getDirection();
+            if(d == DIRECTION.UP) {
+                dir = new Pair<>(0,1);
+            } else if(d == DIRECTION.DOWN) {
+                dir = new Pair<>(0,-1);
+            } else if(d == DIRECTION.RIGHT) {
+                dir = new Pair<>(1,0);
+            }
+            else if(d == DIRECTION.LEFT) {
+                dir = new Pair<>(-1,0);
+            }
+            System.out.println("Jessonn");
+            if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() && (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+                if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
+                    WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+                    if (occupier != null) {
+                        System.out.println(occupier.getName());
+                    }
+                    System.out.println("HAHA");
+                }
+            } else {
+                System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
             }
         }
     }
