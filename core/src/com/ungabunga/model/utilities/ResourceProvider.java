@@ -5,10 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.LivingEngimon;
-import com.ungabunga.model.entities.PlayerEngimon;
-import com.ungabunga.model.entities.Skill;
+import com.badlogic.gdx.utils.Null;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.DIRECTION;
@@ -406,8 +404,6 @@ public class ResourceProvider {
                atlas.findRegion("vulpix_standing_west"),
                atlas.findRegion("vulpix_standing_east")
        );
-        
-
 
 
         this.skills = fileUtil.readSkillCSV();
@@ -626,81 +622,86 @@ public class ResourceProvider {
             return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Blastoise")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return blastoiseAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Charmander")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return charmanderAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Cubchoo")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return cubchooAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Cubone")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return cuboneAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Diglett")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return diglettAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Dugtrio")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return dugtrioAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Glaceon")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return glaceonAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Glalie")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return glalieAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Growlithe")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return growlitheAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Magmar")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return magmarAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Mareep")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return mareepAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Ninetales")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return ninetalesAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Pikachu")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return pikachuAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Poliwag")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return poliwagAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Ponyta")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return ponytaAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Psyduck")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return psyduckAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Raichu")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return raichuAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Sandshrew")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return sandshrewAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Shark")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return sharkAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Snorunt")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return snoruntAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Squirtle")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return squirtleAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Tongkol")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return tongkolAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Voltorb")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return voltorbAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Wartotle")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return wartotleAnimationSet.getStanding(DIRECTION.DOWN);
         }
         if (engimon.getSpecies().equals("Vulpix")) {
-            return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+            return vulpixAnimationSet.getStanding(DIRECTION.DOWN);
         }
 
         return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
+    }
+
+    public TextureRegion getSprite(SkillItem skillitem){
+        TextureAtlas atlas = assetManager.get("pic/packed/SkillLogo.atlas", TextureAtlas.class);
+        return atlas.findRegion(skillitem.getName());
     }
 }
