@@ -2,6 +2,7 @@ package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,13 +18,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.entities.Breeder;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.Inventory;
-import com.ungabunga.model.entities.Skill;
+import com.ungabunga.model.controller.OptionBoxController;
+import com.ungabunga.model.controller.PlayerController;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.ui.*;
 import com.ungabunga.model.utilities.Pair;
+import org.lwjgl.Sys;
 import org.opentest4j.IncompleteExecutionException;
 
 import javax.swing.event.ChangeListener;
@@ -34,6 +35,8 @@ import java.util.List;
 
 public class BreederScreen implements Screen {
     private EngimonGame app;
+
+    private PlayerController controller;
 
     private Sprite ParentABox;
     private Sprite ParentBBox;
@@ -54,11 +57,13 @@ public class BreederScreen implements Screen {
     private Table breedButton;
     private Table parentLabel;
     private Table dialogTable;
+    private Table backButton;
 
 
 
-    public BreederScreen(EngimonGame app) throws IOException {
+    public BreederScreen(EngimonGame app, PlayerController controller) throws IOException {
         this.app = app;
+        this.controller = controller;
         batch = new SpriteBatch();
 
 //        Texture splashTexture = new Texture("img/box.png");
@@ -114,8 +119,18 @@ public class BreederScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        controller.update(delta);
         Gdx.gl.glClearColor(0.50f, 0.79f, 0.61f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        if (!controller.isBreederOpen) {
+            System.out.println("wwwww");
+            try {
+                app.setScreen(new GameScreen(app));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         batch.begin();
 //        ParentABox.setCenter(Gdx.graphics.getWidth() / 4  - 150, 3*Gdx.graphics.getHeight() / 4);
@@ -149,10 +164,11 @@ public class BreederScreen implements Screen {
         dialogTable = new Table();
         parentLabel = new Table();
         breedButton = new Table();
+        backButton = new Table();
 
         dialogueBox =  new DialogueBox(app.getSkin());
         dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
-        dialogTable.add(dialogueBox);
+        dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = app.getSkin().getFont("font");
@@ -162,6 +178,13 @@ public class BreederScreen implements Screen {
 
         breedButton.setBackground(app.getSkin().getDrawable("optionbox"));
         breedButton.add(breed);
+
+        TextButton back = new TextButton("Back", textButtonStyle);
+        back.getLabel().setFontScale(2,2);
+        backButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        backButton.add(back);
+
+
 
 
 
@@ -179,6 +202,8 @@ public class BreederScreen implements Screen {
         parentA.add(labelA);
         parentB.add(labelB);
 
+        root.add(backButton);
+
         breederWrapper.add(parentA).expand().align(Align.topLeft);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
         breederWrapper.add(parentB).expand().align(Align.topLeft).space(11f);
@@ -186,8 +211,14 @@ public class BreederScreen implements Screen {
         root.add(breederWrapper).top().align(Align.center).row();
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                root.add(dialogTable).fillX().bottom().height(uiStage.getHeight()/3);
-//                Breeder.Breed(ParentA, ParentB, inventory);
+//                root.add(dialogTable);
+                System.out.println("Breeding is in progress...");
+            }
+        });
+
+        back.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+               controller.finishBreeding();
             }
         });
 
@@ -203,7 +234,6 @@ public class BreederScreen implements Screen {
 //        breederWrapper.add(ParentBSlot).size(300, 300).expand().align(Align.topLeft).space(8f);
 
     }
-
     @Override
     public void resize(int width, int height) {
 

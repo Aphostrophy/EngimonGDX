@@ -7,16 +7,21 @@ import com.badlogic.gdx.InputAdapter;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.screen.BreederScreen;
+
+import java.io.IOException;
 
 public class PlayerController extends InputAdapter{
     private GameState gameState;
     private DIRECTION direction;
     private AVATAR_STATE state;
     public boolean isInventoryOpen;
+    public boolean isBreederOpen;
 
     public PlayerController(GameState gameState) {
         this.gameState = gameState;
         this.isInventoryOpen = false;
+        this.isBreederOpen = false;
     }
 
     @Override
@@ -24,7 +29,13 @@ public class PlayerController extends InputAdapter{
         if(keycode == Input.Keys.I) {
             isInventoryOpen = !isInventoryOpen;
         }
+        if(keycode == Input.Keys.B) {
+            isBreederOpen = !isBreederOpen;
+        }
         if(isInventoryOpen) {
+            return false;
+        }
+        if (isBreederOpen) {
             return false;
         }
         if(keycode == Keys.W) {
@@ -54,7 +65,16 @@ public class PlayerController extends InputAdapter{
         if (Gdx.input.getX() < 220 && Gdx.input.getX() > 130 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
             isInventoryOpen = !isInventoryOpen;
         }
+
+        if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+            isBreederOpen = !isBreederOpen;
+
+        }
         return super.touchUp(screenX, screenY, pointer, button);
+    }
+
+    public void finishBreeding() {
+        isBreederOpen = !isBreederOpen;
     }
 
     @Override
