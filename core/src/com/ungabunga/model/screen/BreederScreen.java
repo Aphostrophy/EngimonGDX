@@ -210,8 +210,8 @@ public class BreederScreen implements Screen {
 
         uiStage.addActor(root);
 
-        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin());
-        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin());
+        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), inventory);
+        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), inventory);
 
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());
