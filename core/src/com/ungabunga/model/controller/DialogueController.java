@@ -14,9 +14,16 @@ public class DialogueController extends InputAdapter {
     private DialogueBox Dbox;
     private OptionBox Obox;
 
+    private boolean startCountdown;
+
+    private float dialogueBoxTimer;
+    private float TIMER_TIMEOUT = 2f;
+
     public DialogueController(DialogueBox Dbox, OptionBox Obox) {
         this.Dbox = Dbox;
         this.Obox = Obox;
+
+        this.startCountdown = false;
     }
 
     @Override
@@ -57,21 +64,30 @@ public class DialogueController extends InputAdapter {
         return false;
     }
     public void update(float delta) {
-//        if(Dbox.isFinished() && traverser != null) {
-//            if(traverser.getType() == NODE_TYPE.MULT) {
-//                Obox.setVisible(true);
-//            }
-//        }
         if(traverser != null) {
             if(traverser.getType() == NODE_TYPE.MULT) {
                 Obox.setVisible(true);
             }
+            if(traverser.getType()==NODE_TYPE.END && Dbox.isFinished()){
+                if(!startCountdown){
+                    startCountdown = true;
+                } else{
+                    dialogueBoxTimer+= delta;
+                    if(dialogueBoxTimer> TIMER_TIMEOUT){
+                        dialogueBoxTimer = 0f;
+                        startCountdown = false;
+                        Dbox.setVisible(false);
+                    }
+                }
+            }
         }
     }
+
     public void startDialogue(Dialogue D) {
         traverser = new DialogueTraverser(D);
         Dbox.setVisible(true);
         Dbox.animateText(traverser.getText());
+
         if(traverser.getType() == NODE_TYPE.MULT) {
             Obox.clear();
             for(String str : D.getNode(0).getLabels()) {
