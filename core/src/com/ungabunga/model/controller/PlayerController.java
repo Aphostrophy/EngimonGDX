@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,6 +12,8 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.dialogue.Dialogue;
+import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.LivingEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
 import com.ungabunga.model.entities.WildEngimon;
@@ -173,32 +176,28 @@ public class PlayerController extends InputAdapter{
             try{
                 gameState.movePlayerUp();
             } catch(Exception e){
-                gameScreen.dialogueBox.setVisible(false);
-                gameScreen.dialogueBox.setText(e.getMessage());
-                gameScreen.dialogueBox.setVisible(true);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.DOWN && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerDown();
             } catch(Exception e){
-                gameScreen.dialogueBox.setVisible(false);
-                gameScreen.dialogueBox.setText("AAAAAAAAA");
-                gameScreen.dialogueBox.setVisible(true);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.LEFT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerLeft();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.RIGHT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerRight();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
     }

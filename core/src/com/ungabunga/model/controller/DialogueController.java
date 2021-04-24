@@ -85,7 +85,12 @@ public class DialogueController extends InputAdapter {
             }
         }
     }
-    public boolean isDialogueShowing() {
-        return Dbox.isVisible();
+
+    public void startExceptionDialogue(Exception e){
+        Dialogue dialogue = new Dialogue();
+        DialogueNode a = new DialogueNode(e.getMessage(), 0);
+
+        dialogue.addNode(a);
+        startDialogue(dialogue);
     }
 }

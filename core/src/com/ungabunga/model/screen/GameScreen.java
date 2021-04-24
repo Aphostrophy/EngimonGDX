@@ -32,8 +32,8 @@ public class GameScreen extends AbstractScreen {
 
     private GameState gameState;
 
-    private InputMultiplexer multiplexer;
-    private PlayerController controller;
+    public InputMultiplexer multiplexer;
+    public PlayerController controller;
     private SpriteBatch batch;
 
     private SpriteBatch HUDBatch;
@@ -55,11 +55,8 @@ public class GameScreen extends AbstractScreen {
 
     public DialogueBox dialogueBox,dialogueCommand;
 
-    private OptionBox optionBox;
-    private Dialogue dialogue;
-    private DialogueController dialogueController;
-
-    public int x;
+    public OptionBox optionBox;
+    public DialogueController dialogueController;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -80,7 +77,6 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_west"),
                 atlas.findRegion("brendan_stand_east")
         );
-        this.x = 30;
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
         gameState = new GameState("orz", playerAnimations,map, app);
@@ -113,7 +109,7 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
 
-        dialogue = new Dialogue();
+        Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
         DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
         DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
