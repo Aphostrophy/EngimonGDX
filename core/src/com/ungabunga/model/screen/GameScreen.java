@@ -1,7 +1,6 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -20,12 +19,8 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.OptionBoxController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.ui.DialogueBox;
-import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
-import org.lwjgl.Sys;
-import java.util.Arrays;
-import javax.swing.plaf.synth.SynthTextAreaUI;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -57,9 +52,6 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
     private DialogueBox dialogueBox;
-    private Table inventoryWrapper;
-
-    private InventoryUI inventoryUI;
 
     private OptionBox optionBox;
 
@@ -113,7 +105,6 @@ public class GameScreen extends AbstractScreen {
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
-        multiplexer.addProcessor(2, uiStage);
     }
 
     @Override
@@ -142,11 +133,18 @@ public class GameScreen extends AbstractScreen {
         controller.update(delta);
         gameState.update(delta);
         gameState.player.update(delta);
-        inventoryUI.setVisible(controller.isInventoryOpen);
 
         if (controller.isBreederOpen) {
             try {
                 getApp().setScreen(new BreederScreen(getApp(), controller));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(controller.isInventoryOpen) {
+            try {
+                getApp().setScreen(new InventoryScreen(getApp(), controller));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -200,11 +198,8 @@ public class GameScreen extends AbstractScreen {
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
 //        uiStage.setDebugAll(true);
         root = new Table();
-        inventoryWrapper = new Table();
         root.setFillParent(true);
-        inventoryWrapper.setFillParent(true);
         uiStage.addActor(root);
-        uiStage.addActor(inventoryWrapper);
         Table dialogTable = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogueBox.animateText("Hellow BGST!\n KEREN GA DIALOGUE BOXNYA HEHEHEHEHEEHEHEHE");
@@ -219,13 +214,12 @@ public class GameScreen extends AbstractScreen {
         dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable).expand().align(Align.bottom);
 
-        inventoryUI = new InventoryUI(getApp().getSkin());
-        inventoryWrapper.add(inventoryUI).expand().align(Align.center);
+//        inventoryUI = new InventoryUI(getApp().getSkin());
+//        inventoryWrapper.add(inventoryUI).expand().align(Align.center);
 
 //        root.row();
 //        root.add(inventoryUI).expand().align(Align.center).pad(5f);
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
-
     }
 
     @Override

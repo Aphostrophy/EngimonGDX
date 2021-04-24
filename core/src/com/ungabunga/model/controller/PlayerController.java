@@ -104,6 +104,10 @@ public class PlayerController extends InputAdapter{
         isBreederOpen = !isBreederOpen;
     }
 
+    public void closeInventory() {
+        isInventoryOpen = !isInventoryOpen;
+    }
+
     @Override
     public boolean keyUp(int keycode){
         if(keycode == Keys.W) {
