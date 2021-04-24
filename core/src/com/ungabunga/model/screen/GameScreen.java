@@ -9,8 +9,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,10 +17,10 @@ import com.ungabunga.EngimonGame;
 import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
-import com.ungabunga.model.controller.InteractionController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
+import com.ungabunga.model.entities.LivingEngimon;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.AnimationSet;
@@ -60,7 +58,6 @@ public class GameScreen extends AbstractScreen {
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
-    private InteractionController interactionController;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -110,11 +107,9 @@ public class GameScreen extends AbstractScreen {
         initUI();
         multiplexer = new InputMultiplexer();
         dialogueController = new DialogueController(dialogueBox,optionBox);
-        interactionController = new InteractionController(dialogueController,gameState);
 
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
-        multiplexer.addProcessor(2, interactionController);
 
         dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
@@ -183,7 +178,7 @@ public class GameScreen extends AbstractScreen {
         }
 
         if(gameState.isOccupied()) {
-            dialogueBox.setText("NABRAK WOI");
+            dialogueBox.setText(gameState.getStringException());
             dialogueBox.setVisible(true);
             gameState.setOccupied(false);
         }
@@ -200,8 +195,8 @@ public class GameScreen extends AbstractScreen {
 
         for(int y=0;y<gameState.map.length();y++){
             for(int x=0;x<gameState.map.get(y).length();x++){
-                if(gameState.map.get(y).get(x).occupier != null){
-                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map.get(y).get(x).occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())){
+                    batch.draw(getApp().getResourceProvider().getSprite((LivingEngimon) gameState.map.get(y).get(x).occupier), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }

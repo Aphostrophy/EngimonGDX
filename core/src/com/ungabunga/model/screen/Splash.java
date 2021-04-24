@@ -36,11 +36,11 @@ public class Splash implements Screen {
         batch = new SpriteBatch();
 
         // NANTI LOGO GAMENYA DIGANTIIII!!!!!
-        Texture splashTexture = new Texture("Pokemon.png");
+        Texture splashTexture = new Texture("Logo.png");
         splash = new Sprite(splashTexture);
         font = new BitmapFont(Gdx.files.internal("font/white.fnt"));
         text = new GlyphLayout(font, "PRESS SPACE TO CONTINUE!!!");
-        splash.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.openingTheme = Gdx.audio.newMusic(Gdx.files.internal("song/OpeningTheme.ogg"));
 
         Splash splash = this;

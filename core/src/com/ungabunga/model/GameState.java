@@ -31,7 +31,7 @@ public class GameState {
     public DialogueBox dialogueBox;
     public boolean Occupied = false;
     private float timeDelta;
-
+    private String stringException;
     private float SPAWN_INTERVAL = 5.0f;
 
     private int wildEngimonCount;
@@ -220,5 +220,11 @@ public class GameState {
     }
     public void setOccupied(boolean O) {
         this.Occupied = O;
+    }
+    public String getStringException() {
+        return this.stringException;
+    }
+    public void setExceptionString(String str) {
+        this.stringException = str;
     }
 }
