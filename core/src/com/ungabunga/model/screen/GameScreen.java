@@ -10,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -57,7 +59,7 @@ public class GameScreen extends AbstractScreen {
 
     private Stage uiStage;
     private Table root;
-    private DialogueBox dialogueBox;
+    private DialogueBox dialogueBox,dialogueCommand;
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
@@ -120,18 +122,16 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(1, dialogueController);
 
         dialogue = new Dialogue();
-        DialogueNode command = new DialogueNode("To walk, use W A S D.\n Use Arrow UP and DOWN for option. \n and Use ENTER for next text.", 0);
-        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 1);
-        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 2);
-        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 3);
-        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 4);
+        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
+        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
+        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
+        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 3);
 
-        command.makeLinear(a.getId());
         a.makeLinear(b.getId());
-        b.addChoice("Iblis",3);
-        b.addChoice("Setan",4);
+        b.addChoice("Iblis",2);
+        b.addChoice("Setan",3);
 
-        dialogue.addNode(command);
+
         dialogue.addNode(a);
         dialogue.addNode(b);
         dialogue.addNode(c);
@@ -169,6 +169,7 @@ public class GameScreen extends AbstractScreen {
     public  void render(float delta) {
         controller.update(delta);
         dialogueController.update(delta);
+//        dialogueCommand.update(delta);
         gameState.update(delta);
         gameState.player.update(delta);
         inventoryUI.setVisible(controller.isInventoryOpen);
@@ -227,23 +228,44 @@ public class GameScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
-//        uiStage.setDebugAll(true);
+        uiStage.setDebugAll(true);
         root = new Table();
         inventoryWrapper = new Table();
         root.setFillParent(true);
+        Table dialogTable1 = new Table();
+        dialogTable1.setFillParent(true);
         inventoryWrapper.setFillParent(true);
         uiStage.addActor(root);
         uiStage.addActor(inventoryWrapper);
-        Table dialogTable = new Table();
+        uiStage.addActor(dialogTable1);
+
+
+        dialogueCommand = new DialogueBox(getApp().getSkin());
+        dialogueCommand.animateText("To walk, use W A S D." +
+                "\n Use Arrow UP and DOWN for option. " +
+                "\n and Use ENTER for next text." +
+                "\n Press B for Battle");
+        dialogTable1.add(dialogueCommand).expand().align(Align.top);
+
+        Table dialogTable2 = new Table();
         dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogueBox.setVisible(false);
 
         optionBox = new OptionBox(getApp().getSkin());
         optionBox.setVisible(false);
 
-        dialogTable.add(optionBox).expand().align(Align.right).space(8f).row();
-        dialogTable.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
-        root.add(dialogTable).expand().align(Align.bottom).pad(8f);
+
+//        public DialogueBox(Skin skin) {
+//            super(skin);
+//            this.setBackground("dialoguebox");
+//            textLabel = new Label("\n", skin);
+//            this.add(textLabel).expand().align(Align.left).pad(5f);
+//        }
+//        Skin c = new Skin();
+
+        dialogTable2.add(optionBox).expand().align(Align.right).space(8f).row();
+        dialogTable2.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
+        root.add(dialogTable2).expand().align(Align.bottom);
 
         inventoryUI = new InventoryUI(getApp().getSkin());
         inventoryWrapper.add(inventoryUI).expand().align(Align.center);
