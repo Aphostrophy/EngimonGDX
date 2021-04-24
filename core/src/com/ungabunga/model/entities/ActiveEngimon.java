@@ -15,10 +15,12 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     DIRECTION direction;
     AVATAR_STATE state;
 
-    public ActiveEngimon(PlayerEngimon PE, Player P){
+    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y){
         super(PE);
         Pair<Integer,Integer> playerPosition = P.getPosition();
-        this.position = new Pair<Integer,Integer>(0,0);
+        this.position = new Pair<Integer,Integer>(x,y);
+        this.direction = P.getDirection();
+        this.state = P.getState();
     }
 
     @Override
@@ -76,4 +78,12 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     @Override
     public String getEngimonSpecies(){return this.getSpecies();}
+    
+    public int getX(){
+        return this.position.getFirst();
+    }
+
+    public int getY(){
+        return this.position.getSecond();
+    }
 }

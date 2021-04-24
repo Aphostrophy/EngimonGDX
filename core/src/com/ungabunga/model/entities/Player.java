@@ -174,20 +174,32 @@ public class Player {
         return animations.getStanding(direction);
     }
 
-    public Engimon getActiveEngimon(){
+    public ActiveEngimon getActiveEngimon(){
         try{
-            return (Engimon) this.activeEngimon;
+            return this.activeEngimon;
         } catch(Exception e){
             System.out.println(e);
             return null;
         }
     }
 
-    public void setActiveEngimon(PlayerEngimon PE){
-        this.activeEngimon = new ActiveEngimon(PE, this);
+    public void setActiveEngimon(ActiveEngimon AE){
+        this.activeEngimon = AE;
+    }
+
+    public void removeActiveEngimon(){
+        this.activeEngimon = null;
     }
 
     public Pair<Integer,Integer> getPosition(){
         return this.position;
+    }
+
+    public DIRECTION getDirection(){
+        return this.direction;
+    }
+
+    public AVATAR_STATE getState(){
+        return this.state;
     }
 }

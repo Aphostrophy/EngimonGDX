@@ -111,7 +111,7 @@ public class GameScreen extends AbstractScreen {
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
-
+        multiplexer.addProcessor(2, uiStage);
         Gdx.input.setInputProcessor(new InputAdapter() {
 
             @Override
@@ -172,10 +172,10 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        for(int y=0;y<gameState.map.length;y++){
-            for(int x=0;x<gameState.map[y].length;x++){
-                if(gameState.map[y][x].occupier != null){
-                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map[y][x].occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+        for(int y=0;y<gameState.map.length();y++){
+            for(int x=0;x<gameState.map.get(y).length();x++){
+                if(gameState.map.get(y).get(x).occupier != null){
+                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map.get(y).get(x).occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }
@@ -255,8 +255,6 @@ public class GameScreen extends AbstractScreen {
         renderer = new OrthogonalTiledMapRenderer(map);
 
         Gdx.input.setInputProcessor(multiplexer);
-
-        camera = new OrthographicCamera();
     }
 
 }

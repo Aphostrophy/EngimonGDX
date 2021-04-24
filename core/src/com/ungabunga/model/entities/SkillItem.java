@@ -11,7 +11,7 @@ public class SkillItem {
         this.power = 0;
     }
 
-    SkillItem(String skillName, int power)
+    public SkillItem(String skillName, int power)
     {
         this.skillName = skillName;
         this.amount = 1;
