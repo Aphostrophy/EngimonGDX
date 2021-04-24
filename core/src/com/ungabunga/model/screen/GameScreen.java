@@ -177,6 +177,11 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
+        if(gameState.isOccupied()) {
+            dialogueBox.setText(gameState.getStringException());
+            dialogueBox.setVisible(true);
+            gameState.setOccupied(false);
+        }
         renderer.setView(camera);
         renderer.render();
 

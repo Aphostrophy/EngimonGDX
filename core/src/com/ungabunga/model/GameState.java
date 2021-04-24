@@ -3,12 +3,16 @@ package com.ungabunga.model;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
+import com.ungabunga.model.controller.DialogueController;
+import com.ungabunga.model.dialogue.Dialogue;
+import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.save.Save;
+import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.fileUtil;
@@ -24,9 +28,10 @@ public class GameState {
     public AtomicReferenceArray<AtomicReferenceArray<MapCell>> map;
 
     private Bag playerInventory;
-
+    public DialogueBox dialogueBox;
+    public boolean Occupied = false;
     private float timeDelta;
-
+    private String stringException;
     private float SPAWN_INTERVAL = 5.0f;
 
     private int wildEngimonCount;
@@ -71,6 +76,8 @@ public class GameState {
         this.player = new Player(name, animations, map.length()/2, map.get(0).length()/2);
 
         this.wildEngimonCount = 0;
+
+        this.dialogueBox = new DialogueBox(app.getSkin());
 
         for(int y=0;y<decorationLayer.getHeight();y++){
             for(int x=0;x<decorationLayer.getWidth();x++){
@@ -121,9 +128,11 @@ public class GameState {
             if(map.get(y+1).get(x).occupier==null && map.get(y+1).get(x).cellType!=CellType.BLOCKED){
                 player.moveUp();
             } else{
+                setOccupied(true);
                 throw new CellOccupiedException("Cell occupied!");
             }
         }
+
     }
 
     public void movePlayerDown() throws CellOccupiedException {
@@ -204,5 +213,18 @@ public class GameState {
 
     public Bag getPlayerInventory(){
         return this.playerInventory;
+    }
+
+    public boolean isOccupied() {
+        return Occupied;
+    }
+    public void setOccupied(boolean O) {
+        this.Occupied = O;
+    }
+    public String getStringException() {
+        return this.stringException;
+    }
+    public void setExceptionString(String str) {
+        this.stringException = str;
     }
 }

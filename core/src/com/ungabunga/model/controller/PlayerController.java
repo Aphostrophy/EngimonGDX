@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.LivingEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
@@ -15,6 +18,7 @@ import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.BreederScreen;
+import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
 import java.io.IOException;
@@ -163,6 +167,7 @@ public class PlayerController extends InputAdapter{
             try{
                 gameState.movePlayerUp();
             } catch(Exception e){
+                gameState.setExceptionString(e.getMessage());
                 System.out.println(e);
             }
         }
