@@ -14,6 +14,10 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     DIRECTION direction;
     AVATAR_STATE state;
 
+    public WildEngimon(){
+
+    }
+
     public WildEngimon(Engimon E){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);

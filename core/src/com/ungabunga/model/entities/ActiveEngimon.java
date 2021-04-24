@@ -15,6 +15,10 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     DIRECTION direction;
     AVATAR_STATE state;
 
+    public ActiveEngimon(){
+
+    }
+
     public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y){
         super(PE);
         Pair<Integer,Integer> playerPosition = P.getPosition();

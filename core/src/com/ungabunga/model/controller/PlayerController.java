@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
@@ -50,7 +52,18 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.F5){
             Json json = new Json();
+            json.setOutputType(JsonWriter.OutputType.json);
             System.out.println(json.prettyPrint(new Save(gameState)));
+            FileHandle file = Gdx.files.local("mysave.json");
+            file.writeString(json.toJson(new Save(gameState)), false);
+        }
+        if(keycode == Keys.F6){
+            FileHandle file = Gdx.files.local("mysave.json");
+            String mysave = file.readString();
+            System.out.println(mysave);
+            Json json = new Json();
+            Save save = json.fromJson(Save.class, mysave);
+            System.out.println(json.prettyPrint(save));
         }
         return false;
     }

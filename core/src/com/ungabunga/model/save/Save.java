@@ -5,9 +5,13 @@ import com.ungabunga.model.entities.MapCell;
 
 public class Save {
 
-    int playerPosX;
-    int playerPosY;
-    MapCell[][] map;
+    public int playerPosX;
+    public int playerPosY;
+    public MapCell[][] map;
+
+    public Save(){
+
+    }
 
     public Save(GameState gameState){
         this.playerPosX = gameState.player.getX();
