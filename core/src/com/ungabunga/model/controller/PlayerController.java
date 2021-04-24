@@ -18,22 +18,25 @@ import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.BreederScreen;
+import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
 import java.io.IOException;
 
 public class PlayerController extends InputAdapter{
+    private GameScreen gameScreen;
     private GameState gameState;
     private DIRECTION direction;
     private AVATAR_STATE state;
     public boolean isInventoryOpen;
     public boolean isBreederOpen;
 
-    public PlayerController(GameState gameState) {
+    public PlayerController(GameState gameState, GameScreen gameScreen) {
         this.gameState = gameState;
         this.isInventoryOpen = false;
         this.isBreederOpen = false;
+        this.gameScreen = gameScreen;
     }
 
     @Override
@@ -108,6 +111,9 @@ public class PlayerController extends InputAdapter{
                 }
             }
         }
+//        if(keycode == Keys.ENTER){
+//            gameScreen.dialogueBox.setVisible(false);
+//        }
         if(keycode == Keys.F5){
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);
@@ -167,15 +173,18 @@ public class PlayerController extends InputAdapter{
             try{
                 gameState.movePlayerUp();
             } catch(Exception e){
-                gameState.setExceptionString(e.getMessage());
-                System.out.println(e);
+                gameScreen.dialogueBox.setVisible(false);
+                gameScreen.dialogueBox.setText(e.getMessage());
+                gameScreen.dialogueBox.setVisible(true);
             }
         }
         else if(direction == DIRECTION.DOWN && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerDown();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueBox.setVisible(false);
+                gameScreen.dialogueBox.setText("AAAAAAAAA");
+                gameScreen.dialogueBox.setVisible(true);
             }
         }
         else if(direction == DIRECTION.LEFT && state!=AVATAR_STATE.STANDING){

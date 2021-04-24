@@ -53,11 +53,13 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
 
-    private DialogueBox dialogueBox,dialogueCommand;
+    public DialogueBox dialogueBox,dialogueCommand;
 
     private OptionBox optionBox;
     private Dialogue dialogue;
     private DialogueController dialogueController;
+
+    public int x;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -78,12 +80,12 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_west"),
                 atlas.findRegion("brendan_stand_east")
         );
-
+        this.x = 30;
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
         gameState = new GameState("orz", playerAnimations,map, app);
 
-        controller = new PlayerController(gameState);
+        controller = new PlayerController(gameState,this);
 
         camera = new OrthographicCamera();
 
@@ -177,11 +179,7 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
-        if(gameState.isOccupied()) {
-            dialogueBox.setText(gameState.getStringException());
-            dialogueBox.setVisible(true);
-            gameState.setOccupied(false);
-        }
+
         renderer.setView(camera);
         renderer.render();
 

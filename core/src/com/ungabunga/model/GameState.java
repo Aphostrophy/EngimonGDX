@@ -128,7 +128,6 @@ public class GameState {
             if(map.get(y+1).get(x).occupier==null && map.get(y+1).get(x).cellType!=CellType.BLOCKED){
                 player.moveUp();
             } else{
-                setOccupied(true);
                 throw new CellOccupiedException("Cell occupied!");
             }
         }
@@ -213,18 +212,5 @@ public class GameState {
 
     public Bag getPlayerInventory(){
         return this.playerInventory;
-    }
-
-    public boolean isOccupied() {
-        return Occupied;
-    }
-    public void setOccupied(boolean O) {
-        this.Occupied = O;
-    }
-    public String getStringException() {
-        return this.stringException;
-    }
-    public void setExceptionString(String str) {
-        this.stringException = str;
     }
 }
