@@ -52,6 +52,15 @@ public class MainMenu implements Screen {
                     Gdx.app.exit();
                 }
 
+//                if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
+//                    try {
+//                        game.setScreen(new GameScreen(game));
+//                        splash.dispose();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+
                 //Play game button
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
                     try {

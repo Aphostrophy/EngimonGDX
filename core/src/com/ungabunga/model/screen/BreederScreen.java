@@ -37,6 +37,8 @@ import java.util.List;
 public class BreederScreen implements Screen {
     private EngimonGame app;
 
+    private final GameScreen gameScreen;
+
     private PlayerController controller;
 
     private Sprite ParentABox;
@@ -70,10 +72,12 @@ public class BreederScreen implements Screen {
 
 
 
-    public BreederScreen(EngimonGame app, PlayerController controller) throws IOException {
+    public BreederScreen(EngimonGame app, PlayerController controller,GameScreen gameScreen) throws IOException {
         this.app = app;
         this.controller = controller;
         batch = new SpriteBatch();
+
+        this.gameScreen = gameScreen;
 
 //        Texture splashTexture = new Texture("img/box.png");
 //        this.ParentABox = new Sprite(splashTexture);
@@ -142,11 +146,7 @@ public class BreederScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isBreederOpen) {
-            try {
-                app.setScreen(new GameScreen(app));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            app.setScreen(gameScreen);
         }
 
         uiStage.act(delta);
