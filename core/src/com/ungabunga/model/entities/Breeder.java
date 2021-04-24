@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Breeder {
-    Breeder() {}
+    Breeder() {
+
+    }
 
     // Memerima input nama engimon dari user
     public static String childName() {
@@ -73,7 +75,7 @@ public class Breeder {
     }
 
 
-    public ArrayList<Pair<String,String>> getParentDetails(Engimon parentA, Engimon parentB)
+    public static ArrayList<Pair<String,String>> getParentDetails(Engimon parentA, Engimon parentB)
     {
         ArrayList<Pair<String,String>> result = new ArrayList<>();
         Pair<String,String> parentName = new Pair<>(parentA.getName(),parentB.getName());
@@ -83,7 +85,7 @@ public class Breeder {
         return result;
     }
 
-    ArrayList<Skill> getChildSkill(Engimon parentA, Engimon parentB)
+    public static ArrayList<Skill> getChildSkill(Engimon parentA, Engimon parentB)
     {
         ArrayList<Skill> result = new ArrayList<>();
         int idx, parentMastery;
@@ -115,7 +117,7 @@ public class Breeder {
         return result;
     }
 
-    public void BreedFinishing(Engimon ParentA, Engimon ParentB, Engimon child, Inventory<Engimon> inventory) {
+    public static void BreedFinishing(Engimon ParentA, Engimon ParentB, Engimon child, Inventory<Engimon> inventory) {
 
         try{
             // insert to inventory here
@@ -129,7 +131,8 @@ public class Breeder {
             System.out.println("Parent:");
             System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
             System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-            System.out.println("Skills: ");
+            System.out.print("Skills: \n.");
+
             for (Skill s : child.getSkills()) {
                 System.out.println("- " + s.getSkillName());
             }
@@ -141,7 +144,7 @@ public class Breeder {
 
 
     //Fire,Water,Electric,Ground,Ice,Fire/Electric, WaterGround,WaterIce
-    public void Breed(Engimon ParentA, Engimon ParentB, Inventory<Engimon> inventory)
+    public static void Breed(Engimon ParentA, Engimon ParentB, Inventory<Engimon> inventory)
     {
         if (ParentA.getElements().size() == 1) {
             if (ParentA.getElements().get(0) == IElements.GROUND)
@@ -155,7 +158,7 @@ public class Breeder {
                         elmt.add(IElements.WATER);
                         elmt.add(IElements.GROUND);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else if (ParentB.getElements().get(0) == IElements.ICE) {
                         // Ground + Ice = Ice
@@ -164,7 +167,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.ICE);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else {
                         // Ground + Fire = Ground
@@ -175,7 +178,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.GROUND);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                 } else {
@@ -215,7 +218,7 @@ public class Breeder {
                         elmt.add(IElements.FIRE);
                         elmt.add(IElements.ELECTRIC);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Charmander", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Charmander", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.WATER)
@@ -226,7 +229,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.WATER);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else if (ParentB.getElements().get(0) == IElements.GROUND)
                     {
@@ -236,7 +239,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.GROUND);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else
                     {
@@ -247,7 +250,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.FIRE);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                 } else {
@@ -286,7 +289,7 @@ public class Breeder {
                         elmt.add(IElements.WATER);
                         elmt.add(IElements.GROUND);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Psyduck", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Psyduck", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.ICE)
@@ -298,7 +301,7 @@ public class Breeder {
                         elmt.add(IElements.WATER);
                         elmt.add(IElements.ICE);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Poliwag", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Poliwag", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.ELECTRIC)
@@ -309,7 +312,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.ELECTRIC);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else {
@@ -320,7 +323,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.WATER);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                 } else {
@@ -358,7 +361,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.WATER);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.GROUND)
@@ -369,7 +372,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.GROUND);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else if (ParentB.getElements().get(0) == IElements.FIRE)
                     {
@@ -380,7 +383,7 @@ public class Breeder {
                         elmt.add(IElements.FIRE);
                         elmt.add(IElements.ELECTRIC);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Charmander", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Charmander", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else
@@ -392,7 +395,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.ELECTRIC);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                 } else {
@@ -432,7 +435,7 @@ public class Breeder {
                         elmt.add(IElements.WATER);
                         elmt.add(IElements.ICE);
                         String name = childName();
-                        Engimon child = new Engimon(name, "Poliwag", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, "Poliwag", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.FIRE)
@@ -443,7 +446,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.FIRE);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                     else if (ParentB.getElements().get(0) == IElements.ELECTRIC)
@@ -454,7 +457,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.ELECTRIC);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     } else {
                         // Ice + Ground = Ice
@@ -464,7 +467,7 @@ public class Breeder {
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.ICE);
                         String name = childName();
-                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(1), parentDetails.get(2));
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
                         BreedFinishing(ParentA, ParentB, child, inventory);
                     }
                 } else {

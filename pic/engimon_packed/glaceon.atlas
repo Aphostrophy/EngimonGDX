@@ -1,0 +1,90 @@
+
+glaceon.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+glaceon_standing_east
+  rotate: false
+  xy: 2, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: -1
+glaceon_walking_east
+  rotate: false
+  xy: 2, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: 0
+glaceon_standing_north
+  rotate: false
+  xy: 114, 2
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: -1
+glaceon_walking_north
+  rotate: false
+  xy: 114, 2
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: 0
+glaceon_standing_south
+  rotate: false
+  xy: 156, 2
+  size: 18, 25
+  orig: 18, 25
+  offset: 0, 0
+  index: -1
+glaceon_walking_south
+  rotate: false
+  xy: 156, 2
+  size: 18, 25
+  orig: 18, 25
+  offset: 0, 0
+  index: 0
+glaceon_standing_west
+  rotate: false
+  xy: 30, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: -1
+glaceon_walking_west
+  rotate: false
+  xy: 30, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: 0
+glaceon_walking_east
+  rotate: false
+  xy: 58, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: 1
+glaceon_walking_north
+  rotate: false
+  xy: 135, 2
+  size: 19, 25
+  orig: 19, 25
+  offset: 0, 0
+  index: 1
+glaceon_walking_south
+  rotate: false
+  xy: 176, 2
+  size: 18, 25
+  orig: 18, 25
+  offset: 0, 0
+  index: 1
+glaceon_walking_west
+  rotate: false
+  xy: 86, 4
+  size: 26, 23
+  orig: 26, 23
+  offset: 0, 0
+  index: 1

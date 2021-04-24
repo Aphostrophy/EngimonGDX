@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -111,6 +112,25 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
         multiplexer.addProcessor(2, uiStage);
+        Gdx.input.setInputProcessor(new InputAdapter() {
+
+            @Override
+            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+                if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
+                    System.out.println("ok");
+                    try {
+                        app.setScreen(new BreederScreen(app));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+                return super.touchUp(screenX, screenY, pointer, button);
+            }
+
+        });
     }
 
     @Override
@@ -152,10 +172,10 @@ public class GameScreen extends AbstractScreen {
         batch.begin();
         batch.setProjectionMatrix(camera.combined);
 
-        for(int y=0;y<gameState.map.length;y++){
-            for(int x=0;x<gameState.map[y].length;x++){
-                if(gameState.map[y][x].occupier != null){
-                    batch.draw(gameState.player.getSprite(), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+        for(int y=0;y<gameState.map.length();y++){
+            for(int x=0;x<gameState.map.get(y).length();x++){
+                if(gameState.map.get(y).get(x).occupier != null){
+                    batch.draw(getApp().getResourceProvider().getSprite(gameState.map.get(y).get(x).occupier ), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }
@@ -209,11 +229,13 @@ public class GameScreen extends AbstractScreen {
 
         inventoryUI = new InventoryUI(getApp().getSkin());
         inventoryWrapper.add(inventoryUI).expand().align(Align.center);
+
 //        root.row();
 //        root.add(inventoryUI).expand().align(Align.center).pad(5f);
 //        root.add(dialogueBox).expand().align(Align.bottom).pad(8f);
 
     }
+
     @Override
     public  void resize(int width, int height) {
         camera.viewportHeight = height;

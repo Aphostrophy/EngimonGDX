@@ -2,6 +2,7 @@ package com.ungabunga.model.entities;
 
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.enums.DIRECTION;
 
 public interface LivingEngimon {
 
@@ -16,4 +17,6 @@ public interface LivingEngimon {
     public int getRemainingLives();
     public boolean isDead();
     public void reduceLives();
+
+    public DIRECTION getDirection();
 }

@@ -1,0 +1,90 @@
+
+magmar.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+magmar_standing_east
+  rotate: false
+  xy: 2, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+magmar_walking_east
+  rotate: false
+  xy: 2, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 0
+magmar_standing_north
+  rotate: false
+  xy: 26, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+magmar_walking_north
+  rotate: false
+  xy: 26, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 0
+magmar_standing_south
+  rotate: false
+  xy: 50, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+magmar_walking_south
+  rotate: false
+  xy: 50, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 0
+magmar_standing_west
+  rotate: false
+  xy: 74, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: -1
+magmar_walking_west
+  rotate: false
+  xy: 74, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 0
+magmar_walking_east
+  rotate: false
+  xy: 98, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 1
+magmar_walking_north
+  rotate: false
+  xy: 146, 2
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 1
+magmar_walking_south
+  rotate: false
+  xy: 169, 2
+  size: 21, 21
+  orig: 21, 21
+  offset: 0, 0
+  index: 1
+magmar_walking_west
+  rotate: false
+  xy: 122, 2
+  size: 22, 21
+  orig: 22, 21
+  offset: 0, 0
+  index: 1

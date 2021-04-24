@@ -1,7 +1,7 @@
 package com.ungabunga.model.entities;
 
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.LivingEngimon;
+import com.ungabunga.model.enums.AVATAR_STATE;
+import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.utilities.Pair;
@@ -11,11 +11,17 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     int remainingLives;
     int turnsBeforeMoving;
 
+    DIRECTION direction;
+    AVATAR_STATE state;
+
     public WildEngimon(Engimon E){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
         this.turnsBeforeMoving = CONSTANTS.TURNSTOMOVE;
+
+        this.direction = DIRECTION.DOWN;
+        this.state = AVATAR_STATE.STANDING;
     }
 
     @Override
@@ -47,6 +53,11 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public Pair<Integer, Integer> getPosition() throws FeatureNotImplementedException {
         return this.position;
+    }
+
+    @Override
+    public DIRECTION getDirection() {
+        return this.direction;
     }
 
     @Override

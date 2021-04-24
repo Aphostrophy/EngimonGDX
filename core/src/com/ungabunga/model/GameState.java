@@ -3,22 +3,23 @@ package com.ungabunga.model;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.MapCell;
-import com.ungabunga.model.entities.Player;
-import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.fileUtil;
 
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 
 public class GameState {
-    public Player player;
-    public MapCell[][] map;
-
     private EngimonGame app;
+
+    public Player player;
+    public AtomicReferenceArray<AtomicReferenceArray<MapCell>> map;
+
+    private Inventory<PlayerEngimon> playerEngimonInventory;
+    private Inventory<SkillItem> playerSkillItemInventory;
 
     private float timeDelta;
 
@@ -30,9 +31,18 @@ public class GameState {
         TiledMapTileLayer biomeLayer = (TiledMapTileLayer)tiledMap.getLayers().get(0); // Tile
         TiledMapTileLayer decorationLayer = (TiledMapTileLayer)tiledMap.getLayers().get(1); // Decoration
 
-        this.map = fileUtil.readMapLayer(biomeLayer);
+        MapCell nonConcurrentMap[][] = fileUtil.readMapLayer(biomeLayer);
 
-        this.player = new Player(name, animations, map.length/2, map[0].length/2);
+        AtomicReferenceArray<AtomicReferenceArray<MapCell>> atomicMap = new AtomicReferenceArray<>(nonConcurrentMap.length);
+
+        for(int y=0;y<nonConcurrentMap.length;y++){
+            AtomicReferenceArray<MapCell> atomicRow = new AtomicReferenceArray<MapCell>(nonConcurrentMap[y]);
+            atomicMap.set(y,atomicRow);
+        }
+
+        this.map = atomicMap;
+
+        this.player = new Player(name, animations, map.length()/2, map.get(0).length()/2);
 
         this.wildEngimonCount = 0;
 
@@ -40,7 +50,7 @@ public class GameState {
             for(int x=0;x<decorationLayer.getWidth();x++){
                 if(decorationLayer.getCell(x,y) != null){
                     if(decorationLayer.getCell(x,y).getTile().getProperties().containsKey("Blocked")){
-                        this.map[y][x].cellType = CellType.BLOCKED;
+                        this.map.get(y).get(x).cellType = CellType.BLOCKED;
                     }
                 }
             }
@@ -53,24 +63,34 @@ public class GameState {
     public void update(float delta){
         timeDelta += delta;
         if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
-            int spawnX = ThreadLocalRandom.current().nextInt(0,map.length);
-            int spawnY = ThreadLocalRandom.current().nextInt(0,map.length);
-            if(map[spawnY][spawnX].cellType == CellType.BLOCKED || map[spawnY][spawnX].occupier!=null){
+            int spawnX = ThreadLocalRandom.current().nextInt(0,map.length());
+            int spawnY = ThreadLocalRandom.current().nextInt(0,map.length());
+            if(map.get(spawnY).get(spawnX).cellType == CellType.BLOCKED || map.get(spawnY).get(spawnX).occupier!=null){
                 return;
             }
-            Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map[spawnY][spawnX].cellType);
-            map[spawnY][spawnX].occupier = new WildEngimon(wildEngimon);
+            Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
+            map.get(spawnY).get(spawnX).occupier = new WildEngimon(wildEngimon);
 
             wildEngimonCount++;
             timeDelta = 0;
+
+            // Nyoba doang nanti hapus di bawah ini
+            if(player.getActiveEngimon()==null){
+                try{
+                    System.out.println("Active Engimon spawned");
+                    spawnActiveEngimon(new PlayerEngimon(this.app.getResourceProvider().getEngimon("Blastoise")));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     public void movePlayerUp() throws CellOccupiedException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
-        if(y+1<map.length){
-            if(map[y+1][x].occupier==null && map[y+1][x].cellType!=CellType.BLOCKED){
+        if(y+1<map.length()){
+            if(map.get(y+1).get(x).occupier==null && map.get(y+1).get(x).cellType!=CellType.BLOCKED){
                 player.moveUp();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -82,7 +102,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y-1>=0){
-            if(map[y-1][x].occupier==null && map[y-1][x].cellType!=CellType.BLOCKED){
+            if(map.get(y-1).get(x).occupier==null &&map.get(y-1).get(x).cellType!=CellType.BLOCKED){
                 player.moveDown();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -94,7 +114,7 @@ public class GameState {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x-1>=0){
-            if(map[y][x-1].occupier==null && map[y][x-1].cellType!=CellType.BLOCKED){
+            if(map.get(y).get(x-1).occupier==null && map.get(y).get(x-1).cellType!=CellType.BLOCKED){
                 player.moveLeft();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -105,8 +125,8 @@ public class GameState {
     public void movePlayerRight() throws CellOccupiedException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
-        if(x+1<map[y].length){
-            if(map[y][x+1].occupier==null && map[y][x+1].cellType!=CellType.BLOCKED){
+        if(x+1<map.get(y).length()){
+            if(map.get(y).get(x+1).occupier==null && map.get(y).get(x+1).cellType!=CellType.BLOCKED){
                 player.moveRight();
             } else{
                 throw new CellOccupiedException("Cell occupied!");
@@ -120,5 +140,37 @@ public class GameState {
 
     public void setWildEngimonCount(int count){
         this.wildEngimonCount=count;
+    }
+
+    public void spawnActiveEngimon(PlayerEngimon playerEngimon) throws CellOccupiedException{
+        if(map.get(player.getY()-1).get(player.getX()).occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player,player.getX(), player.getY()-1);
+            player.setActiveEngimon(activeEngimon);
+            map.get(player.getY()-1).get(player.getX()).occupier = activeEngimon;
+        }
+        else if(map.get(player.getY()+1).get(player.getX()).occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX(), player.getY()+1);
+            player.setActiveEngimon(activeEngimon);
+            map.get(player.getY()+1).get(player.getX()).occupier = activeEngimon;
+        }
+        else if(map.get(player.getY()).get(player.getX()-1).occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()-1, player.getY());
+            player.setActiveEngimon(activeEngimon);
+            map.get(player.getY()).get(player.getX()-1).occupier = activeEngimon;
+        }
+        else if(map.get(player.getY()).get(player.getX()+1).occupier==null){
+            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()+1,player.getY());
+            player.setActiveEngimon(activeEngimon);
+            map.get(player.getY()).get(player.getX()+1).occupier = activeEngimon;
+        } else{
+            throw new CellOccupiedException("No place to spawn player engimon");
+        }
+    }
+
+    public void removePlayerEngimon(){
+        if(player.getActiveEngimon()!=null){
+            map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
+            player.removeActiveEngimon();
+        }
     }
 }

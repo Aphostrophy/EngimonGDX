@@ -1,0 +1,90 @@
+
+sandshrew.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+sandshrew_standing_east
+  rotate: false
+  xy: 70, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: -1
+sandshrew_walking_east
+  rotate: false
+  xy: 70, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: 0
+sandshrew_standing_north
+  rotate: false
+  xy: 2, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+sandshrew_walking_north
+  rotate: false
+  xy: 2, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: 0
+sandshrew_standing_south
+  rotate: false
+  xy: 36, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: -1
+sandshrew_walking_south
+  rotate: false
+  xy: 36, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: 0
+sandshrew_standing_west
+  rotate: false
+  xy: 89, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: -1
+sandshrew_walking_west
+  rotate: false
+  xy: 89, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: 0
+sandshrew_walking_east
+  rotate: false
+  xy: 108, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: 1
+sandshrew_walking_north
+  rotate: false
+  xy: 19, 2
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: 1
+sandshrew_walking_south
+  rotate: false
+  xy: 53, 3
+  size: 15, 20
+  orig: 15, 20
+  offset: 0, 0
+  index: 1
+sandshrew_walking_west
+  rotate: false
+  xy: 127, 9
+  size: 17, 14
+  orig: 17, 14
+  offset: 0, 0
+  index: 1
