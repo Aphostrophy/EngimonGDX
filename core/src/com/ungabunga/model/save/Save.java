@@ -5,6 +5,7 @@ import com.ungabunga.model.entities.MapCell;
 
 public class Save {
 
+    public String playerName;
     public int playerPosX;
     public int playerPosY;
     public MapCell[][] map;
@@ -14,6 +15,7 @@ public class Save {
     }
 
     public Save(GameState gameState){
+        this.playerName = gameState.player.name;
         this.playerPosX = gameState.player.getX();
         this.playerPosY = gameState.player.getY();
 

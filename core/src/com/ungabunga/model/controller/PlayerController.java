@@ -60,10 +60,9 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.F6){
             FileHandle file = Gdx.files.local("mysave.json");
             String mysave = file.readString();
-            System.out.println(mysave);
             Json json = new Json();
             Save save = json.fromJson(Save.class, mysave);
-            System.out.println(json.prettyPrint(save));
+            gameState.loadSave(save);
         }
         return false;
     }
