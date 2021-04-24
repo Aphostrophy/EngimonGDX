@@ -15,9 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.EngimonGame;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.Bag;
-import com.ungabunga.model.ui.BreederEngimonUI;
+import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.InventoryItem;
 import com.ungabunga.model.ui.InventoryUI;
@@ -145,8 +146,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
 
         uiStage.addActor(root);
 
-        InventoryUI engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider());
-        InventoryUI skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider());
+        InventoryUI engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider(), gameScreen.getGameState());
+        InventoryUI skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider(), gameScreen.getGameState());
 
         Label labelA = new Label("Engimon", getApp().getSkin());
         Label labelB = new Label("SkillItem", getApp().getSkin());
