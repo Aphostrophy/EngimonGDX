@@ -113,8 +113,7 @@ public class GameScreen extends AbstractScreen {
         optionBoxController = new OptionBoxController(optionBox);
         multiplexer.addProcessor(0,controller);
         multiplexer.addProcessor(1,optionBoxController);
-
-
+        multiplexer.addProcessor(2, uiStage);
     }
 
     @Override
