@@ -282,4 +282,7 @@ public class GameScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
 }
