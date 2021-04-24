@@ -52,11 +52,16 @@ public class BreederScreen implements Screen {
 
 
     private Stage uiStage;
-    private Table root;
+
     private DialogueBox dialogueBox;
+
+    private TextField childName;
+
+    private Table root;
     private Table topBar;
     private Table breederWrapper;
     private Table breedButton;
+    private Table nameWrapper;
     private Table parentLabel;
     private Table dialogTable;
     private Table backButton;
@@ -153,7 +158,7 @@ public class BreederScreen implements Screen {
         breedButton = new Table();
         backButton = new Table();
         title = new Table();
-
+        nameWrapper = new Table();
 
         Image bg = new Image(new Texture("img/breeder_title.png"));
         title.add(bg).width(500);
@@ -179,7 +184,15 @@ public class BreederScreen implements Screen {
         topBar.add(backButton).align(Align.topLeft);
         topBar.add(title);
 
+        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.font = app.getSkin().getFont("font");
+        textFieldStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
+        childName = new TextField(" ", textFieldStyle);
+        childName.setPosition(24,73);
+        childName.setSize(88, 14);
+        nameWrapper.setBackground(app.getSkin().getDrawable("dialoguebox"));
+        nameWrapper.add(childName).width(uiStage.getWidth()).height(uiStage.getHeight()/3).space(11f);
 
 //        uiStage.addActor(dialogTable);
 //        uiStage.addActor(inventoryWrapper);
@@ -203,22 +216,28 @@ public class BreederScreen implements Screen {
         root.add(breederWrapper).top().align(Align.center).row();
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                root.add(dialogTable);
-                Engimon child = Breeder.Breed(ParentA, ParentB, "yolo", inventory);
-                // cuma buat mastiin childnya kebreed
-                System.out.println("Nama: " + child.getName());
-                System.out.println("Lvl. " + child.getLevel());
-                System.out.println("Species: " + child.getSpecies());
-                System.out.println("Parent:");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.print("Skills: \n.");
-
-                for (Skill s : child.getSkills()) {
-                    System.out.println("- " + s.getSkillName());
+                try {
+                    app.setScreen(new ChildEngimonScreen(app, controller, ParentA, ParentB, inventory));
+                } catch (IOException e){
+                    e.printStackTrace();
                 }
-                System.out.println("heyyy");
-//                System.out.println("Breeding is in progress...");
+//                root.add(dialogTable);
+//                root.add(nameWrapper);
+//                Engimon child = Breeder.Breed(ParentA, ParentB, "yolo", inventory);
+//                // cuma buat mastiin childnya kebreed
+//                System.out.println("Nama: " + child.getName());
+//                System.out.println("Lvl. " + child.getLevel());
+//                System.out.println("Species: " + child.getSpecies());
+//                System.out.println("Parent:");
+//                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+//                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getSecond() + ")");
+//                System.out.print("Skills: \n.");
+//
+//                for (Skill s : child.getSkills()) {
+//                    System.out.println("- " + s.getSkillName());
+//                }
+//                System.out.println("heyyy");
+////                System.out.println("Breeding is in progress...");
             }
         });
 
