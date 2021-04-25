@@ -17,9 +17,15 @@ public class InventoryUI extends Table {
     private final int slotWidth = 72;
     private final int slotHeight = 72;
 
+    private boolean isDelete;
+    private boolean isDetail;
+
+    private int amount;
+
     public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType, ResourceProvider provider, GameState gameState){
        super(skin);
        this.setBackground("dialoguebox");
+
        Integer count = 0;
        int idx = 0;
        for(int i = 1; i <= ROW; i++) {
@@ -43,26 +49,48 @@ public class InventoryUI extends Table {
                            InventorySlot slot = (InventorySlot) event.getListenerActor();
 
                            if (slot.getItemType() == InventoryItem.ItemType.ENGIMON) {
+
                                PlayerEngimon chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(slot.getIdx());
-                               chosenEngimon.displayInfo();
-                               try {
-                                   gameState.spawnActiveEngimon(chosenEngimon);
-                               } catch (CellOccupiedException e) {
-                                   e.printStackTrace();
-                               }
-                           } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
-                               SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
-                               System.out.println(chosenSkillItem.getAmount());
-                               if(chosenSkillItem.getAmount() > 0) {
-                                   Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
+                               if(isDelete) {
+                                    inventory.deleteFromInventory(chosenEngimon);
+                                    slot.decrementItemCount(1);
+                               } else if (isDetail) {
+                                   chosenEngimon.displayInfo();
+                               } else {
                                    try {
-                                       gameState.player.getActiveEngimon().learnSkill(chosenSkill);
-                                       inventory.deleteFromInventory(chosenSkillItem);
-                                       slot.decrementItemCount();
-                                   } catch (FeatureNotImplementedException e) {
+                                       gameState.spawnActiveEngimon(chosenEngimon);
+                                   } catch (CellOccupiedException e) {
                                        e.printStackTrace();
                                    }
-                                   gameState.player.getActiveEngimon().displayInfo();
+                               }
+
+                           } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
+                               SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
+                               if(isDelete) {
+                                   if(amount <= slot.getNumItemsVal()) {
+                                       for(int i = 0; i < amount; i++) {
+                                           inventory.deleteFromInventory(chosenSkillItem);
+                                       }
+                                       slot.decrementItemCount(amount);
+                                   }
+                               } else if (isDetail){
+                                   Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
+                                   chosenSkill.displaySkillInfo();
+                               } else {
+                                   if(gameState.player.getActiveEngimon() != null) {
+                                       System.out.println(chosenSkillItem.getAmount());
+                                       if (chosenSkillItem.getAmount() > 0) {
+                                           Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
+                                           try {
+                                               gameState.player.getActiveEngimon().learnSkill(chosenSkill);
+                                               inventory.deleteFromInventory(chosenSkillItem);
+                                               slot.decrementItemCount(1);
+                                           } catch (FeatureNotImplementedException e) {
+                                               e.printStackTrace();
+                                           }
+                                           gameState.player.getActiveEngimon().displayInfo();
+                                       }
+                                   }
                                }
                            }
                        }
@@ -78,5 +106,17 @@ public class InventoryUI extends Table {
            }
            this.row();
        }
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public void setDetail(boolean detail) {
+        isDetail = detail;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
