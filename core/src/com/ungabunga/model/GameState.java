@@ -11,6 +11,7 @@ import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.FullInventoryException;
+import com.ungabunga.model.exceptions.OutOfBoundException;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
@@ -122,7 +123,7 @@ public class GameState {
         this.wildEngimonCount = save.wildEngimonCount;
     }
 
-    public void movePlayerUp() throws CellOccupiedException {
+    public void movePlayerUp() throws CellOccupiedException, OutOfBoundException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y+1<map.length()){
@@ -131,11 +132,12 @@ public class GameState {
             } else{
                 throw new CellOccupiedException("Cell occupied!");
             }
+        } else{
+            throw new OutOfBoundException("Let's explore that area later");
         }
-
     }
 
-    public void movePlayerDown() throws CellOccupiedException {
+    public void movePlayerDown() throws CellOccupiedException, OutOfBoundException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y-1>=0){
@@ -144,10 +146,12 @@ public class GameState {
             } else{
                 throw new CellOccupiedException("Cell occupied!");
             }
+        } else{
+            throw new OutOfBoundException("Let's explore that area later");
         }
     }
 
-    public void movePlayerLeft() throws CellOccupiedException {
+    public void movePlayerLeft() throws CellOccupiedException, OutOfBoundException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x-1>=0){
@@ -156,10 +160,12 @@ public class GameState {
             } else{
                 throw new CellOccupiedException("Cell occupied!");
             }
+        } else{
+            throw new OutOfBoundException("Let's explore that area later");
         }
     }
 
-    public void movePlayerRight() throws CellOccupiedException {
+    public void movePlayerRight() throws CellOccupiedException, OutOfBoundException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x+1<map.get(y).length()){
@@ -168,6 +174,8 @@ public class GameState {
             } else{
                 throw new CellOccupiedException("Cell occupied!");
             }
+        } else{
+            throw new OutOfBoundException("Let's explore that area later");
         }
     }
 

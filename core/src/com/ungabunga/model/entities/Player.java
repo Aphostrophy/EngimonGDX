@@ -127,6 +127,9 @@ public class Player {
 
     private void move(int dx,int dy){
         initializeMove(dx,dy);
+        if(activeEngimon!=null){
+            activeEngimon.move(dx,dy);
+        }
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
     }

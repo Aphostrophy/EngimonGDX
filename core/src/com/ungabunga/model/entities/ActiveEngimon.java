@@ -42,6 +42,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
         this.worldX = x;
         this.worldY = y;
+
+        this.animTimer = 0f;
     }
 
     private void initializeMove(int dx,int dy){
@@ -67,6 +69,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             stateTimer += delta;
             worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
             worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+
+            System.out.println(worldX);
 
             if(animTimer > ANIM_TIMER){
                 stateTimer -= (animTimer - ANIM_TIMER);
@@ -115,6 +119,14 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     @Override
     public boolean isDead() {
         return this.remainingLives<=0;
+    }
+
+    public float getWorldX() {
+        return worldX;
+    }
+
+    public float getWorldY() {
+        return worldY;
     }
 
     @Override

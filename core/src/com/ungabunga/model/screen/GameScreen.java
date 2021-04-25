@@ -178,6 +178,9 @@ public class GameScreen extends AbstractScreen {
             }
         }
         batch.draw(gameState.player.getSprite(),gameState.player.getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        if(gameState.player.getActiveEngimon()!=null){
+            batch.draw(gameState.player.getSprite(),gameState.player.getActiveEngimon().getWorldX()*Settings.SCALED_TILE_SIZE,gameState.player.getActiveEngimon().getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE*1.5f);
+        }
 
         batch.end();
 
