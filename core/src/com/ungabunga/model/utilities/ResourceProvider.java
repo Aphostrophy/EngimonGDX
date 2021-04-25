@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Null;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.CellType;
@@ -13,11 +12,10 @@ import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.OutOfBoundException;
 
-import java.util.HashMap;
-import java.util.concurrent.ThreadLocalRandom;
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
 
