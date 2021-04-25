@@ -7,4 +7,5 @@ public class Settings {
 
 //    public static float ANIM_TIMER = 0.5f;
     public static float ANIM_TIMER = 0.5f;
+    public static float RUN_ANIM_TIMER = 0.1f;
 }

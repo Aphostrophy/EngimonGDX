@@ -91,7 +91,7 @@ public class InventoryUI extends Table {
                                                slot.decrementItemCount(1);
                                                inventoryScreen.dialogueController.startInventoryDialogue(gameState.player.getActiveEngimon().getName() + " learned " + chosenSkillItem.getName() + "!!");
                                            } catch (FeatureNotImplementedException e) {
-                                               e.printStackTrace();
+                                               inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
                                            }
                                        }
                                    }

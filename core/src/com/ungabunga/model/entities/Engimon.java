@@ -214,7 +214,13 @@ public class Engimon {
     }
 
     public void learnSkill(Skill skill) throws FeatureNotImplementedException {
-        if(this.skills.size() == CONSTANTS.MAXSKILL) {
+        ArrayList<String> skillNames = new ArrayList<String>();
+        for(int i = 0; i < this.skills.size(); i++) {
+            skillNames.add(this.skills.get(i).getSkillName());
+        }
+        if(skillNames.contains(skill.getSkillName())) {
+            throw new FeatureNotImplementedException("Skill already learned!!");
+        } else if(this.skills.size() == CONSTANTS.MAXSKILL) {
             throw new FeatureNotImplementedException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
         } else {
             this.skills.add(skill);
