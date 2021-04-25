@@ -78,6 +78,7 @@ public class Inventory<T> {
 
     public void deleteFromInventory(PlayerEngimon engimon) {
         this.items.remove(((T)engimon));
+        this.neff--;
     }
 
     public void deleteFromInventory(SkillItem skillitem){
@@ -94,6 +95,7 @@ public class Inventory<T> {
         if (((SkillItem) this.items.get(i)).getAmount() == 0)
         {
             this.items.remove(((T)skillitem));
+            this.neff--;
         }
     }
 
@@ -205,6 +207,19 @@ public class Inventory<T> {
             }
         }
         throw new SkillItemNotFound("SkillItem Tidak Ditemukan");
+    }
+
+    public int getMaxEngimonLevel() {
+        int i;
+        int level = 1;
+        for (i = 0; i < this.neff; i++)
+        {
+            if (((PlayerEngimon) this.items.get(i)).getLevel() > level)
+            {
+                level = ((PlayerEngimon) this.items.get(i)).getLevel();
+            }
+        }
+        return level;
     }
 
 }

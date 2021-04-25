@@ -10,7 +10,7 @@ public class Bag {
         this.engimonInventory = new Inventory<PlayerEngimon>();
     }
     public int getCurrBagCapacity(){
-        return (this.skillItemInventory.getFilledSlot() + this.engimonInventory.getFilledSlot());
+        return (this.skillItemInventory.getSkillItemAmount() + this.engimonInventory.getFilledSlot());
     }
     public void insertToBag(SkillItem skillitem) throws FullInventoryException {
         this.skillItemInventory.insertToInventory(skillitem,getCurrBagCapacity());
