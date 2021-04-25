@@ -1,5 +1,6 @@
 package com.ungabunga.model.entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
@@ -25,4 +26,8 @@ public interface LivingEngimon {
     public AVATAR_STATE getState();
 
     public DIRECTION getDirection();
+
+    public TextureRegion getSprite();
+
+    public float getKeyFrame();
 }

@@ -461,157 +461,157 @@ public class ResourceProvider {
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return arcanineAnimationSet.getStanding(engimon.getDirection());
             } else {
-//                return arcanineAnimationSet.getWalking(engimon.getDirection());
+                return arcanineAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Blastoise")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return blastoiseAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return blastoiseAnimationSet.getWalking(engimon.getDirection());
+                return blastoiseAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Charmander")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return charmanderAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return charmanderAnimationSet.getWalking(engimon.getDirection());
+                return charmanderAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Cubchoo")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return cubchooAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return cubchooAnimationSet.getWalking(engimon.getDirection());
+                return cubchooAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Cubone")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return cuboneAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return cuboneAnimationSet.getWalking(engimon.getDirection());
+                return cuboneAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Diglett")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return diglettAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return diglettAnimationSet.getWalking(engimon.getDirection());
+                return diglettAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Dugtrio")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return dugtrioAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return dugtrioAnimationSet.getWalking(engimon.getDirection());
+                return dugtrioAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Glaceon")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return glaceonAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return glaceonAnimationSet.getWalking(engimon.getDirection());
+                return glaceonAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Glalie")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return glalieAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return glalieAnimationSet.getWalking(engimon.getDirection());
+                return glalieAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         }else if (engimon.getEngimonSpecies().equals("Growlithe")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return growlitheAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return growlitheAnimationSet.getWalking(engimon.getDirection());
+                return growlitheAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Magmar")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return magmarAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return magmarAnimationSet.getWalking(engimon.getDirection());
+                return magmarAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Mareep")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return mareepAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return mareepAnimationSet.getWalking(engimon.getDirection());
+                return mareepAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Ninetales")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return ninetalesAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return ninetalesAnimationSet.getWalking(engimon.getDirection());
+                return ninetalesAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Pikachu")) {
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return pikachuAnimationSet.getStanding(engimon.getDirection());
             } else {
-//                return pikachuAnimationSet.getWalking(engimon.getDirection());
+                return pikachuAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Poliwag")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return poliwagAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return poliwagAnimationSet.getWalking(engimon.getDirection());
+                return poliwagAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Ponyta")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return ponytaAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return ponytaAnimationSet.getWalking(engimon.getDirection());
+                return ponytaAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Psyduck")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return psyduckAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return psyduckAnimationSet.getWalking(engimon.getDirection());
+                return psyduckAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Raichu")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return raichuAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return raichuAnimationSet.getWalking(engimon.getDirection());
+                return raichuAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Sandshrew")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return sandshrewAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return sandshrewAnimationSet.getWalking(engimon.getDirection());
+                return sandshrewAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Shark")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return sharkAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return sharkAnimationSet.getWalking(engimon.getDirection());
+                return sharkAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Snorunt")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return snoruntAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return snoruntAnimationSet.getWalking(engimon.getDirection());
+                return snoruntAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Squirtle")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return squirtleAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return squirtleAnimationSet.getWalking(engimon.getDirection());
+                return squirtleAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Tongkol")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return tongkolAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return tongkolAnimationSet.getWalking(engimon.getDirection());
+                return tongkolAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Voltorb")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return voltorbAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return voltorbAnimationSet.getWalking(engimon.getDirection());
+                return voltorbAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Wartotle")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return wartotleAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return wartotleAnimationSet.getWalking(engimon.getDirection());
+                return wartotleAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         } else if (engimon.getEngimonSpecies().equals("Vulpix")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return vulpixAnimationSet.getStanding(engimon.getDirection());
             }else {
-//                return vulpixAnimationSet.getWalking(engimon.getDirection());
+                return vulpixAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
         }
         return arcanineAnimationSet.getStanding(engimon.getDirection());

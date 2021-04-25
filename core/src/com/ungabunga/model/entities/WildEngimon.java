@@ -1,32 +1,43 @@
 package com.ungabunga.model.entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.utilities.ResourceProvider;
 
 public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
-    float worldX;
-    float worldY;
+
+    ResourceProvider resourceProvider;
 
     int remainingLives;
 
     DIRECTION direction;
     AVATAR_STATE state;
 
+    private float srcX,srcY;
+    private float destX,destY;
+    private float worldX,worldY;
+    private float animTimer;
+
+    private float stateTimer;
+
     public WildEngimon(){
 
     }
 
-    public WildEngimon(Engimon E,int spawnX,int spawnY){
+    public WildEngimon(Engimon E, int spawnX, int spawnY, ResourceProvider resourceProvider){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
 
         this.direction = DIRECTION.DOWN;
         this.state = AVATAR_STATE.STANDING;
+
+        this.resourceProvider = resourceProvider;
 
         Pair<Integer,Integer> position = new Pair<>();
         position.setFirst(spawnX);
@@ -56,6 +67,16 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public DIRECTION getDirection() {
         return this.direction;
+    }
+
+    @Override
+    public TextureRegion getSprite() {
+        return resourceProvider.getSprite(this);
+    }
+
+    @Override
+    public float getKeyFrame() {
+        return stateTimer;
     }
 
     @Override

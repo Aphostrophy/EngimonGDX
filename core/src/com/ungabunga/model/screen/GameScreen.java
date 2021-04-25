@@ -177,7 +177,7 @@ public class GameScreen extends AbstractScreen {
             for(int x=0;x<gameState.map.get(y).length();x++){
                 if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())){
                     LivingEngimon occupier = gameState.map.get(y).get(x).occupier;
-                    batch.draw(getApp().getResourceProvider().getSprite(occupier), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                    batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }
