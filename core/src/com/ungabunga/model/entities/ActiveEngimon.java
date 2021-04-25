@@ -35,7 +35,6 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y, GameState gameState){
         super(PE);
-        Pair<Integer,Integer> playerPosition = P.getPosition();
         this.position = new Pair<Integer,Integer>(x,y);
         this.direction = P.getDirection();
         this.state = P.getState();
@@ -100,11 +99,6 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             direction = DIRECTION.UP;
             move(0,1);
         }
-//        else{
-//            if(direction == DIRECTION.UP){
-//                moveFrameRequest = true;
-//            }
-//        }
     }
 
     public void moveDown() {
@@ -112,11 +106,6 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             direction = DIRECTION.DOWN;
             move(0,-1);
         }
-//        else{
-//            if(direction == DIRECTION.DOWN){
-//                moveFrameRequest = true;
-//            }
-//        }
     }
 
     public void moveLeft() {
@@ -124,11 +113,6 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             direction = DIRECTION.LEFT;
             move(-1,0);
         }
-//        else{
-//            if(direction == DIRECTION.LEFT){
-//                moveFrameRequest = true;
-//            }
-//        }
     }
 
     public void moveRight() {
@@ -136,31 +120,22 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             direction = DIRECTION.RIGHT;
             move(1,0);
         }
-//        else{
-//            if(direction == DIRECTION.RIGHT){
-//                moveFrameRequest = true;
-//            }
-//        }
     }
 
     public boolean followPlayer(int playerLastX, int playerLastY){
         if(this.getX()<this.player.getWorldX()){
-            System.out.println("Belok kanan");
             moveRight();
             return true;
         }
         if(this.getX()>this.player.getWorldX()){
-            System.out.println("Belok kiri");
             moveLeft();
             return true;
         }
         if(this.getY()<this.player.getWorldY()){
-            System.out.println("Naik");
             moveUp();
             return true;
         }
         if(this.getY()>this.player.getWorldY()){
-            System.out.println("Turun");
             moveDown();
             return true;
         }
