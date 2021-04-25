@@ -17,11 +17,17 @@ public class DialogueController extends InputAdapter {
     private OptionBox Obox;
 
     private boolean startCountdown;
-    private boolean isBattle = false;
+    private DIALOG_STATE dialogState;
 
     private float dialogueBoxTimer;
     private float TIMER_TIMEOUT = 2f;
     private float BATTLE_TIMEOUT = 4f;
+
+    public enum DIALOG_STATE{
+        BATTLE,
+        CHOOSESKILL,
+        ELSE,
+    }
 
     public DialogueController(DialogueBox Dbox, OptionBox Obox) {
         this.Dbox = Dbox;
@@ -57,7 +63,15 @@ public class DialogueController extends InputAdapter {
             else if(traverser.getType() == NODE_TYPE.LINEAR) {
                 progress(0);
             }
-            else if(traverser.getType() == NODE_TYPE.MULT) {
+            else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.BATTLE) {
+                progress(Obox.getSelected());
+                if(Obox.getSelected() == 0) {
+                    System.out.println("MARI BERANTEM");
+                } else{
+                    System.out.println("CABUT");
+                }
+            }
+            else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.ELSE) {
                 progress(Obox.getSelected());
             }
             return true;
@@ -78,7 +92,7 @@ public class DialogueController extends InputAdapter {
                 } else{
                     dialogueBoxTimer+= delta;
                     float time;
-                    if(isBattle) {
+                    if(dialogState == DIALOG_STATE.BATTLE) {
                         time = BATTLE_TIMEOUT;
                     } else {
                         time = TIMER_TIMEOUT;
@@ -87,7 +101,7 @@ public class DialogueController extends InputAdapter {
                         dialogueBoxTimer = 0f;
                         startCountdown = false;
                         Dbox.setVisible(false);
-                        isBattle = false;
+                        dialogState = DIALOG_STATE.ELSE;
                     }
                 }
             }
@@ -119,6 +133,7 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startTutorialDialogue(){
+        dialogState = DIALOG_STATE.ELSE;
         Dialogue dialogue = new Dialogue();
 
         DialogueNode a = new DialogueNode("Welcome to Engimon, Curse of The Marcello Pokemon God" +
@@ -147,7 +162,7 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startExceptionDialogue(Exception e){
-        isBattle = false;
+        dialogState = DIALOG_STATE.ELSE;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode(e.getMessage(), 0);
 
@@ -157,15 +172,24 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startBattleDialogue(ArrayList<String> Dialog) {
-        isBattle = true;
+        this.dialogState = DIALOG_STATE.BATTLE;
         Dialogue dialogue = new Dialogue();
-        dialogue = dialogue.generateDialogue(Dialog);
-        Obox.setVisible(false);
+        DialogueNode awal = new DialogueNode("Hellow nub", 0);
+        DialogueNode a = new DialogueNode("Anda mau gelud?", 1);
+        DialogueNode b = new DialogueNode("Mari kita coba!", 2);
+        DialogueNode c = new DialogueNode("Okay!", 3);
+        awal.makeLinear(a.getId());
+        a.addChoice("Proceed",2);
+        a.addChoice("Abort",3);
+        dialogue.addNode(awal);
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
         startDialogue(dialogue);
     }
 
     public void startDialogue(String message) {
-        isBattle = false;
+        dialogState = DIALOG_STATE.ELSE;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode(message, 0);
 
@@ -175,7 +199,7 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startInventoryDialogue(String Dialog) {
-        isBattle = false;
+        dialogState = DIALOG_STATE.ELSE;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode(Dialog, 0);
 
@@ -183,4 +207,8 @@ public class DialogueController extends InputAdapter {
         Obox.setVisible(false);
         startDialogue(dialogue);
     }
+
+//    public int startSkillChoiceDialogue(SkilI)
+
+
 }

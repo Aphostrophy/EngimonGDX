@@ -49,8 +49,6 @@ public class Battle {
     {
         String str = ("Power level engimon player : " + this.powerPlayer +  "\n" + "Power level engimon enemy : " + this.powerEnemy + "\n");
         return str;
-        //        System.out.println("Power level engimon player : " + this.powerPlayer);
-        //        System.out.println("Power level engimon enemy : " + this.powerEnemy);
     }
 
     private Boolean isPlayerLose()
@@ -80,7 +78,6 @@ public class Battle {
             for (String str : words) {
                 float str_float = Float.parseFloat(str);
                 this.advantageChart[i][j] = str_float;
-                System.out.print(this.advantageChart[i][j] + " ");
                 j++;
             }
             i++;
