@@ -2,6 +2,7 @@ package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -58,6 +59,8 @@ public class GameScreen extends AbstractScreen {
     public OptionBox optionBox;
     public DialogueController dialogueController;
 
+    private Music themeSong;
+
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
 
@@ -65,6 +68,11 @@ public class GameScreen extends AbstractScreen {
 
         batch = new SpriteBatch();
         HUDBatch = new SpriteBatch();
+
+        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themesong.ogg"));
+        themeSong.setLooping(true);
+        themeSong.setVolume(.025f);
+        themeSong.play();
 
         TextureAtlas atlas = app.getAssetManager().get("pic/packed/avatarTextures.atlas", TextureAtlas.class);
         AnimationSet playerAnimations = new AnimationSet(
@@ -122,6 +130,7 @@ public class GameScreen extends AbstractScreen {
         batch.dispose();
         map.dispose();
         renderer.dispose();
+        themeSong.dispose();
     }
 
     @Override
@@ -142,6 +151,9 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
+        if(gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()<=0){
+            getApp().setScreen(new GameOverScreen(getApp()));
+        }
         controller.update(delta);
         dialogueController.update(delta);
 
