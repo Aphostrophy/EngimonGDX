@@ -72,12 +72,9 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public void move(int dx, int dy){
 //        initializeMove(dx,dy);
-        System.out.println(Thread.currentThread().getName() + " bergerak");
-        System.out.println(Thread.currentThread().getName() + "Posisi awal : (" + this.getX() + "," + this.getY()+")");
         gameState.map.get(this.getY()).get(this.getX()).occupier=null;
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
-        System.out.println(Thread.currentThread().getName() + "Posisi akhir : (" + this.getX() + "," + this.getY()+")");
         gameState.map.get(this.getY()).get(this.getX()).occupier=this;
 
         finishMove();
@@ -92,7 +89,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveUp() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
-            if(this.getY()+1>=gameState.map.length() || gameState.map.get(this.getX()).get(this.getY()+1).occupier!=null){
+            if(this.getY()+1>=gameState.map.length() || gameState.map.get(this.getY()+1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()+1).get(this.getX()).cellType == CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()+1==gameState.player.getY())){
                 repositionOnCellConflict();
             }
             move(0,1);
@@ -102,7 +99,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
-            if(this.getY()-1<0 || gameState.map.get(this.getX()).get(this.getY()-1).occupier!=null && gameState.map.get(this.getX()).get(this.getY()-1).cellType!= CellType.BLOCKED){
+            if(this.getY()-1<0 || gameState.map.get(this.getY()-1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()-1).get(this.getX()).cellType== CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()-1==gameState.player.getY())){
                 repositionOnCellConflict();
             }
             move(0,-1);
@@ -112,7 +109,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
-            if(this.getX()-1<0 || gameState.map.get(this.getX()-1).get(this.getY()).occupier!=null && gameState.map.get(this.getX()-1).get(this.getY()).cellType!=CellType.BLOCKED){
+            if(this.getX()-1<0 || gameState.map.get(this.getY()).get(this.getX()-1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()-1).cellType==CellType.BLOCKED || (this.getX()-1==gameState.player.getX() && this.getY()==gameState.player.getY())){
                 repositionOnCellConflict();
             }
             move(-1,0);
@@ -122,7 +119,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveRight() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
-            if(this.getX()+1 >= gameState.map.get(0).length() || gameState.map.get(this.getX()+1).get(this.getY()).occupier!=null){
+            if(this.getX()+1 >= gameState.map.get(0).length() || gameState.map.get(this.getY()).get(this.getX()+1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()+1).cellType == CellType.BLOCKED ||  (this.getX()+1==gameState.player.getX() && this.getY()==gameState.player.getY())){
                 repositionOnCellConflict();
             }
             move(1,0);
@@ -133,7 +130,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         int x = ThreadLocalRandom.current().nextInt(0,4);
         if(x==0){
             try{
-                System.out.println(Thread.currentThread().getName() + " Gerak ke atas");
                 moveUp();
             } catch(Exception e){
                 e.printStackTrace();
@@ -141,7 +137,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         }
         if(x==1){
             try{
-                System.out.println(Thread.currentThread().getName() + " Gerak ke kanan");
                 moveRight();
             } catch(Exception e){
                 e.printStackTrace();
@@ -149,7 +144,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         }
         if(x==2){
             try{
-                System.out.println(Thread.currentThread().getName() + " Gerak ke bawah");
                 moveDown();
             } catch(Exception e){
                 e.printStackTrace();
@@ -157,7 +151,6 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         }
         if(x==3){
             try{
-                System.out.println(Thread.currentThread().getName() + " Gerak ke kiri");
                 moveLeft();
             } catch(Exception e){
                 e.printStackTrace();
@@ -229,7 +222,8 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         return this.position.getSecond();
     }
 
-    public void removeFromMap(){
+    public void killEngimon(){
         gameState.map.get(this.getY()).get(this.getX()).occupier=null;
+        reduceLives();
     }
 }

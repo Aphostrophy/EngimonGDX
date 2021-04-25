@@ -25,7 +25,7 @@ public class WildEngimonThread extends Thread{
             }
         }
         System.out.println(Thread.currentThread().getName() + " YAH AKU MATI");
-        wildEngimon.removeFromMap();
+        wildEngimon.killEngimon();
         gameState.reduceWildEngimon();
     }
 }
