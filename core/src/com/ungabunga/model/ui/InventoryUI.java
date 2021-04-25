@@ -31,6 +31,7 @@ public class InventoryUI extends Table {
                        item = new InventoryItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(idx)), itemType);
                        inventorySlot = new InventorySlot(skin, item, 1, count);
                    } else {
+                       inventory.displaySkillItem();
                        item = new InventoryItem(provider.getSprite((SkillItem) inventory.getItemByIndex(idx)), itemType);
                        inventorySlot = new InventorySlot(skin, item, inventory.getSkillItemAmount(), count);
                    }
@@ -43,6 +44,7 @@ public class InventoryUI extends Table {
 
                            if (slot.getItemType() == InventoryItem.ItemType.ENGIMON) {
                                PlayerEngimon chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(slot.getIdx());
+                               chosenEngimon.displayInfo();
                                try {
                                    gameState.spawnActiveEngimon(chosenEngimon);
                                } catch (CellOccupiedException e) {
@@ -51,6 +53,17 @@ public class InventoryUI extends Table {
                            } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
                                SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
                                System.out.println(chosenSkillItem.getAmount());
+                               if(chosenSkillItem.getAmount() > 0) {
+                                   Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
+                                   try {
+                                       gameState.player.getActiveEngimon().learnSkill(chosenSkill);
+                                       chosenSkillItem.setAmount(chosenSkillItem.getAmount() - 1);
+                                       slot.decrementItemCount();
+                                   } catch (FeatureNotImplementedException e) {
+                                       e.printStackTrace();
+                                   }
+                                   gameState.player.getActiveEngimon().displayInfo();
+                               }
                            }
 
                        }

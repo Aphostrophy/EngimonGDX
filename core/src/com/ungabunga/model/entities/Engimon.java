@@ -181,10 +181,15 @@ public class Engimon {
         System.out.println("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")");
         System.out.println("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")");
         System.out.println("Slogan \t:\t" + this.slogan);
+        this.displaySkills();
     }
 
-    public void displaySkills() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Blom diimplementasiin krn bingung ama GUI-nya");
+    public void displaySkills() {
+        System.out.println("======SKILLS======");
+        for (int i = 0; i < this.skills.size(); i++)
+        {
+            this.skills.get(i).displaySkillInfo();
+        }
     }
 
     public void increaseMastery() {

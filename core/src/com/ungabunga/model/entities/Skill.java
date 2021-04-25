@@ -20,6 +20,17 @@ public class Skill {
         this.masteryExp = 0;
     }
 
+    public void displaySkillInfo() {
+        System.out.println("Nama Skill\t:\t" + this.skillName);
+        System.out.println("Base Power\t:\t" + this.basePower);
+        System.out.println("Master Level\t:\t" + this.masteryLevel);
+        System.out.println("Element\t\t:");
+        for (int i = 0; i < this.elements.size(); i++)
+        {
+            System.out.println("\t- " + this.elements.get(i));
+        }
+    }
+
     public String getSkillName() {
         return skillName;
     }

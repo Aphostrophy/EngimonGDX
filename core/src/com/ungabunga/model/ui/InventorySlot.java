@@ -42,6 +42,23 @@ public class InventorySlot extends Stack {
         this.add(numItemsLabel);
     }
 
+    public void decrementItemCount() {
+        numItemsVal--;
+        numItemsLabel.setText(String.valueOf(numItemsVal));
+        if( numItemsVal == 0){
+            defaultBackground.getChildren().pop();
+        }
+        checkVisibilityOfItemCount();
+    }
+
+    private void checkVisibilityOfItemCount(){
+        if( numItemsVal <= 1){
+            numItemsLabel.setVisible(false);
+        }else{
+            numItemsLabel.setVisible(true);
+        }
+    }
+
     public int getNumItemsVal() {
         return numItemsVal;
     }
