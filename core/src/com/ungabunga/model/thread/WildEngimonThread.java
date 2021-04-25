@@ -17,7 +17,7 @@ public class WildEngimonThread extends Thread{
     public void run(){
         System.out.println(Thread.currentThread().getName() + " HAHAHAHAHA AKU HIDUP");
         while(!wildEngimon.isDead()){
-            System.out.println(Thread.currentThread().getName() + " I'm still alive");
+//            System.out.println(Thread.currentThread().getName() + " I'm still alive");
             wildEngimon.randomizeMove();
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(2000,5000));

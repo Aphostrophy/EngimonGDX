@@ -48,13 +48,14 @@ public class GameState {
         }
 
         ArrayList<IElements> elmt = new ArrayList<IElements>();
-        elmt.add(IElements.FIRE);
+        elmt.add(IElements.WATER);
+        elmt.add(IElements.GROUND);
         ArrayList<IElements> elmt2 = new ArrayList<IElements>();
         elmt2.add(IElements.ELECTRIC);
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        Engimon a = new Engimon("Test", "Pikachu", "X",100, elmt, skills, parents, parents);
+        Engimon a = new Engimon("Test", "Squirtle", "X",100, elmt, skills, parents, parents);
         Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
 
         SkillItem hehe = new SkillItem("Buffer", 15);
@@ -104,7 +105,7 @@ public class GameState {
             if(map.get(spawnY).get(spawnX).cellType == CellType.BLOCKED || map.get(spawnY).get(spawnX).occupier!=null){
                 return;
             }
-            Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
+            Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType,playerInventory.getEngimonInventory().getMaxEngimonLevel());
             WildEngimon wildEngimon = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider(),this);
             map.get(spawnY).get(spawnX).occupier = wildEngimon;
             WildEngimonThread wildEngimonThread = new WildEngimonThread(wildEngimon, this);

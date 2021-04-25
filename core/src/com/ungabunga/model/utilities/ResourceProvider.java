@@ -90,6 +90,7 @@ public class ResourceProvider {
        assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
        assetManager.load("pic/packed/skillLogo.atlas", TextureAtlas.class);
         assetManager.load("pic/packed/skillItemLogo.atlas", TextureAtlas.class);
+        assetManager.load("pic/packed/aura.atlas", TextureAtlas.class);
 
         assetManager.finishLoading();
 
@@ -431,7 +432,7 @@ public class ResourceProvider {
         return null;
     }
 
-    public Engimon randomizeEngimon(CellType biomes){
+    public Engimon randomizeEngimon(CellType biomes,int level){
         ArrayList<Engimon> candidates = new ArrayList<>();
         for(Engimon engimon: this.engimon){
             for(IElements engimonElement: engimon.getElements()){
@@ -444,7 +445,9 @@ public class ResourceProvider {
             return null;
         }
         int x = ThreadLocalRandom.current().nextInt(0,candidates.size());
-        return candidates.get(x);
+        Engimon engimon = candidates.get(x);
+        engimon.setLevel(level);
+        return engimon;
     }
 
     public Engimon getEngimon(String species) throws OutOfBoundException {
@@ -710,6 +713,90 @@ public class ResourceProvider {
         return atlas.findRegion(skill.getSkillName());
     }
 
+    public TextureRegion getSpriteAura(LivingEngimon engimon){
+        TextureAtlas atlas = assetManager.get("pic/packed/aura.atlas", TextureAtlas.class);
+        if (engimon.getEngimonSpecies().equals("Arcanine")) {
+            return atlas.findRegion("5");
+        }
+        if (engimon.getEngimonSpecies().equals("Blastoise")) {
+            return atlas.findRegion("1");
+        }
+        if (engimon.getEngimonSpecies().equals("Charmander")) {
+            return atlas.findRegion("2");
+        }
+        if (engimon.getEngimonSpecies().equals("Cubchoo")) {
+            return atlas.findRegion("7");
+        }
+        if (engimon.getEngimonSpecies().equals("Cubone")) {
+            return atlas.findRegion("4");
+        }
+        if (engimon.getEngimonSpecies().equals("Diglett")) {
+            return atlas.findRegion("4");
+        }
+        if (engimon.getEngimonSpecies().equals("Dugtrio")) {
+            return atlas.findRegion("4");
+        }
+        if (engimon.getEngimonSpecies().equals("Glaceon")) {
+            return atlas.findRegion("7");
+        }
+        if (engimon.getEngimonSpecies().equals("Glalie")) {
+            return atlas.findRegion("7");
+        }
+        if (engimon.getEngimonSpecies().equals("Growlithe")) {
+            return atlas.findRegion("5");
+        }
+        if (engimon.getEngimonSpecies().equals("Magmar")) {
+            return atlas.findRegion("5");
+        }
+        if (engimon.getEngimonSpecies().equals("Mareep")) {
+            return atlas.findRegion("3");
+        }
+        if (engimon.getEngimonSpecies().equals("Ninetales")) {
+            return atlas.findRegion("2");
+        }
+        if (engimon.getEngimonSpecies().equals("Pikachu")) {
+            return atlas.findRegion("3");
+        }
+        if (engimon.getEngimonSpecies().equals("Poliwag")) {
+            return atlas.findRegion("0");
+        }
+        if (engimon.getEngimonSpecies().equals("Ponyta")) {
+            return atlas.findRegion("5");
+        }
+        if (engimon.getEngimonSpecies().equals("Psyduck")) {
+            return atlas.findRegion("1");
+        }
+        if (engimon.getEngimonSpecies().equals("Raichu")) {
+            return atlas.findRegion("3");
+        }
+        if (engimon.getEngimonSpecies().equals("Sandshrew")) {
+            return atlas.findRegion("4");
+        }
+        if (engimon.getEngimonSpecies().equals("Shark")) {
+            return atlas.findRegion("0");
+        }
+        if (engimon.getEngimonSpecies().equals("Snorunt")) {
+            return atlas.findRegion("7");
+        }
+        if (engimon.getEngimonSpecies().equals("Squirtle")) {
+            return atlas.findRegion("1");
+        }
+        if (engimon.getEngimonSpecies().equals("Tongkol")) {
+            return atlas.findRegion("6");
+        }
+
+        if (engimon.getEngimonSpecies().equals("Voltorb")) {
+            return atlas.findRegion("3");
+        }
+        if (engimon.getEngimonSpecies().equals("Wartotle")) {
+            return atlas.findRegion("6");
+        }
+        if (engimon.getEngimonSpecies().equals("Vulpix")) {
+            return atlas.findRegion("5");
+        }
+
+        return atlas.findRegion("0");
+    }
     public boolean isCompatible(List<IElements> elementsList, CellType biome){
         for(IElements element : elementsList){
             if(mapElementToBiome.get(element).equals(biome)){

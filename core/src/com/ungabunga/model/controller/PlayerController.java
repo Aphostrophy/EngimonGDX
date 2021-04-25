@@ -4,26 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.dialogue.Dialogue;
-import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
-import com.ungabunga.model.screen.BreederScreen;
 import com.ungabunga.model.screen.GameScreen;
-import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayerController extends InputAdapter{
@@ -68,11 +59,21 @@ public class PlayerController extends InputAdapter{
             direction = DIRECTION.RIGHT;
             state = AVATAR_STATE.WALKING;
         }
+        if(keycode == Keys.SHIFT_LEFT  && gameState.player.state == AVATAR_STATE.WALKING) {
+            gameState.player.isRunning = true;
+        }
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
         }
         if (keycode == Keys.B) {
            battleHandler();
+        }
+        if (keycode ==Keys.Z){
+            if(gameState.player.getActiveEngimon()!=null){
+                gameScreen.dialogueController.startDialogue(gameState.player.getActiveEngimon().getSlogan());
+            } else{
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            }
         }
         if(keycode == Keys.X){
             instantKill();
@@ -135,6 +136,9 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.D) {
             state = AVATAR_STATE.STANDING;
         }
+        if (keycode == Keys.SHIFT_LEFT && gameState.player.state == AVATAR_STATE.WALKING) {
+            gameState.player.isRunning= false;
+        }
         return false;
     }
 
@@ -183,7 +187,11 @@ public class PlayerController extends InputAdapter{
                 dir = new Pair<>(-1,0);
             }
             System.out.println("Jessonn");
-            if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() || (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+
+            if((this.gameState.player.getY() + dir.getSecond())
+                    != this.gameState.player.getActiveEngimon().getY()
+                    || (this.gameState.player.getX() + dir.getFirst())
+                    != this.gameState.player.getActiveEngimon().getX() ) {
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     if (occupier != null) {
@@ -193,9 +201,9 @@ public class PlayerController extends InputAdapter{
                         B.BattleEngimon(PlayerEngimons, EnemyEngimons);
                         String AllBattleDialogue = B.showTotalPower();
                         if(B.BattleStatusIsWin()) {
-                            AllBattleDialogue += "Engimon anda jago juga !\n";
+                            AllBattleDialogue += "Engimon anda jago juga !";
                         } else {
-                            AllBattleDialogue += "Engimon anda cupu kali !\n";
+                            AllBattleDialogue += "Engimon anda cupu kali !";
                         }
                         ArrayList<String> Dialog = new ArrayList<String>();
                         Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
@@ -207,9 +215,10 @@ public class PlayerController extends InputAdapter{
                     }
                     System.out.println("HAHA");
                 }
-            }   else {
+            }
+            else {
                 System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-                }
+            }
         }
     }
 

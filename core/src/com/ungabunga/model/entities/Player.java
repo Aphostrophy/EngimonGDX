@@ -6,16 +6,17 @@ import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.save.Save;
-import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
+import static com.ungabunga.Settings.RUN_ANIM_TIMER;
 
 public class Player {
     private ActiveEngimon activeEngimon;
 
     public AVATAR_STATE state;
+    public boolean isRunning;
 
     public String name;
 
@@ -96,33 +97,39 @@ public class Player {
         if(activeEngimon!=null){
             activeEngimon.update(delta);
         }
-        if(state == AVATAR_STATE.WALKING) {
-            animTimer += delta;
-            stateTimer += delta;
-            worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
-            worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+        float anime_time = 0f;
+        animTimer += delta;
+        stateTimer += delta;
 
-            if(animTimer > ANIM_TIMER){
-                stateTimer -= (animTimer - ANIM_TIMER);
-                finishMove();
-                if(moveFrameRequest){
-                    if(direction == DIRECTION.UP){
-                        moveUp();
-                    }
-                    if(direction == DIRECTION.DOWN){
-                        moveDown();
-                    }
-                    if(direction == DIRECTION.LEFT){
-                        moveLeft();
-                    }
-                    if(direction == DIRECTION.RIGHT){
-                        moveRight();
-                    }
-                } else{
-                    stateTimer = 0f;
+        if(state == AVATAR_STATE.WALKING && !isRunning) {
+            anime_time = ANIM_TIMER;
+        } else if (state == AVATAR_STATE.WALKING && isRunning) {
+            anime_time = RUN_ANIM_TIMER;
+        }
+        worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/anime_time);
+        worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/anime_time);
+        if(animTimer > anime_time){
+            stateTimer -= (animTimer - anime_time);
+            finishMove();
+            if(moveFrameRequest){
+                if(direction == DIRECTION.UP){
+                    moveUp();
                 }
+                if(direction == DIRECTION.DOWN){
+                    moveDown();
+                }
+                if(direction == DIRECTION.LEFT){
+                    moveLeft();
+                }
+                if(direction == DIRECTION.RIGHT){
+                    moveRight();
+                }
+            } else{
+                this.isRunning = false;
+                stateTimer = 0f;
             }
         }
+
         moveFrameRequest = false;
     }
 
@@ -131,6 +138,7 @@ public class Player {
         if(activeEngimon!=null){
             activeEngimon.followPlayer();
         }
+
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
     }
@@ -180,8 +188,10 @@ public class Player {
     }
 
     public TextureRegion getSprite(){
-        if(state == AVATAR_STATE.WALKING){
+        if(state == AVATAR_STATE.WALKING && !isRunning){
             return animations.getWalking(direction).getKeyFrame(stateTimer);
+        } else if (state == AVATAR_STATE.WALKING && isRunning) {
+            return animations.getRunning(direction).getKeyFrame(stateTimer);
         }
         return animations.getStanding(direction);
     }

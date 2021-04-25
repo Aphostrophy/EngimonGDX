@@ -193,16 +193,16 @@ public class Engimon {
 
     public String displayInfoToString() {
         String str = new String();
-        str += ("ID \t\t:\t" + this.id+ "\n");
-        str += ("Name \t\t:\t" + this.name+ "\n");
-        str += ("Species \t:\t" + this.species+ "\n");
-        str += ("Level \t\t:\t" + this.level+ "\n");
-        str += ("Exp \t\t:\t" + this.exp+ "\n");
-        str += ("Cumulative Exp \t:\t" + this.cumulativeExp+ "\n");
-        str += ("Parents \t:\t"+ "\n");
+        str += ("ID \t\t:\t " + this.id+ "\n");
+        str += ("Name \t\t:\t " + this.name+ "\n");
+        str += ("Species \t:\t " + this.species+ "\n");
+        str += ("Level \t\t:\t " + this.level+ "\n");
+        str += ("Exp \t\t:\t " + this.exp+ "\n");
+        str += ("Cumulative Exp \t:\t " + this.cumulativeExp+ "\n");
+        str += ("Parents \t:\t "+ "\n");
         str += ("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")"+ "\n");
         str += ("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")"+ "\n");
-        str += ("Slogan \t:\t" + this.slogan);
+        str += ("Slogan \t:\t " + this.slogan);
         return str;
     }
 
@@ -214,7 +214,13 @@ public class Engimon {
     }
 
     public void learnSkill(Skill skill) throws FeatureNotImplementedException {
-        if(this.skills.size() == CONSTANTS.MAXSKILL) {
+        ArrayList<String> skillNames = new ArrayList<String>();
+        for(int i = 0; i < this.skills.size(); i++) {
+            skillNames.add(this.skills.get(i).getSkillName());
+        }
+        if(skillNames.contains(skill.getSkillName())) {
+            throw new FeatureNotImplementedException("Skill already learned!!");
+        } else if(this.skills.size() == CONSTANTS.MAXSKILL) {
             throw new FeatureNotImplementedException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
         } else {
             this.skills.add(skill);

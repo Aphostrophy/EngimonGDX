@@ -77,6 +77,11 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_west"),
                 atlas.findRegion("brendan_stand_east")
         );
+        playerAnimations.addrun(
+                new Animation(0.25f/2f, atlas.findRegions("brendan_run_north"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.25f/2f, atlas.findRegions("brendan_run_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.25f/2f, atlas.findRegions("brendan_run_west"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation(0.25f/2f, atlas.findRegions("brendan_run_east"), Animation.PlayMode.LOOP_PINGPONG));
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
         gameState = new GameState("orz", playerAnimations,map, app);
@@ -175,7 +180,8 @@ public class GameScreen extends AbstractScreen {
             for(int x=0;x<gameState.map.get(y).length();x++){
                 if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())){
                     LivingEngimon occupier = gameState.map.get(y).get(x).occupier;
-                    batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                        batch.draw(occupier.getSpriteAura(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.5f);
+                        batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }
