@@ -7,10 +7,8 @@ import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.dialogue.DialogueNode.NODE_TYPE;
 import com.ungabunga.model.dialogue.DialogueTraverser;
-import com.ungabunga.model.entities.Battle;
-import com.ungabunga.model.entities.Engimon;
-import com.ungabunga.model.entities.SkillItem;
-import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.entities.*;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
@@ -86,8 +84,31 @@ public class DialogueController extends InputAdapter {
                     String AllBattleDialogue = B.showTotalPower();
                     if(B.BattleStatusIsWin()) {
                         AllBattleDialogue += "Engimon anda jago juga !";
+                        if (PlayerEngimons.getLevel() < 5)
+                        {
+                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 10);
+                        }
+                        else if (PlayerEngimons.getLevel() <= 10)
+                        {
+                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 15);
+                        }
+                        else if (PlayerEngimons.getLevel() <= 20)
+                        {
+                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 20);
+                        }
+                        else
+                        {
+                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
+                        }
+                        try {
+                            gameScreen.getGameState().getPlayerInventory().insertToBag(new PlayerEngimon(EnemyEngimons));
+                            gameScreen.getGameState().getPlayerInventory().insertToBag(new SkillItem(EnemyEngimons.getSkills().get(0).getSkillName(),EnemyEngimons.getSkills().get(0).getBasePower()));
+                        } catch (FullInventoryException e) {
+                            e.printStackTrace();
+                        }
                     } else {
                         AllBattleDialogue += "Engimon anda cupu kali !";
+
                     }
                     ArrayList<String> Dialog = new ArrayList<String>();
                     Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
