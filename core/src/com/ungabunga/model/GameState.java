@@ -10,6 +10,7 @@ import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.exceptions.OutOfBoundException;
 import com.ungabunga.model.save.Save;
@@ -95,7 +96,11 @@ public class GameState {
     }
 
     public void update(float delta){
-        player.update(delta);
+        try {
+            player.update(delta);
+        } catch (EngimonConflictException e) {
+           removePlayerEngimon();
+        }
         timeDelta += delta;
         if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
             int spawnX = ThreadLocalRandom.current().nextInt(0,map.length());
@@ -123,7 +128,7 @@ public class GameState {
         this.wildEngimonCount = save.wildEngimonCount;
     }
 
-    public void movePlayerUp() throws CellOccupiedException, OutOfBoundException {
+    public void movePlayerUp() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y+1<map.length()){
@@ -137,7 +142,7 @@ public class GameState {
         }
     }
 
-    public void movePlayerDown() throws CellOccupiedException, OutOfBoundException {
+    public void movePlayerDown() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(y-1>=0){
@@ -151,7 +156,7 @@ public class GameState {
         }
     }
 
-    public void movePlayerLeft() throws CellOccupiedException, OutOfBoundException {
+    public void movePlayerLeft() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x-1>=0){
@@ -165,7 +170,7 @@ public class GameState {
         }
     }
 
-    public void movePlayerRight() throws CellOccupiedException, OutOfBoundException {
+    public void movePlayerRight() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
         if(x+1<map.get(y).length()){

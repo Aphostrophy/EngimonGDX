@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
-import com.ungabunga.model.exceptions.FeatureNotImplementedException;
+import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.utilities.Pair;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
@@ -65,7 +65,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.worldY = this.getY();
     }
 
-    public void update(float delta){
+    public void update(float delta) throws EngimonConflictException {
         if(state == AVATAR_STATE.WALKING) {
             animTimer += delta;
             stateTimer += delta;
@@ -76,7 +76,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
                 stateTimer -= (animTimer - ANIM_TIMER);
                 finishMove();
                 if(player.getMoveFrameRequest()){
-                    followPlayer(player.getX(),player.getY());
+                    followPlayer();
                 } else{
                     stateTimer = 0f;
                 }
@@ -94,35 +94,49 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         gameState.map.get(this.getY()).get(this.getX()).occupier=this;
     }
 
-    public void moveUp() {
+    public void moveUp() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
+            if(gameState.map.get(this.getX()).get(this.getY()+1).occupier!=null){
+                repositionOnCellConflict();
+            }
             move(0,1);
         }
     }
 
-    public void moveDown() {
+    public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
+            if(gameState.map.get(this.getX()).get(this.getY()-1).occupier!=null){
+                repositionOnCellConflict();
+            }
             move(0,-1);
         }
     }
 
-    public void moveLeft() {
+    public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
+            if(gameState.map.get(this.getX()-1).get(this.getY()).occupier!=null){
+                repositionOnCellConflict();
+            }
             move(-1,0);
         }
     }
 
-    public void moveRight() {
+    public void moveRight() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
+            if(gameState.map.get(this.getX()+1).get(this.getY()).occupier!=null){
+                repositionOnCellConflict();
+            }
             move(1,0);
         }
     }
 
-    public boolean followPlayer(int playerLastX, int playerLastY){
+    //I.S Player sukses bergerak
+    //F.S Engimon berhasil menempati posisi terakhir pemain, direposisi apabila posisi terakhir pemain ditempati engimon baru, dan throw exception dan remove engimon apabila sekeliling pemain tidak ada tempat spawn engimon
+    public boolean followPlayer() throws EngimonConflictException {
         if(this.getX()<this.player.getWorldX()){
             moveRight();
             return true;
@@ -148,8 +162,40 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     }
 
     @Override
-    public void repositionOnCellConflict() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void repositionOnCellConflict() throws EngimonConflictException {
+        if(gameState.map.get(player.getY()).get(player.getX()-1).occupier == null){
+            this.position.setFirst(player.getX()-1);
+            this.position.setSecond(player.getY());
+
+            this.worldX = player.getX()-1;
+            this.worldY = player.getY();
+            return;
+        }
+        if(gameState.map.get(player.getY()).get(player.getX()+1).occupier == null){
+            this.position.setFirst(player.getX()+1);
+            this.position.setSecond(player.getY());
+
+            this.worldX = player.getX()+1;
+            this.worldY = player.getY();
+            return;
+        }
+        if(gameState.map.get(player.getY()-1).get(player.getX()).occupier == null){
+            this.position.setFirst(player.getX());
+            this.position.setSecond(player.getY()-1);
+
+            this.worldX = player.getX();
+            this.worldY = player.getY()-1;
+            return;
+        }
+        if(gameState.map.get(player.getY()+1).get(player.getX()).occupier == null){
+            this.position.setFirst(player.getX());
+            this.position.setSecond(player.getY()+1);
+
+            this.worldX = player.getX();
+            this.worldY = player.getY()+1;
+            return;
+        }
+        throw new EngimonConflictException("Can't reposition your engimon as you're surrounded by wild engimons");
     }
 
     @Override

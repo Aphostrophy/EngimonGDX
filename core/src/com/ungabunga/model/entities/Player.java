@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
@@ -91,7 +92,7 @@ public class Player {
         this.worldY = this.getY();
     }
 
-    public void update(float delta){
+    public void update(float delta) throws EngimonConflictException {
         if(activeEngimon!=null){
             activeEngimon.update(delta);
         }
@@ -125,16 +126,16 @@ public class Player {
         moveFrameRequest = false;
     }
 
-    private void move(int dx,int dy){
+    private void move(int dx,int dy) throws EngimonConflictException {
         initializeMove(dx,dy);
         if(activeEngimon!=null){
-            activeEngimon.followPlayer(this.position.getFirst(),this.position.getSecond());
+            activeEngimon.followPlayer();
         }
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
     }
 
-    public void moveUp() {
+    public void moveUp() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
             move(0,1);
@@ -145,7 +146,7 @@ public class Player {
         }
     }
 
-    public void moveDown() {
+    public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
             move(0,-1);
@@ -156,7 +157,7 @@ public class Player {
         }
     }
 
-    public void moveLeft() {
+    public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
             move(-1,0);
@@ -167,7 +168,7 @@ public class Player {
         }
     }
 
-    public void moveRight() {
+    public void moveRight() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
             move(1,0);
