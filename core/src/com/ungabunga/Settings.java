@@ -6,5 +6,5 @@ public class Settings {
     public static float SCALED_TILE_SIZE = TILE_SIZE * SCALE;
 
 //    public static float ANIM_TIMER = 0.5f;
-    public static float ANIM_TIMER = 0.05f;
+    public static float ANIM_TIMER = 0.5f;
 }
