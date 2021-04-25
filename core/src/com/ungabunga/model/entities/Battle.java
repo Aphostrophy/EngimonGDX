@@ -6,6 +6,8 @@ import java.io.*;
 //import javafx.util.*;
 //import com.ungabunga.model.entities.Engimon;
 //import com.ungabunga.model.GameState;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.utilities.Pair;
 
@@ -66,24 +68,24 @@ public class Battle {
     private void generateChart()
     {
         int i = 0, j = 0;
-        try {
-            BufferedReader inputFile = new BufferedReader(new FileReader("../constants/advantageChart.csv"));
-            String line;
-            while ((line = inputFile.readLine()) != null) {
-                String[] values = line.split(",");
-                j = 0;
-                for (String str : values) {
-                    float str_float = Float.parseFloat(str);
-                    this.advantageChart[i][j] = str_float;
-                    System.out.print(this.advantageChart[i][j] + " ");
-                    j++;
-                }
-                i++;
-                System.out.println("");
+        FileHandle inputFile = Gdx.files.internal("resources/advantageChart.csv");
+//            BufferedReader inputFile = new BufferedReader(new FileReader("../constants/advantageChart.csv"));
+//            String line;
+        String text = inputFile.readString();
+        String linesArray[] = text.split("\\r?\\n");
+        i = 0;
+        for (String line : linesArray) {
+            String words[] = line.split(",");
+            j = 0;
+            for (String str : words) {
+                float str_float = Float.parseFloat(str);
+                this.advantageChart[i][j] = str_float;
+                System.out.print(this.advantageChart[i][j] + " ");
+                j++;
             }
-            inputFile.close();
-        } catch (IOException ioException) {
+            i++;
         }
+
     }
 
     private Pair<Float, Float> elementAdvantage()

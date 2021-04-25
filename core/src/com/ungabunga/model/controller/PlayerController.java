@@ -15,6 +15,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.*;
+import com.ungabunga.model.enums.AVATAR_MODE;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
@@ -67,6 +68,9 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.D) {
             direction = DIRECTION.RIGHT;
             state = AVATAR_STATE.WALKING;
+        }
+        if(keycode == Keys.SHIFT_LEFT  && gameState.player.currMode == AVATAR_MODE.WALKING) {
+            gameState.player.nextMode = AVATAR_MODE.RUNNING;
         }
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
@@ -142,6 +146,9 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.D) {
             state = AVATAR_STATE.STANDING;
         }
+        if (keycode == Keys.SHIFT_LEFT && gameState.player.currMode == AVATAR_MODE.RUNNING) {
+            gameState.player.nextMode = AVATAR_MODE.WALKING;
+        }
         return false;
     }
 
@@ -190,7 +197,11 @@ public class PlayerController extends InputAdapter{
                 dir = new Pair<>(-1,0);
             }
             System.out.println("Jessonn");
-            if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() || (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+
+            if((this.gameState.player.getY() + dir.getSecond())
+                    != this.gameState.player.getActiveEngimon().getY()
+                    || (this.gameState.player.getX() + dir.getFirst())
+                    != this.gameState.player.getActiveEngimon().getX() ) {
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     if (occupier != null) {
@@ -214,9 +225,10 @@ public class PlayerController extends InputAdapter{
                     }
                     System.out.println("HAHA");
                 }
-            }   else {
+            }
+            else {
                 System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-                }
+            }
         }
     }
 
