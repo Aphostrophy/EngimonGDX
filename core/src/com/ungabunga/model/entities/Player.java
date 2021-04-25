@@ -125,6 +125,7 @@ public class Player {
                     moveRight();
                 }
             } else{
+                this.isRunning = false;
                 stateTimer = 0f;
             }
         }
