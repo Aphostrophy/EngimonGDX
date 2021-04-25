@@ -67,8 +67,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         root = new Table();
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
 
-        Image image = new Image(getApp().getSkin(), "optionbox");
-
         topBar = new Table();
         engimonPic = new Stack();
         name = new Table();
@@ -80,9 +78,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         left = new Table();
         right = new Table();
         nameInputWrapper = new Table();
-
-        // add background
-        engimonPic.add(image);
 
 //        name.setBackground("dialoguebox");
 //        details.setBackground("dialoguebox");
@@ -112,9 +107,10 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         skills.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
 
         for(int i = 0; i < activeEngimon.getSkills().size(); i++) {
+            Image backgroundImage = new Image(getApp().getSkin(), "optionbox");
             Stack skillPic = new Stack();
             Table skillWrapper = new Table();
-            skillPic.add(image);
+            skillPic.add(backgroundImage);
 
             Label masteryLevelLabel = new Label(String.valueOf(activeEngimon.getSkills().get(i).getMasteryLevel()), getApp().getSkin());
             masteryLevelLabel.setAlignment(Align.bottomRight);
@@ -168,7 +164,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         root.add(right).center().fillX();
 
         uiStage.addActor(root);
-        uiStage.setDebugAll(true);
 
         back.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

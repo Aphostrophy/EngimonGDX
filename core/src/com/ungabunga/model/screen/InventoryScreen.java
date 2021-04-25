@@ -176,6 +176,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         optionBox = new OptionBox(getApp().getSkin());
         dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
+        optionBox.setVisible(false);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = getApp().getSkin().getFont("font");
@@ -278,5 +279,9 @@ public class InventoryScreen extends AbstractScreen implements Screen {
                 }
             }
         });
+    }
+
+    public void setOptionBoxVisibility(boolean visible) {
+        optionBox.setVisible(visible);
     }
 }

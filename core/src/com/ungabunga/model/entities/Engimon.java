@@ -151,6 +151,18 @@ public class Engimon {
         return skills;
     }
 
+    public void deleteSkill(String skillName) {
+        for(int i = 0; i < this.skills.size(); i++) {
+            if(this.skills.get(i).getSkillName() == skillName) {
+                this.skills.remove(i);
+            }
+        }
+    }
+
+    public void addSkill(Skill skill) {
+        this.skills.add(skill);
+    }
+
     public void setSkills(List<Skill> skills) { this.skills = skills; }
 
     public Boolean isLevelUp() {
