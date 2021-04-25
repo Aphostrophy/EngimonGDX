@@ -74,6 +74,13 @@ public class PlayerController extends InputAdapter{
         if (keycode == Keys.B) {
            battleHandler();
         }
+        if (keycode ==Keys.Z){
+            if(gameState.player.getActiveEngimon()!=null){
+                gameScreen.dialogueController.startDialogue(gameState.player.getActiveEngimon().getSlogan());
+            } else{
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            }
+        }
         if(keycode == Keys.X){
             instantKill();
         }
