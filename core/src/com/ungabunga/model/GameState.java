@@ -16,6 +16,7 @@ import com.ungabunga.model.thread.WildEngimonThread;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.utilities.ResourceProvider;
 import com.ungabunga.model.utilities.fileUtil;
 
 import java.util.ArrayList;
@@ -56,6 +57,11 @@ public class GameState {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
+        skills.add(app.getResourceProvider().getSkill("LightningBeam"));
+        skills.add(app.getResourceProvider().getSkill("Charge"));
+        skills.add(app.getResourceProvider().getSkill("LightningBolt"));
+        skills.add(app.getResourceProvider().getSkill("RisingVoltage"));
+
         Engimon a = app.getResourceProvider().getEngimon("Squirtle");
         a.setName("Test");
         a.setLevel(30);
@@ -64,6 +70,7 @@ public class GameState {
         a.getSkills().get(0).displaySkillInfo();
 
         Engimon b = app.getResourceProvider().getEngimon("Raichu");
+        b.setSkills(skills);
         b.setName("Hola");
         b.setLevel(30);
         b.setParentName(new Pair<String,String>("C","D"));
