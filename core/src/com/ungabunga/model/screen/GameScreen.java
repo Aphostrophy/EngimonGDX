@@ -164,6 +164,13 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
+        if(controller.isDetailOpen) {
+            try {
+                getApp().setScreen(new DetailEngimonScreen(getApp(), this, gameState.player.getActiveEngimon(), getApp().getResourceProvider(), controller));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         renderer.setView(camera);
         renderer.render();

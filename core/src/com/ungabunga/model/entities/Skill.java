@@ -36,7 +36,18 @@ public class Skill {
         str += ("Nama Skill\t:\t " + this.skillName + "\n");
         str += ("Base Power\t:\t " + this.basePower + "\n");
         str += ("Master Level\t:\t " + this.masteryLevel + "\n");
-        str += ("Nama Skill\t:\t " + this.skillName + "\n");
+        str += ("Element\t\t:" + "\n");
+        for (int i = 0; i < this.elements.size(); i++)
+        {
+            str += ("\t- " + this.elements.get(i) + "\n");
+        }
+        return str;
+    }
+
+    public String displaySkillInfoDetailString() {
+        String str = new String();
+        str += ("Base Power\t:\t " + this.basePower + "\n");
+        str += ("Master Level\t:\t " + this.masteryLevel + "\n");
         str += ("Element\t\t:" + "\n");
         for (int i = 0; i < this.elements.size(); i++)
         {

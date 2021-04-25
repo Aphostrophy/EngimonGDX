@@ -215,16 +215,26 @@ public class Engimon {
     }
 
     public void learnSkill(Skill skill) throws DuplicateSkillException {
+        boolean found = false;
         ArrayList<String> skillNames = new ArrayList<String>();
         for(int i = 0; i < this.skills.size(); i++) {
             skillNames.add(this.skills.get(i).getSkillName());
         }
-        if(skillNames.contains(skill.getSkillName())) {
-            throw new DuplicateSkillException("Skill already learned!!");
-        } else if(this.skills.size() == CONSTANTS.MAXSKILL) {
-            throw new DuplicateSkillException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
-        } else {
-            this.skills.add(skill);
+
+        for(int i = 0; i < this.elements.size(); i++) {
+            if(skill.getElements().contains(this.elements.get(i))) {
+                found = true;
+                if(skillNames.contains(skill.getSkillName())) {
+                    throw new DuplicateSkillException("Skill already learned!!");
+                } else if(this.skills.size() == CONSTANTS.MAXSKILL) {
+                    throw new DuplicateSkillException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
+                } else {
+                    this.skills.add(skill);
+                }
+            }
+        }
+        if(!found) {
+            throw new DuplicateSkillException("Element not compatible!!");
         }
     }
 

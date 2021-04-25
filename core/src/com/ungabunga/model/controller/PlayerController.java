@@ -24,11 +24,13 @@ public class PlayerController extends InputAdapter{
     private AVATAR_STATE state;
     public boolean isInventoryOpen;
     public boolean isBreederOpen;
+    public boolean isDetailOpen;
 
     public PlayerController(GameState gameState, GameScreen gameScreen) {
         this.gameState = gameState;
         this.isInventoryOpen = false;
         this.isBreederOpen = false;
+        this.isDetailOpen = false;
         this.gameScreen = gameScreen;
     }
 
@@ -64,6 +66,9 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
+        }
+        if(keycode == Keys.E) {
+            isDetailOpen = !isDetailOpen;
         }
         if (keycode == Keys.B) {
            battleHandler();
@@ -109,7 +114,6 @@ public class PlayerController extends InputAdapter{
 
         if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
             isBreederOpen = !isBreederOpen;
-
         }
         return super.touchUp(screenX, screenY, pointer, button);
     }
@@ -120,6 +124,10 @@ public class PlayerController extends InputAdapter{
 
     public void closeInventory() {
         isInventoryOpen = !isInventoryOpen;
+    }
+
+    public void closeDetail() {
+        isDetailOpen = !isDetailOpen;
     }
 
     @Override
