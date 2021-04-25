@@ -3,9 +3,6 @@ package com.ungabunga.model;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
-import com.ungabunga.model.controller.DialogueController;
-import com.ungabunga.model.dialogue.Dialogue;
-import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
@@ -14,6 +11,7 @@ import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.exceptions.OutOfBoundException;
 import com.ungabunga.model.save.Save;
+import com.ungabunga.model.thread.WildEngimonThread;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
@@ -31,9 +29,7 @@ public class GameState {
 
     private Bag playerInventory;
     public DialogueBox dialogueBox;
-    public boolean Occupied = false;
     private float timeDelta;
-    private String stringException;
     private float SPAWN_INTERVAL = 5.0f;
 
     private int wildEngimonCount;
@@ -109,7 +105,10 @@ public class GameState {
                 return;
             }
             Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
-            map.get(spawnY).get(spawnX).occupier = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider());
+            WildEngimon wildEngimon = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider(),this);
+            map.get(spawnY).get(spawnX).occupier = wildEngimon;
+            WildEngimonThread wildEngimonThread = new WildEngimonThread(wildEngimon, this);
+            wildEngimonThread.start();
 
             wildEngimonCount++;
             timeDelta = 0;
@@ -119,11 +118,11 @@ public class GameState {
 
     public void loadSave(Save save){
         player.loadSave(save);
-        for(int y=0;y<save.map.length;y++){
-            for(int x=0;x<save.map[0].length;x++){
-                this.map.get(y).set(x, save.map[y][x]);
-            }
-        }
+//        for(int y=0;y<save.map.length;y++){
+//            for(int x=0;x<save.map[0].length;x++){
+//                this.map.get(y).set(x, save.map[y][x]);
+//            }
+//        }
         this.playerInventory = save.playerInventory;
         this.wildEngimonCount = save.wildEngimonCount;
     }
@@ -229,5 +228,9 @@ public class GameState {
 
     public Bag getPlayerInventory(){
         return this.playerInventory;
+    }
+
+    public void reduceWildEngimon(){
+        this.wildEngimonCount--;
     }
 }
