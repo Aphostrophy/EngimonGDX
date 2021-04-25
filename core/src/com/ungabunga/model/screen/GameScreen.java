@@ -163,7 +163,10 @@ public class GameScreen extends AbstractScreen {
 
         if (controller.isBreederOpen) {
             try {
-                getApp().setScreen(new BreederScreen(getApp(), controller, gameState.getPlayerInventory(),this));
+                BreederScreen breederScreen = new BreederScreen(getApp(), controller, gameState,this);
+                getApp().setScreen(breederScreen);
+                setGameState(breederScreen.getGameState());
+                getGameState().getPlayerInventory().showInventory();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -254,6 +257,14 @@ public class GameScreen extends AbstractScreen {
         dialogTable2.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable2.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable2).expand().align(Align.bottom);
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     @Override

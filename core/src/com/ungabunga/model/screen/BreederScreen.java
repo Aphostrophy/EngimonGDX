@@ -1,9 +1,6 @@
 package com.ungabunga.model.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -37,19 +34,10 @@ import java.util.List;
 public class BreederScreen implements Screen {
     private EngimonGame app;
 
+    private GameState gameState;
     private final GameScreen gameScreen;
 
     private PlayerController controller;
-
-    private Bag bag;
-
-    private Sprite ParentABox;
-    private Sprite ParentBBox;
-    private Sprite BreedButtonInactive;
-    private Sprite BreedButtonActive;
-
-    private Engimon ParentA;
-    private Engimon ParentB;
 
     private SpriteBatch batch;
     private Inventory<Engimon> inventory;
@@ -74,29 +62,14 @@ public class BreederScreen implements Screen {
 
 
 
-    public BreederScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
+    public BreederScreen(EngimonGame app, PlayerController controller, GameState gameState, GameScreen gameScreen) throws IOException {
         this.app = app;
         this.controller = controller;
-        this.bag = bag;
+        this.gameState = gameState;
 
         batch = new SpriteBatch();
 
         this.gameScreen = gameScreen;
-
-//        Texture splashTexture = new Texture("img/box.png");
-//        this.ParentABox = new Sprite(splashTexture);
-//        ParentABox.setSize(250, 250);
-//
-//        this.ParentBBox = new Sprite(splashTexture);
-//        ParentBBox.setSize(250, 250);
-//
-//        splashTexture = new Texture("img/breed_inactive.png");
-//        this.BreedButtonInactive = new Sprite(splashTexture);
-//        BreedButtonInactive.setSize(200, 100);
-//
-//        splashTexture = new Texture("img/breed_active.png");
-//        this.BreedButtonActive = new Sprite(splashTexture);
-//        BreedButtonActive.setSize(200, 100);
 
         inventory = new Inventory<Engimon>();
         ArrayList<IElements> elmt = new ArrayList<IElements>();
@@ -108,15 +81,6 @@ public class BreederScreen implements Screen {
 
         Engimon a = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
         Engimon b = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
-
-//        ParentA = new Engimon("Test", "X", "X",100, elmt, skills, parents, parents);
-//        ParentB = new Engimon("Hola", "X", "X",100, elmt2, skills, parents, parents);
-        try {
-            inventory.insertToInventory(a, inventory.getFilledSlot());
-            inventory.insertToInventory(b, inventory.getFilledSlot());
-        } catch (FullInventoryException e) {
-            controller.finishBreeding();
-        }
 
         initUI();
     }
@@ -210,8 +174,8 @@ public class BreederScreen implements Screen {
 
         uiStage.addActor(root);
 
-        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), bag.getEngimonInventory(), app.getResourceProvider());
-        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), bag.getEngimonInventory(), app.getResourceProvider());
+        BreederEngimonUI parentA = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
+        BreederEngimonUI parentB = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
 
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());
@@ -228,7 +192,9 @@ public class BreederScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if (parentA.isParentFilled() && parentB.isParentFilled()) {
                     try {
-                        app.setScreen(new ChildEngimonScreen(app, controller, parentA.getParentEngimon(), parentB.getParentEngimon(), inventory));
+                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, parentA.getParentEngimon(), parentB.getParentEngimon(), gameState);
+                        app.setScreen(childEngimonScreen);
+                        setGameState(childEngimonScreen.getNewGameState());
                     } catch (IOException e){
                         e.printStackTrace();
                     }
@@ -264,6 +230,14 @@ public class BreederScreen implements Screen {
     @Override
     public void resume() {
 
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     @Override
