@@ -145,7 +145,10 @@ public class GameScreen extends AbstractScreen {
 
         if (controller.isBreederOpen) {
             try {
-                getApp().setScreen(new BreederScreen(getApp(), controller, gameState.getPlayerInventory(),this));
+                BreederScreen breederScreen = new BreederScreen(getApp(), controller, gameState,this);
+                getApp().setScreen(breederScreen);
+                setGameState(breederScreen.getGameState());
+                getGameState().getPlayerInventory().showInventory();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -227,6 +230,14 @@ public class GameScreen extends AbstractScreen {
         root.add(dialogTable2).expand().align(Align.bottom);
     }
 
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
     @Override
     public  void resize(int width, int height) {
         camera.viewportHeight = height;
@@ -248,7 +259,4 @@ public class GameScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
 }

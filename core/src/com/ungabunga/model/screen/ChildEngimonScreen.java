@@ -38,12 +38,13 @@ public class ChildEngimonScreen implements Screen {
     private EngimonGame app;
 
     private PlayerController controller;
+    private GameState gameState;
 
     private Stage uiStage;
+    private Bag bag;
 
     private Engimon ParentA;
     private Engimon ParentB;
-    private Inventory<Engimon> inventory;
 
     private Table root;
     private Table topBar;
@@ -56,11 +57,11 @@ public class ChildEngimonScreen implements Screen {
     private TextField childName;
 
 
-    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, Inventory<Engimon> inventory) throws IOException {
+    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, GameState gameState) throws IOException {
         this.app = app;
         this.controller = controller;
+        this.gameState = gameState;
 
-        this.inventory = inventory;
         this.ParentA = ParentA;
         this.ParentB = ParentB;
 
@@ -165,7 +166,7 @@ public class ChildEngimonScreen implements Screen {
         enter.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
 
-                Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), inventory);
+                Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
                 // cuma buat mastiin childnya kebreed
                 System.out.println("Nama: " + child.getName());
                 System.out.println("Lvl. " + child.getLevel());
@@ -185,6 +186,11 @@ public class ChildEngimonScreen implements Screen {
         uiStage.addActor(root);
 
     }
+
+    public GameState getNewGameState() {
+        return gameState;
+    }
+
     @Override
     public void resize(int width, int height) {
 
