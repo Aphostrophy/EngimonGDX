@@ -52,13 +52,14 @@ public class GameState {
         }
 
         ArrayList<IElements> elmt = new ArrayList<IElements>();
-        elmt.add(IElements.FIRE);
+        elmt.add(IElements.WATER);
+        elmt.add(IElements.GROUND);
         ArrayList<IElements> elmt2 = new ArrayList<IElements>();
         elmt2.add(IElements.ELECTRIC);
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        Engimon a = new Engimon("Test", "Pikachu", "X",100, elmt, skills, parents, parents);
+        Engimon a = new Engimon("Test", "Squirtle", "X",100, elmt, skills, parents, parents);
         Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
 
         SkillItem hehe = new SkillItem("Buffer", 15);

@@ -3,6 +3,7 @@ package com.ungabunga.model.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.enums.AVATAR_MODE;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
@@ -10,6 +11,7 @@ import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.ResourceProvider;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
+import static com.ungabunga.Settings.RUN_ANIM_TIMER;
 
 /*
 Active Engimon merepresentasikan Player Engimon yang sedang aktif merupakan turunan dari PlayerEngimon
@@ -71,20 +73,24 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     }
 
     public void update(float delta) throws EngimonConflictException {
-        if(state == AVATAR_STATE.WALKING) {
-            animTimer += delta;
-            stateTimer += delta;
-            worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
-            worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+        float anime_time = 0f;
+        animTimer += delta;
+        stateTimer += delta;
+        if(player.currMode == AVATAR_MODE.WALKING) {
+            anime_time = ANIM_TIMER;
+        } else if (player.currMode == AVATAR_MODE.RUNNING) {
+            anime_time = RUN_ANIM_TIMER;
+        }
+        worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/anime_time);
+        worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/anime_time);
 
-            if(animTimer > ANIM_TIMER){
-                stateTimer -= (animTimer - ANIM_TIMER);
-                finishMove();
-                if(player.getMoveFrameRequest()){
-                    followPlayer();
-                } else{
-                    stateTimer = 0f;
-                }
+        if(animTimer > anime_time){
+            stateTimer -= (animTimer - anime_time);
+            finishMove();
+            if(player.getMoveFrameRequest()){
+                followPlayer();
+            } else{
+                stateTimer = 0f;
             }
         }
     }
