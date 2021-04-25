@@ -3,6 +3,8 @@ package com.ungabunga.model.thread;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.WildEngimon;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class WildEngimonThread extends Thread{
 
     WildEngimon wildEngimon;
@@ -17,7 +19,7 @@ public class WildEngimonThread extends Thread{
         while(!wildEngimon.isDead()){
             wildEngimon.randomizeMove();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(ThreadLocalRandom.current().nextInt(2000,5000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
