@@ -51,6 +51,14 @@ public class Battle {
         return str;
     }
 
+    public float getActiveEngimonPower() {
+        return this.powerPlayer;
+    }
+
+    public float getEnemyEngimonPower() {
+        return this.powerEnemy;
+    }
+
     private Boolean isPlayerLose()
     {
         if (this.powerPlayer <= this.powerEnemy)
