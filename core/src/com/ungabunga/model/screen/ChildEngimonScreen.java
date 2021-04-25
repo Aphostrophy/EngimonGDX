@@ -46,9 +46,12 @@ public class ChildEngimonScreen implements Screen {
 
     private Engimon ParentA;
     private Engimon ParentB;
+    private Engimon child;
 
     private Table root;
     private Table topBar;
+    private Table childBox;
+    private Table childWrapper;
     private Table nameWrapper;
 
     private Table backButton;

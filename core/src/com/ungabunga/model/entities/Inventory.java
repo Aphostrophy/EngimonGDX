@@ -250,10 +250,11 @@ public class Inventory<T> {
         {
             if (((PlayerEngimon) this.items.get(i)).getLevel() >= 4)
             {
+                ((PlayerEngimon) this.items.get(i)).displayInfo();
                 result.add(((PlayerEngimon) this.items.get(i)));
             }
         }
-        if (result.size() <= 1){
+        if (result.size() < 1){
             throw new NoBreedableEngimon("Tidak ada Engimon yang dapat di breed");
         }
         return result;
