@@ -42,6 +42,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
 
     private Table root;
     private DialogueBox dialogueBox;
+    private OptionBox optionBox;
     private Table topBar;
     private Table inventoryWrapper;
     private Table dialogTable;
@@ -69,9 +70,6 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         this.gameScreen = gameScreen;
         this.isDelete = false;
         this.isDetail = false;
-
-        OptionBox optionBox = new OptionBox(getApp().getSkin());
-        optionBox.setVisible(false);
 
         initUI();
         this.dialogueController = new DialogueController(dialogueBox, optionBox);
@@ -168,6 +166,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         Image bg = new Image(new Texture("img/inventory_title.png"));
         title.add(bg).width(500);
 
+        optionBox = new OptionBox(getApp().getSkin());
         dialogueBox =  new DialogueBox(getApp().getSkin());
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
