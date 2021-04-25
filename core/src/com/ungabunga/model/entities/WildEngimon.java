@@ -75,6 +75,11 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     }
 
     @Override
+    public TextureRegion getSpriteAura() {
+        return resourceProvider.getSpriteAura(this);
+    }
+
+    @Override
     public float getKeyFrame() {
         return stateTimer;
     }
