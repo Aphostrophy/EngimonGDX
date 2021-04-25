@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -11,29 +12,33 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.entities.LivingEngimon;
-import com.ungabunga.model.entities.PlayerEngimon;
-import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.dialogue.Dialogue;
+import com.ungabunga.model.dialogue.DialogueNode;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.BreederScreen;
+import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerController extends InputAdapter{
+    private GameScreen gameScreen;
     private GameState gameState;
     private DIRECTION direction;
     private AVATAR_STATE state;
     public boolean isInventoryOpen;
     public boolean isBreederOpen;
 
-    public PlayerController(GameState gameState) {
+    public PlayerController(GameState gameState, GameScreen gameScreen) {
         this.gameState = gameState;
         this.isInventoryOpen = false;
         this.isBreederOpen = false;
+        this.gameScreen = gameScreen;
     }
 
     @Override
@@ -66,47 +71,11 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
         }
-        if(keycode == Keys.P){
-            if(gameState.player.getActiveEngimon()==null){
-                try{
-                    System.out.println("Active Engimon spawned");
-                    gameState.spawnActiveEngimon(new PlayerEngimon(gameState.app.getResourceProvider().getEngimon("Blastoise")));
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
+        if (keycode == Keys.B) {
+           battleHandler();
         }
-        if (keycode == Keys.T) {
-            if(this.gameState.player.getActiveEngimon()!=null){
-                Pair<Integer,Integer> dir = new Pair<>(0,0);
-                DIRECTION d = this.gameState.player.getDirection();
-                if(d == DIRECTION.UP) {
-                    System.out.println("Lihat atas");
-                    dir = new Pair<>(0,1);
-                } else if(d == DIRECTION.DOWN) {
-                    System.out.println("Lihat bawah");
-                    dir = new Pair<>(0,-1);
-                } else if(d == DIRECTION.RIGHT) {
-                    System.out.println("Lihat kanan");
-                    dir = new Pair<>(1,0);
-                }
-                else if(d == DIRECTION.LEFT) {
-                    System.out.println("Lihat kiri");
-                    dir = new Pair<>(-1,0);
-                }
-                System.out.println("Jessonn");
-                if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() && (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
-                    if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
-                        WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
-                        if (occupier != null) {
-                            System.out.println(occupier.getName());
-                        }
-                        System.out.println("HAHA");
-                    }
-                } else {
-                    System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-                }
-            }
+        if(keycode == Keys.H){
+            gameScreen.dialogueController.startTutorialDialogue();
         }
         if(keycode == Keys.F5){
             Json json = new Json();
@@ -167,30 +136,73 @@ public class PlayerController extends InputAdapter{
             try{
                 gameState.movePlayerUp();
             } catch(Exception e){
-                gameState.setExceptionString(e.getMessage());
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.DOWN && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerDown();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.LEFT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerLeft();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
         }
         else if(direction == DIRECTION.RIGHT && state!=AVATAR_STATE.STANDING){
             try{
                 gameState.movePlayerRight();
             } catch(Exception e){
-                System.out.println(e);
+                gameScreen.dialogueController.startExceptionDialogue(e);
             }
+        }
+    }
+
+    public void battleHandler(){
+        if(this.gameState.player.getActiveEngimon()!=null){
+            Pair<Integer,Integer> dir = new Pair<>(0,0);
+            DIRECTION d = this.gameState.player.getDirection();
+            if(d == DIRECTION.UP) {
+                dir = new Pair<>(0,1);
+            } else if(d == DIRECTION.DOWN) {
+                dir = new Pair<>(0,-1);
+            } else if(d == DIRECTION.RIGHT) {
+                dir = new Pair<>(1,0);
+            } else if(d == DIRECTION.LEFT) {
+                dir = new Pair<>(-1,0);
+            }
+            System.out.println("Jessonn");
+            if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() && (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+                if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
+                    WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+                    if (occupier != null) {
+                        Battle B = new Battle();
+                        Engimon PlayerEngimons =(Engimon)this.gameState.player.getActiveEngimon();
+                        Engimon EnemyEngimons = (Engimon)occupier;
+                        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
+                        String AllBattleDialogue = B.showTotalPower();
+                        if(B.BattleStatusIsWin()) {
+                            AllBattleDialogue += "Engimon anda jago juga !\n";
+                        } else {
+                            AllBattleDialogue += "Engimon anda cupu kali !\n";
+                        }
+                        ArrayList<String> Dialog = new ArrayList<String>();
+                        Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
+                        Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
+                        Dialog.add(AllBattleDialogue);
+                        System.out.println(AllBattleDialogue);
+                        gameScreen.dialogueController.startBattleDialogue(Dialog);
+                        System.out.println(occupier.getName());
+                    }
+                    System.out.println("HAHA");
+                }
+            }   else {
+                System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
+                }
         }
     }
 }

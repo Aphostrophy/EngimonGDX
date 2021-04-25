@@ -53,11 +53,10 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
 
-    private DialogueBox dialogueBox,dialogueCommand;
+    public DialogueBox dialogueBox;
 
-    private OptionBox optionBox;
-    private Dialogue dialogue;
-    private DialogueController dialogueController;
+    public OptionBox optionBox;
+    public DialogueController dialogueController;
 
     public GameScreen(EngimonGame app) throws IOException {
         super(app);
@@ -78,12 +77,11 @@ public class GameScreen extends AbstractScreen {
                 atlas.findRegion("brendan_stand_west"),
                 atlas.findRegion("brendan_stand_east")
         );
-
         map = new TmxMapLoader().load("Maps/Map.tmx");
 
         gameState = new GameState("orz", playerAnimations,map, app);
 
-        controller = new PlayerController(gameState);
+        controller = new PlayerController(gameState,this);
 
         camera = new OrthographicCamera();
 
@@ -111,23 +109,7 @@ public class GameScreen extends AbstractScreen {
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
 
-        dialogue = new Dialogue();
-        DialogueNode a = new DialogueNode("HALLO WELCOME TO THE HELL!", 0);
-        DialogueNode b = new DialogueNode("Anda iblis atau setan?", 1);
-        DialogueNode c = new DialogueNode("Saya tau anda itu emang iblis!", 2);
-        DialogueNode d = new DialogueNode("Saya tau anda itu emang setan!", 3);
-
-        a.makeLinear(b.getId());
-        b.addChoice("Iblis",2);
-        b.addChoice("Setan",3);
-
-
-        dialogue.addNode(a);
-        dialogue.addNode(b);
-        dialogue.addNode(c);
-        dialogue.addNode(d);
-
-        dialogueController.startDialogue(dialogue);
+        dialogueController.startTutorialDialogue();
     }
 
     @Override
@@ -163,7 +145,10 @@ public class GameScreen extends AbstractScreen {
 
         if (controller.isBreederOpen) {
             try {
-                getApp().setScreen(new BreederScreen(getApp(), controller, gameState.getPlayerInventory(),this));
+                BreederScreen breederScreen = new BreederScreen(getApp(), controller, gameState,this);
+                getApp().setScreen(breederScreen);
+                setGameState(breederScreen.getGameState());
+                getGameState().getPlayerInventory().showInventory();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -177,11 +162,7 @@ public class GameScreen extends AbstractScreen {
             }
         }
 
-        if(gameState.isOccupied()) {
-            dialogueBox.setText(gameState.getStringException());
-            dialogueBox.setVisible(true);
-            gameState.setOccupied(false);
-        }
+
         renderer.setView(camera);
         renderer.render();
 
@@ -228,22 +209,10 @@ public class GameScreen extends AbstractScreen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         uiStage.getViewport().update(Gdx.graphics.getWidth()/uiScale,Gdx.graphics.getWidth()/uiScale);
-        uiStage.setDebugAll(true);
         root = new Table();
         root.setFillParent(true);
 
-        Table dialogTable1 = new Table();
-        dialogTable1.setFillParent(true);
         uiStage.addActor(root);
-        uiStage.addActor(dialogTable1);
-
-
-        dialogueCommand = new DialogueBox(getApp().getSkin());
-        dialogueCommand.animateText("To walk, use W A S D." +
-                "\n Use Arrow UP and DOWN for option. " +
-                "\n and Use ENTER for next text." +
-                "\n Press B for Battle");
-        dialogTable1.add(dialogueCommand).expand().align(Align.top);
 
         Table dialogTable2 = new Table();
 
@@ -259,6 +228,14 @@ public class GameScreen extends AbstractScreen {
         dialogTable2.add(optionBox).expand().align(Align.right).space(8f).row();
         dialogTable2.add(dialogueBox).expand().align(Align.bottom).space(8f).row();
         root.add(dialogTable2).expand().align(Align.bottom);
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 
     @Override
@@ -282,7 +259,4 @@ public class GameScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
 }

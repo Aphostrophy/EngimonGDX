@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.utilities.ResourceProvider;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
@@ -31,7 +32,7 @@ public class BreederEngimonUI extends Table {
     private boolean isParent;
     private ArrayList<Engimon> breedableEngimon;
 
-    public BreederEngimonUI(Skin skin, Inventory inventory, ResourceProvider provider){
+    public BreederEngimonUI(Skin skin, GameState gameState, ResourceProvider provider){
         super(skin);
         this.setBackground("dialoguebox");
         Texture texture = new Texture(Gdx.files.internal("Avatar/brendan_bike_east_0.png"));
@@ -57,15 +58,15 @@ public class BreederEngimonUI extends Table {
 
         for(int i = 1; i <= ROW; i++) {
             for(int j = 1; j <= COLUMN; j++) {
-                if (k < inventory.getFilledSlot()) {
-                    BreederItem item = new BreederItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(k)), (Engimon) inventory.getItemByIndex(k));
+                if (k < gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()) {
+                    BreederItem item = new BreederItem(provider.getSprite((PlayerEngimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(k)), (Engimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(k));
                     BreederSlot breederSlot = new BreederSlot(skin, item, k);
                     this.add(breederSlot).size(slotWidth, slotHeight).pad(2.5f);
                     breederSlot.addListener(new ClickListener() {
                         public void clicked(InputEvent event, float x, float y) {
                             super.clicked(event, x, y);
                             BreederSlot slot = (BreederSlot) event.getListenerActor();
-                            setParent((Engimon) inventory.getItemByIndex(slot.getIdx()));
+                            setParent((Engimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(slot.getIdx()));
                         }
                     });
                     k++;

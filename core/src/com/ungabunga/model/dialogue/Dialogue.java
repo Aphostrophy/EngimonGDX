@@ -1,5 +1,7 @@
 package com.ungabunga.model.dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
+
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -18,10 +20,10 @@ public class Dialogue {
         return nodes.size();
     }
 
-    public static Dialogue generateDialogue(String... lines) {
+    public static Dialogue generateDialogue(ArrayList<String> lines) {
         Dialogue dialogue = new Dialogue();
-        for (int i = 0; i < lines.length; i++) {
-            DialogueNode node = new DialogueNode(lines[i], i);
+        for (int i = 0; i < lines.size(); i++) {
+            DialogueNode node = new DialogueNode(lines.get(i), i);
             dialogue.addNode(node);
             if (i != 0) {
                 dialogue.getNode(i-1).makeLinear(i);

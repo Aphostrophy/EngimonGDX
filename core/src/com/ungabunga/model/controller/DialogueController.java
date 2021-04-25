@@ -9,14 +9,25 @@ import com.ungabunga.model.dialogue.DialogueTraverser;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 
+import java.util.ArrayList;
+
 public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
     private DialogueBox Dbox;
     private OptionBox Obox;
 
+    private boolean startCountdown;
+    private boolean isBattle = false;
+
+    private float dialogueBoxTimer;
+    private float TIMER_TIMEOUT = 2f;
+    private float BATTLE_TIMEOUT = 4f;
+
     public DialogueController(DialogueBox Dbox, OptionBox Obox) {
         this.Dbox = Dbox;
         this.Obox = Obox;
+
+        this.startCountdown = false;
     }
 
     @Override
@@ -38,7 +49,7 @@ public class DialogueController extends InputAdapter {
                 return true;
             }
         }
-        if(traverser != null && keycode == Keys.ENTER && Dbox.isFinished()) {
+        if(traverser != null && keycode == Keys.ENTER) {
             if(traverser.getType() == NODE_TYPE.END) {
                 traverser = null;
                 Dbox.setVisible(false);
@@ -57,16 +68,37 @@ public class DialogueController extends InputAdapter {
         return false;
     }
     public void update(float delta) {
-        if(Dbox.isFinished() && traverser != null) {
+        if(traverser != null) {
             if(traverser.getType() == NODE_TYPE.MULT) {
                 Obox.setVisible(true);
             }
+            if(traverser.getType()==NODE_TYPE.END && Dbox.isFinished()){
+                if(!startCountdown){
+                    startCountdown = true;
+                } else{
+                    dialogueBoxTimer+= delta;
+                    float time;
+                    if(isBattle) {
+                        time = BATTLE_TIMEOUT;
+                    } else {
+                        time = TIMER_TIMEOUT;
+                    }
+                    if(dialogueBoxTimer> time){
+                        dialogueBoxTimer = 0f;
+                        startCountdown = false;
+                        Dbox.setVisible(false);
+                        isBattle = false;
+                    }
+                }
+            }
         }
     }
+
     public void startDialogue(Dialogue D) {
         traverser = new DialogueTraverser(D);
         Dbox.setVisible(true);
         Dbox.animateText(traverser.getText());
+
         if(traverser.getType() == NODE_TYPE.MULT) {
             Obox.clear();
             for(String str : D.getNode(0).getLabels()) {
@@ -85,7 +117,50 @@ public class DialogueController extends InputAdapter {
             }
         }
     }
-    public boolean isDialogueShowing() {
-        return Dbox.isVisible();
+
+    public void startTutorialDialogue(){
+        Dialogue dialogue = new Dialogue();
+
+        DialogueNode a = new DialogueNode("Welcome to Engimon, Curse of The Marcello Pokemon God" +
+                "\nPress Enter to close this message",0);
+        DialogueNode b = new DialogueNode("Use UP and DOWN arrow to select choices, would you like to skip the tutorial?", 1);
+        DialogueNode c = new DialogueNode("To walk, use W A S D." +
+                "\nPress H to restart the tutorial. " +
+                "\nPress B for Battle", 2);
+        DialogueNode d = new DialogueNode("Press F5 to save the game"+
+                "\nYou can breed and open the inventory by"+
+                "\nclicking the icons at the top left of the screen",3);
+        DialogueNode e = new DialogueNode("Enjoy the game!", 4);
+
+        a.makeLinear(b.getId());
+        c.makeLinear(d.getId());
+        b.addChoice("Yes",4);
+        b.addChoice("No",2);
+
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
+        dialogue.addNode(d);
+        dialogue.addNode(e);
+
+        startDialogue(dialogue);
+    }
+
+    public void startExceptionDialogue(Exception e){
+        isBattle = false;
+        Dialogue dialogue = new Dialogue();
+        DialogueNode a = new DialogueNode(e.getMessage(), 0);
+
+        dialogue.addNode(a);
+        Obox.setVisible(false);
+        startDialogue(dialogue);
+    }
+
+    public void startBattleDialogue(ArrayList<String> Dialog) {
+        isBattle = true;
+        Dialogue dialogue = new Dialogue();
+        dialogue = dialogue.generateDialogue(Dialog);
+        Obox.setVisible(false);
+        startDialogue(dialogue);
     }
 }

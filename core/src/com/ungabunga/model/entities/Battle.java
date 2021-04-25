@@ -21,8 +21,7 @@ public class Battle {
     private float[][] advantageChart = new float[arrSize][arrSize];
     private  Engimon playerEngimons, enemyEngimons;
 
-    Battle()
-    {
+    public Battle() {
         this.generateChart();
     }
 
@@ -44,10 +43,12 @@ public class Battle {
     }
 
     //Method
-    public void showTotalPower()
+    public String showTotalPower()
     {
-        System.out.println("Power level engimon player : " + this.powerPlayer);
-        System.out.println("Power level engimon enemy : " + this.powerEnemy);
+        String str = ("Power level engimon player : " + this.powerPlayer +  "\n" + "Power level engimon enemy : " + this.powerEnemy + "\n");
+        return str;
+        //        System.out.println("Power level engimon player : " + this.powerPlayer);
+        //        System.out.println("Power level engimon enemy : " + this.powerEnemy);
     }
 
     private Boolean isPlayerLose()
@@ -204,10 +205,9 @@ public class Battle {
         return elPair;
     }
 
-    private Boolean BattleStatus()
+    public Boolean BattleStatusIsWin()
     {
         if (this.isPlayerLose()) {
-            System.out.println("Engimon anda kalah");
             return false;
             // Lanjut Command Selanjutnya
         } else // player menang
@@ -217,12 +217,11 @@ public class Battle {
             //  item yang kompatibel dengan lawan
         }
     }
-    private Boolean BattleEngimon(Engimon engimon1, Engimon engimon2)
+    public void BattleEngimon(Engimon engimon1, Engimon engimon2)
     {
         this.playerEngimons = engimon1;
         this.enemyEngimons = engimon2;
         this.HitungPower(engimon1, engimon2);
-        return this.BattleStatus();
     }
 }
 // cd src/com/ungabunga/model/entities
