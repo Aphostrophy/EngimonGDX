@@ -1,5 +1,6 @@
 package com.ungabunga.model.thread;
 
+import com.badlogic.gdx.Gdx;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.WildEngimon;
 
@@ -18,6 +19,7 @@ public class WildEngimonThread extends Thread{
         System.out.println(Thread.currentThread().getName() + " HAHAHAHAHA AKU HIDUP");
         while(!wildEngimon.isDead()){
             System.out.println(Thread.currentThread().getName() + " I'm still alive");
+            System.out.println(Gdx.graphics.getDeltaTime());
             wildEngimon.randomizeMove();
             try {
                 Thread.sleep(ThreadLocalRandom.current().nextInt(2000,5000));
