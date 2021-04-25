@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.exceptions.CellOccupiedException;
+import com.ungabunga.model.exceptions.DuplicateSkillException;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
@@ -85,13 +86,18 @@ public class InventoryUI extends Table {
                                        System.out.println(chosenSkillItem.getAmount());
                                        if (chosenSkillItem.getAmount() > 0) {
                                            Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
-                                           try {
-                                               gameState.player.getActiveEngimon().learnSkill(chosenSkill);
-                                               inventory.deleteFromInventory(chosenSkillItem);
-                                               slot.decrementItemCount(1);
-                                               inventoryScreen.dialogueController.startInventoryDialogue(gameState.player.getActiveEngimon().getName() + " learned " + chosenSkillItem.getName() + "!!");
-                                           } catch (FeatureNotImplementedException e) {
-                                               inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
+                                           if(gameState.player.getActiveEngimon().getSkills().size()<4){
+                                               try {
+                                                   gameState.player.getActiveEngimon().learnSkill(chosenSkill);
+                                                   inventory.deleteFromInventory(chosenSkillItem);
+                                                   slot.decrementItemCount(1);
+                                                   inventoryScreen.dialogueController.startInventoryDialogue(gameState.player.getActiveEngimon().getName() + " learned " + chosenSkillItem.getName() + "!!");
+                                               } catch (DuplicateSkillException e) {
+                                                   inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
+                                               }
+                                           }
+                                           else{
+
                                            }
                                        }
                                    }

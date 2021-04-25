@@ -1,5 +1,6 @@
 package com.ungabunga.model.entities;
 
+import com.ungabunga.model.exceptions.DuplicateSkillException;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.enums.IElements;
@@ -213,17 +214,29 @@ public class Engimon {
         }
     }
 
-    public void learnSkill(Skill skill) throws FeatureNotImplementedException {
+    public void learnSkill(Skill skill) throws DuplicateSkillException {
         ArrayList<String> skillNames = new ArrayList<String>();
         for(int i = 0; i < this.skills.size(); i++) {
             skillNames.add(this.skills.get(i).getSkillName());
         }
         if(skillNames.contains(skill.getSkillName())) {
-            throw new FeatureNotImplementedException("Skill already learned!!");
+            throw new DuplicateSkillException("Skill already learned!!");
         } else if(this.skills.size() == CONSTANTS.MAXSKILL) {
-            throw new FeatureNotImplementedException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
+            throw new DuplicateSkillException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
         } else {
             this.skills.add(skill);
         }
     }
+
+    // I.S skill ada
+//    public void unlearnSkill(Skill skill){
+//        ArrayList<String> skillNames = new ArrayList<String>();
+//        for(int i = 0; i < this.skills.size(); i++) {
+//            skillNames.add(this.skills.get(i).getSkillName());
+//        }
+//        int skillIndex = -1;
+//        for(int i=0;i < this.skills.size();i++){
+//
+//        }
+//    }
 }
