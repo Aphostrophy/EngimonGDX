@@ -58,7 +58,7 @@ public class GameState {
         Engimon a = new Engimon("Test", "Squirtle", "X",100, elmt, skills, parents, parents);
         Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
 
-        SkillItem hehe = new SkillItem("Buffer", 15);
+        SkillItem hehe = new SkillItem("Buffer", app.getResourceProvider().getSkill("Buffer").getBasePower());
         this.playerInventory = new Bag();
 
         try {

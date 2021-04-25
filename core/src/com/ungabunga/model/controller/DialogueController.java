@@ -2,11 +2,16 @@ package com.ungabunga.model.controller;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.dialogue.DialogueNode.NODE_TYPE;
 import com.ungabunga.model.dialogue.DialogueTraverser;
+import com.ungabunga.model.entities.Battle;
+import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.SkillItem;
+import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 
@@ -18,6 +23,8 @@ public class DialogueController extends InputAdapter {
     private DialogueBox Dbox;
     private OptionBox Obox;
 
+    private GameScreen gameScreen;
+
     private boolean startCountdown;
     private DIALOG_STATE dialogState;
 
@@ -26,6 +33,7 @@ public class DialogueController extends InputAdapter {
     private float BATTLE_TIMEOUT = 4f;
 
     private List<SkillItem> skillItemList;
+    private WildEngimon wildEngimon;
 
     public enum DIALOG_STATE{
         BATTLE,
@@ -33,10 +41,11 @@ public class DialogueController extends InputAdapter {
         ELSE,
     }
 
-    public DialogueController(DialogueBox Dbox, OptionBox Obox) {
+    public DialogueController(DialogueBox Dbox, OptionBox Obox, GameScreen gameScreen) {
         this.Dbox = Dbox;
         this.Obox = Obox;
 
+        this.gameScreen = gameScreen;
         this.startCountdown = false;
     }
 
@@ -70,9 +79,23 @@ public class DialogueController extends InputAdapter {
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.BATTLE) {
                 progress(Obox.getSelected());
                 if(Obox.getSelected() == 0) {
-                    System.out.println("MARI BERANTEM");
-                } else{
-                    System.out.println("CABUT");
+                    Battle B = new Battle();
+                    Engimon PlayerEngimons =this.gameScreen.getGameState().player.getActiveEngimon();
+                    Engimon EnemyEngimons = this.wildEngimon;
+                    B.BattleEngimon(PlayerEngimons, EnemyEngimons);
+                    String AllBattleDialogue = B.showTotalPower();
+                    if(B.BattleStatusIsWin()) {
+                        AllBattleDialogue += "Engimon anda jago juga !";
+                    } else {
+                        AllBattleDialogue += "Engimon anda cupu kali !";
+                    }
+                    ArrayList<String> Dialog = new ArrayList<String>();
+                    Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
+                    Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
+                    Dialog.add(AllBattleDialogue);
+                    System.out.println(AllBattleDialogue);
+                    gameScreen.dialogueController.startBattleDialogue2(Dialog);
+                    System.out.println(wildEngimon.getName());
                 }
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.CHOOSESKILL){
@@ -179,8 +202,9 @@ public class DialogueController extends InputAdapter {
         startDialogue(dialogue);
     }
 
-    public void startBattleDialogue(ArrayList<String> Dialog) {
+    public void startBattleDialogue(WildEngimon wildEngimon) {
         this.dialogState = DIALOG_STATE.BATTLE;
+        this.wildEngimon = wildEngimon;
         Dialogue dialogue = new Dialogue();
         DialogueNode awal = new DialogueNode("Hellow nub", 0);
         DialogueNode a = new DialogueNode("Anda mau gelud?", 1);
@@ -237,5 +261,10 @@ public class DialogueController extends InputAdapter {
         startDialogue(dialogue);
     }
 
-
+    public void startBattleDialogue2(ArrayList<String> Dialog) {
+        Dialogue dialogue = new Dialogue();
+        dialogue = dialogue.generateDialogue(Dialog);
+        Obox.setVisible(false);
+        startDialogue(dialogue);
+    }
 }
