@@ -193,16 +193,16 @@ public class Engimon {
 
     public String displayInfoToString() {
         String str = new String();
-        str += ("ID \t\t:\t" + this.id+ "\n");
-        str += ("Name \t\t:\t" + this.name+ "\n");
-        str += ("Species \t:\t" + this.species+ "\n");
-        str += ("Level \t\t:\t" + this.level+ "\n");
-        str += ("Exp \t\t:\t" + this.exp+ "\n");
-        str += ("Cumulative Exp \t:\t" + this.cumulativeExp+ "\n");
-        str += ("Parents \t:\t"+ "\n");
+        str += ("ID \t\t:\t " + this.id+ "\n");
+        str += ("Name \t\t:\t " + this.name+ "\n");
+        str += ("Species \t:\t " + this.species+ "\n");
+        str += ("Level \t\t:\t " + this.level+ "\n");
+        str += ("Exp \t\t:\t " + this.exp+ "\n");
+        str += ("Cumulative Exp \t:\t " + this.cumulativeExp+ "\n");
+        str += ("Parents \t:\t "+ "\n");
         str += ("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")"+ "\n");
         str += ("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")"+ "\n");
-        str += ("Slogan \t:\t" + this.slogan);
+        str += ("Slogan \t:\t " + this.slogan);
         return str;
     }
 

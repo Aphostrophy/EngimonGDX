@@ -163,4 +163,14 @@ public class DialogueController extends InputAdapter {
         Obox.setVisible(false);
         startDialogue(dialogue);
     }
+
+    public void startInventoryDialogue(String Dialog) {
+        isBattle = false;
+        Dialogue dialogue = new Dialogue();
+        DialogueNode a = new DialogueNode(Dialog, 0);
+
+        dialogue.addNode(a);
+        Obox.setVisible(false);
+        startDialogue(dialogue);
+    }
 }
