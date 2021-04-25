@@ -1,11 +1,13 @@
 package com.ungabunga.model.entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.utilities.ResourceProvider;
 
 import static com.ungabunga.Settings.ANIM_TIMER;
 
@@ -22,6 +24,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     Player player;
     GameState gameState;
 
+    ResourceProvider resourceProvider;
+
     private float srcX,srcY;
     private float destX,destY;
     private float worldX,worldY;
@@ -33,7 +37,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     }
 
-    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y, GameState gameState){
+    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y, GameState gameState, ResourceProvider resourceProvider){
         super(PE);
         this.position = new Pair<Integer,Integer>(x,y);
         this.direction = P.getDirection();
@@ -41,6 +45,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
         this.player = P;
         this.gameState = gameState;
+        this.resourceProvider = resourceProvider;
 
         this.worldX = x;
         this.worldY = y;
@@ -227,6 +232,11 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     }
 
     @Override
+    public float getKeyFrame() {
+        return stateTimer;
+    }
+
+    @Override
     public AVATAR_STATE getState(){return this.state;}
 
     @Override
@@ -238,5 +248,9 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     public int getY(){
         return this.position.getSecond();
+    }
+
+    public TextureRegion getSprite(){
+        return resourceProvider.getSprite((LivingEngimon) this);
     }
 }
