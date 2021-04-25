@@ -13,8 +13,8 @@ public class WildEngimonThread extends Thread{
         this.gameState = gameState;
     }
     public void run(){
+        System.out.println(Thread.currentThread().getName() + " HAHAHAHAHA AKU HIDUP");
         while(!wildEngimon.isDead()){
-            System.out.println(Thread.currentThread().getName() + " HAHAHAHAHA AKU HIDUP");
             wildEngimon.randomizeMove();
             try {
                 Thread.sleep(2000);
@@ -22,6 +22,8 @@ public class WildEngimonThread extends Thread{
                 e.printStackTrace();
             }
         }
+        System.out.println(Thread.currentThread().getName() + " YAH AKU MATI");
+        wildEngimon.removeFromMap();
         gameState.reduceWildEngimon();
     }
 }

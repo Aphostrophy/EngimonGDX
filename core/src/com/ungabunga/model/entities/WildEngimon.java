@@ -3,6 +3,7 @@ package com.ungabunga.model.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
+import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
@@ -101,7 +102,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
-            if(this.getY()-1<0 || gameState.map.get(this.getX()).get(this.getY()-1).occupier!=null){
+            if(this.getY()-1<0 || gameState.map.get(this.getX()).get(this.getY()-1).occupier!=null && gameState.map.get(this.getX()).get(this.getY()-1).cellType!= CellType.BLOCKED){
                 repositionOnCellConflict();
             }
             move(0,-1);
@@ -111,7 +112,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
-            if(this.getX()-1<0 || gameState.map.get(this.getX()-1).get(this.getY()).occupier!=null){
+            if(this.getX()-1<0 || gameState.map.get(this.getX()-1).get(this.getY()).occupier!=null && gameState.map.get(this.getX()-1).get(this.getY()).cellType!=CellType.BLOCKED){
                 repositionOnCellConflict();
             }
             move(-1,0);
@@ -128,7 +129,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         }
     }
 
-    public void randomizeMove(){
+    public synchronized void randomizeMove(){
         int x = ThreadLocalRandom.current().nextInt(0,4);
         if(x==0){
             try{
@@ -226,5 +227,9 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     public int getY(){
         return this.position.getSecond();
+    }
+
+    public void removeFromMap(){
+        gameState.map.get(this.getY()).get(this.getX()).occupier=null;
     }
 }
