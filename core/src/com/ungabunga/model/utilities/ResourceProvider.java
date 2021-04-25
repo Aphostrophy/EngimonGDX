@@ -54,6 +54,7 @@ public class ResourceProvider {
     AnimationSet voltorbAnimationSet;
     AnimationSet wartotleAnimationSet;
     AnimationSet vulpixAnimationSet;
+    AnimationSet ifritAnimationSet;
 
     public ResourceProvider(){
         this.assetManager = new AssetManager();
@@ -88,6 +89,7 @@ public class ResourceProvider {
        assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/vulpix.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/ifrit.atlas", TextureAtlas.class);
        assetManager.load("pic/packed/skillLogo.atlas", TextureAtlas.class);
         assetManager.load("pic/packed/skillItemLogo.atlas", TextureAtlas.class);
         assetManager.load("pic/packed/aura.atlas", TextureAtlas.class);
@@ -406,6 +408,17 @@ public class ResourceProvider {
                atlas.findRegion("vulpix_standing_east")
        );
 
+        atlas = assetManager.get("pic/engimon_packed/ifrit.atlas", TextureAtlas.class);
+        ifritAnimationSet = new AnimationSet(
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("ifrit_walking_south"), Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("ifrit_walking_north"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("ifrit_walking_west"),Animation.PlayMode.LOOP_PINGPONG),
+                new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("ifrit_walking_east"),Animation.PlayMode.LOOP_PINGPONG),
+                atlas.findRegion("ifrit_standing_south"),
+                atlas.findRegion("ifrit_standing_north"),
+                atlas.findRegion("ifrit_standing_west"),
+                atlas.findRegion("ifrit_standing_east")
+        );
 
         this.skills = fileUtil.readSkillCSV();
         this.engimon = fileUtil.readEngimonCSV(this);
@@ -616,6 +629,12 @@ public class ResourceProvider {
             }else {
                 return vulpixAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
+        } else if (engimon.getEngimonSpecies().equals("Ifrit")){
+            if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
+                return ifritAnimationSet.getStanding(engimon.getDirection());
+            }else {
+                return ifritAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
+            }
         }
         return arcanineAnimationSet.getStanding(engimon.getDirection());
     }
@@ -699,6 +718,9 @@ public class ResourceProvider {
         if (engimon.getSpecies().equals("Vulpix")) {
             return vulpixAnimationSet.getStanding(DIRECTION.DOWN);
         }
+        if (engimon.getSpecies().equals("Ifrit")) {
+            return ifritAnimationSet.getStanding(DIRECTION.DOWN);
+        }
 
         return arcanineAnimationSet.getStanding(DIRECTION.DOWN);
     }
@@ -716,86 +738,89 @@ public class ResourceProvider {
     public TextureRegion getSpriteAura(LivingEngimon engimon){
         TextureAtlas atlas = assetManager.get("pic/packed/aura.atlas", TextureAtlas.class);
         if (engimon.getEngimonSpecies().equals("Arcanine")) {
-            return atlas.findRegion("5");
+            return atlas.findRegion("Fire");
         }
         if (engimon.getEngimonSpecies().equals("Blastoise")) {
-            return atlas.findRegion("1");
+            return atlas.findRegion("Water-ground");
         }
         if (engimon.getEngimonSpecies().equals("Charmander")) {
-            return atlas.findRegion("2");
+            return atlas.findRegion("Fire-electric");
         }
         if (engimon.getEngimonSpecies().equals("Cubchoo")) {
-            return atlas.findRegion("7");
+            return atlas.findRegion("Ice");
         }
         if (engimon.getEngimonSpecies().equals("Cubone")) {
-            return atlas.findRegion("4");
+            return atlas.findRegion("Ground");
         }
         if (engimon.getEngimonSpecies().equals("Diglett")) {
-            return atlas.findRegion("4");
+            return atlas.findRegion("Ground");
         }
         if (engimon.getEngimonSpecies().equals("Dugtrio")) {
-            return atlas.findRegion("4");
+            return atlas.findRegion("Ground");
         }
         if (engimon.getEngimonSpecies().equals("Glaceon")) {
-            return atlas.findRegion("7");
+            return atlas.findRegion("Ice");
         }
         if (engimon.getEngimonSpecies().equals("Glalie")) {
-            return atlas.findRegion("7");
+            return atlas.findRegion("Ice");
         }
         if (engimon.getEngimonSpecies().equals("Growlithe")) {
-            return atlas.findRegion("5");
+            return atlas.findRegion("Fire");
         }
         if (engimon.getEngimonSpecies().equals("Magmar")) {
-            return atlas.findRegion("5");
+            return atlas.findRegion("Fire");
         }
         if (engimon.getEngimonSpecies().equals("Mareep")) {
-            return atlas.findRegion("3");
+            return atlas.findRegion("Electric");
         }
         if (engimon.getEngimonSpecies().equals("Ninetales")) {
-            return atlas.findRegion("2");
+            return atlas.findRegion("Fire-electric");
         }
         if (engimon.getEngimonSpecies().equals("Pikachu")) {
-            return atlas.findRegion("3");
+            return atlas.findRegion("Electric");
         }
         if (engimon.getEngimonSpecies().equals("Poliwag")) {
-            return atlas.findRegion("0");
+            return atlas.findRegion("Water-ice");
         }
         if (engimon.getEngimonSpecies().equals("Ponyta")) {
-            return atlas.findRegion("5");
+            return atlas.findRegion("Fire");
         }
         if (engimon.getEngimonSpecies().equals("Psyduck")) {
-            return atlas.findRegion("1");
+            return atlas.findRegion("Water-ground");
         }
         if (engimon.getEngimonSpecies().equals("Raichu")) {
-            return atlas.findRegion("3");
+            return atlas.findRegion("Electric");
         }
         if (engimon.getEngimonSpecies().equals("Sandshrew")) {
-            return atlas.findRegion("4");
+            return atlas.findRegion("Ground");
         }
         if (engimon.getEngimonSpecies().equals("Shark")) {
-            return atlas.findRegion("0");
+            return atlas.findRegion("Water-ice");
         }
         if (engimon.getEngimonSpecies().equals("Snorunt")) {
-            return atlas.findRegion("7");
+            return atlas.findRegion("Ice");
         }
         if (engimon.getEngimonSpecies().equals("Squirtle")) {
-            return atlas.findRegion("1");
+            return atlas.findRegion("Water-ground");
         }
         if (engimon.getEngimonSpecies().equals("Tongkol")) {
-            return atlas.findRegion("6");
+            return atlas.findRegion("Water");
         }
 
         if (engimon.getEngimonSpecies().equals("Voltorb")) {
-            return atlas.findRegion("3");
+            return atlas.findRegion("Electric");
         }
         if (engimon.getEngimonSpecies().equals("Wartotle")) {
-            return atlas.findRegion("6");
+            return atlas.findRegion("Water");
         }
         if (engimon.getEngimonSpecies().equals("Vulpix")) {
-            return atlas.findRegion("5");
+            return atlas.findRegion("Fire");
+        }
+        if (engimon.getEngimonSpecies().equals("Ifrit")) {
+            return atlas.findRegion("Fire");
         }
 
-        return atlas.findRegion("0");
+        return atlas.findRegion("Water-ice");
     }
     public boolean isCompatible(List<IElements> elementsList, CellType biome){
         for(IElements element : elementsList){

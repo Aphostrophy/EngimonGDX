@@ -4,59 +4,59 @@ size: 1024, 128
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-0
+Electric
   rotate: false
-  xy: 2, 2
-  size: 85, 100
-  orig: 85, 100
-  offset: 0, 0
-  index: -1
-1
-  rotate: false
-  xy: 263, 9
-  size: 77, 93
-  orig: 77, 93
-  offset: 0, 0
-  index: -1
-2
-  rotate: false
-  xy: 89, 8
-  size: 85, 94
-  orig: 85, 94
-  offset: 0, 0
-  index: -1
-3
-  rotate: false
-  xy: 579, 14
+  xy: 263, 14
   size: 77, 88
   orig: 77, 88
   offset: 0, 0
   index: -1
-4
-  rotate: false
-  xy: 176, 14
-  size: 85, 88
-  orig: 85, 88
-  offset: 0, 0
-  index: -1
-5
+Fire
   rotate: false
   xy: 342, 9
   size: 77, 93
   orig: 77, 93
   offset: 0, 0
   index: -1
-6
+Fire-electric
+  rotate: false
+  xy: 89, 8
+  size: 85, 94
+  orig: 85, 94
+  offset: 0, 0
+  index: -1
+Ground
+  rotate: false
+  xy: 176, 14
+  size: 85, 88
+  orig: 85, 88
+  offset: 0, 0
+  index: -1
+Ice
   rotate: false
   xy: 421, 9
   size: 77, 93
   orig: 77, 93
   offset: 0, 0
   index: -1
-7
+Water
   rotate: false
   xy: 500, 9
   size: 77, 93
   orig: 77, 93
+  offset: 0, 0
+  index: -1
+Water-ground
+  rotate: false
+  xy: 579, 9
+  size: 77, 93
+  orig: 77, 93
+  offset: 0, 0
+  index: -1
+Water-ice
+  rotate: false
+  xy: 2, 2
+  size: 85, 100
+  orig: 85, 100
   offset: 0, 0
   index: -1
