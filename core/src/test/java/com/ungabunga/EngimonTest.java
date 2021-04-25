@@ -201,26 +201,7 @@ public class EngimonTest {
         Assertions.assertEquals(6, engimon.getSkills().get(0).getBasePower());
         Assertions.assertEquals(1, engimon.getSkills().get(0).getMasteryLevel());
     }
-    @Test
-    public void testGetHitungPower(){
-        List<IElements> engimonElements = new ArrayList<>();
-        List<IElements> skillElements = new ArrayList<>();
-        List<Skill> skills = new ArrayList<>();
-
-        Pair<String, String> parentName = new Pair("Parent A","Parent B");
-        Pair<String, String> parentSpecies = new Pair("Species A","Species B");
-
-        engimonElements.add(IElements.ELECTRIC);
-        skillElements.add(IElements.ELECTRIC);
-
-        Skill skill = new Skill("Capacitor", skillElements, 6, 1);
-        skills.add(skill);
-
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(1, engimon.getLevel());
-        Assertions.assertEquals(6, engimon.getSkills().get(0).getBasePower());
-        Assertions.assertEquals(1, engimon.getSkills().get(0).getMasteryLevel());
-
+    
     }
     @Test
     public void testGetPosition(AnimationSet animationSet){
