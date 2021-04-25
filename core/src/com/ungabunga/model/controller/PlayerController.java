@@ -173,8 +173,7 @@ public class PlayerController extends InputAdapter{
                 dir = new Pair<>(0,-1);
             } else if(d == DIRECTION.RIGHT) {
                 dir = new Pair<>(1,0);
-            }
-            else if(d == DIRECTION.LEFT) {
+            } else if(d == DIRECTION.LEFT) {
                 dir = new Pair<>(-1,0);
             }
             System.out.println("Jessonn");

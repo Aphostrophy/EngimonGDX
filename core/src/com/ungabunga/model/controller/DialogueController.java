@@ -140,6 +140,7 @@ public class DialogueController extends InputAdapter {
         DialogueNode a = new DialogueNode(e.getMessage(), 0);
 
         dialogue.addNode(a);
+        Obox.setVisible(false);
         startDialogue(dialogue);
     }
 }
