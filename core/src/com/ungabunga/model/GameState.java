@@ -110,9 +110,9 @@ public class GameState {
                 return;
             }
             Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
-            WildEngimon wildEngimon = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider());
+            WildEngimon wildEngimon = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider(),this);
             map.get(spawnY).get(spawnX).occupier = wildEngimon;
-            WildEngimonThread wildEngimonThread = new WildEngimonThread();
+            WildEngimonThread wildEngimonThread = new WildEngimonThread(wildEngimon, this);
             wildEngimonThread.start();
 
             wildEngimonCount++;
@@ -233,5 +233,9 @@ public class GameState {
 
     public Bag getPlayerInventory(){
         return this.playerInventory;
+    }
+
+    public void reduceWildEngimon(){
+        this.wildEngimonCount--;
     }
 }
