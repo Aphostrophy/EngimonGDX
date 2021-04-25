@@ -99,7 +99,8 @@ public class InventoryUI extends Table {
                                                }
                                            }
                                            else{
-                                               inventoryScreen.dialogueController.startSkillChoiceDialogue(gameState.player.getActiveEngimon().getSkills());
+                                               inventoryScreen.setOptionBoxVisibility(true);
+                                               inventoryScreen.dialogueController.startSkillChoiceDialogue(gameState.player.getActiveEngimon().getSkills(), chosenSkill);
 //                                               inventoryScreen.dialogueController.startTutorialDialogue();
                                            }
                                        }

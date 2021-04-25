@@ -146,14 +146,14 @@ public class BreederScreen implements Screen {
 
         if (breedableEngimon.parentAFilled()) {
             parentABox.clearChildren();
-            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(breedableEngimon.getParentAIdx())));
+            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) breedableEngimon.getParentA()));
             parentABox.add(sprite).width(150).height(150);
 
         }
 
         if (breedableEngimon.parentBFilled()) {
             parentBBox.clearChildren();
-            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(breedableEngimon.getParentBIdx())));
+            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) breedableEngimon.getParentB()));
             parentBBox.add(sprite).width(150).height(150);;
         }
 

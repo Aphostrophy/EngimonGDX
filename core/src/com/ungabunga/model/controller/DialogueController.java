@@ -12,7 +12,9 @@ import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
+import com.ungabunga.model.utilities.ResourceProvider;
 
+import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
     private DialogueBox Dbox;
     private OptionBox Obox;
+
+    private ResourceProvider provider;
 
     private GameScreen gameScreen;
 
@@ -31,6 +35,7 @@ public class DialogueController extends InputAdapter {
     private float BATTLE_TIMEOUT = 4f;
 
     private List<Skill> skillList;
+    private Skill newSkill;
     private WildEngimon wildEngimon;
 
     public enum DIALOG_STATE{
@@ -42,6 +47,8 @@ public class DialogueController extends InputAdapter {
     public DialogueController(DialogueBox Dbox, OptionBox Obox, GameScreen gameScreen) {
         this.Dbox = Dbox;
         this.Obox = Obox;
+
+        this.provider = gameScreen.getApp().getResourceProvider();
 
         this.gameScreen = gameScreen;
         this.startCountdown = false;
@@ -124,7 +131,11 @@ public class DialogueController extends InputAdapter {
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.CHOOSESKILL){
                 progress(Obox.getSelected());
-                System.out.println(skillList.get(Obox.getSelected()).getSkillName());
+                if(Obox.getSelected() <= 3) {
+                    System.out.println(skillList.get(Obox.getSelected()).getSkillName());
+                    gameScreen.getGameState().player.getActiveEngimon().deleteSkill(skillList.get(Obox.getSelected()).getSkillName());
+                    gameScreen.getGameState().player.getActiveEngimon().addSkill(provider.getSkill(this.newSkill.getSkillName()));
+                }
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.ELSE) {
                 progress(Obox.getSelected());
@@ -266,9 +277,10 @@ public class DialogueController extends InputAdapter {
     }
 
     // I.S SkillList 4
-    public void startSkillChoiceDialogue(List<Skill> skillList){
+    public void startSkillChoiceDialogue(List<Skill> skillList, Skill newSkill){
         dialogState = DIALOG_STATE.CHOOSESKILL;
         this.skillList = skillList;
+        this.newSkill = newSkill;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("Your engimon already has 4 skills learned" ,0);
         DialogueNode b = new DialogueNode("You already have 4 skills, choose one to unlearn", 1);
