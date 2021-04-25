@@ -166,9 +166,13 @@ public class BreederScreen implements Screen {
                 System.out.println(breedableEngimon.isParentFilled());
                 if (breedableEngimon.isParentFilled()) {
                     if (!breedableEngimon.isParentSame()) {
-                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
-                        app.setScreen(childEngimonScreen);
-                        stopBreeding();
+                        if (gameState.getPlayerInventory().getCurrBagCapacity() < 2) {
+                            ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
+                            app.setScreen(childEngimonScreen);
+                            stopBreeding();
+                        } else {
+                            throw new FullInventoryException("Inventory is full!");
+                        }
                     } else {
                         throw new SameParentException("Please choose two different Engimons!");
                     }
