@@ -59,7 +59,7 @@ public class InventoryUI extends Table {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " removed");
                                } else if (isDetail) {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
-                               } else {
+                               } else if (slot.getNumItemsVal() > 0){
                                    try {
                                        gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
