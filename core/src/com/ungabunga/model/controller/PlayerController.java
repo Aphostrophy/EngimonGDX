@@ -78,6 +78,9 @@ public class PlayerController extends InputAdapter{
         if (keycode == Keys.B) {
            battleHandler();
         }
+        if(keycode == Keys.X){
+            instantKill();
+        }
         if(keycode == Keys.H){
             gameScreen.dialogueController.startTutorialDialogue();
         }
@@ -187,9 +190,10 @@ public class PlayerController extends InputAdapter{
                 dir = new Pair<>(-1,0);
             }
             System.out.println("Jessonn");
+
             if((this.gameState.player.getY() + dir.getSecond())
                     != this.gameState.player.getActiveEngimon().getY()
-                    && (this.gameState.player.getX() + dir.getFirst())
+                    || (this.gameState.player.getX() + dir.getFirst())
                     != this.gameState.player.getActiveEngimon().getX() ) {
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
@@ -217,6 +221,37 @@ public class PlayerController extends InputAdapter{
             }
             else {
                 System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
+            }
+        }
+    }
+
+    public void instantKill(){
+        if(this.gameState.player.getActiveEngimon()!=null){
+            Pair<Integer,Integer> dir = new Pair<>(0,0);
+            DIRECTION d = this.gameState.player.getDirection();
+            if(d == DIRECTION.UP) {
+                dir = new Pair<>(0,1);
+                System.out.println("atas");
+            } else if(d == DIRECTION.DOWN) {
+                dir = new Pair<>(0,-1);
+                System.out.println("bawah");
+            } else if(d == DIRECTION.RIGHT) {
+                dir = new Pair<>(1,0);
+                System.out.println("kanan");
+            } else if(d == DIRECTION.LEFT) {
+                dir = new Pair<>(-1,0);
+                System.out.println("kiri");
+            }
+            System.out.println("X DIPENCET");
+            if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() || (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
+                System.out.println("Ya itu engimon musuh");
+                if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
+                    WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+                    occupier.reduceLives();
+                    System.out.println("mati lo anjeng");
+                }
+            }   else {
+                System.out.println("Itu engimon anda sendiri");
             }
         }
     }

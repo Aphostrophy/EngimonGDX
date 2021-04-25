@@ -39,6 +39,7 @@ public class ChildEngimonScreen implements Screen {
 
     private PlayerController controller;
     private GameState gameState;
+    private final GameScreen gameScreen;
 
     private Stage uiStage;
     private Bag bag;
@@ -57,10 +58,11 @@ public class ChildEngimonScreen implements Screen {
     private TextField childName;
 
 
-    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, GameState gameState) throws IOException {
+    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, GameScreen gameScreen, GameState gameState) throws IOException {
         this.app = app;
         this.controller = controller;
         this.gameState = gameState;
+        this.gameScreen = gameScreen;
 
         this.ParentA = ParentA;
         this.ParentB = ParentB;
@@ -97,11 +99,7 @@ public class ChildEngimonScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isBreederOpen) {
-            try {
-                app.setScreen(new GameScreen(app));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            app.setScreen(gameScreen);
         }
 
         uiStage.act(delta);
@@ -120,11 +118,6 @@ public class ChildEngimonScreen implements Screen {
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = app.getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
-
-        TextButton back = new TextButton("Back", textButtonStyle);
-        back.getLabel().setFontScale(2,2);
-        backButton.setBackground(app.getSkin().getDrawable("optionbox"));
-        backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
         enterButton = new Table();
 
@@ -157,11 +150,6 @@ public class ChildEngimonScreen implements Screen {
         root.add(nameWrapper);
         root.add(enter);
 
-        back.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                controller.finishBreeding();
-            }
-        });
 
         enter.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

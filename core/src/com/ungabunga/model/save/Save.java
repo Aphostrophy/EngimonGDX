@@ -9,7 +9,7 @@ public class Save {
     public String playerName;
     public int playerPosX;
     public int playerPosY;
-    public MapCell[][] map;
+//    public MapCell[][] map;
 
     public Bag playerInventory;
 
@@ -31,7 +31,7 @@ public class Save {
                 map[y][x] = gameState.map.get(y).get(x);
             }
         }
-        this.map = map;
+//        this.map = map;
 
         this.wildEngimonCount = gameState.getWildEngimonCount();
 

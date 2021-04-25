@@ -151,8 +151,6 @@ public class GameScreen extends AbstractScreen {
             try {
                 BreederScreen breederScreen = new BreederScreen(getApp(), controller, gameState,this);
                 getApp().setScreen(breederScreen);
-                setGameState(breederScreen.getGameState());
-                getGameState().getPlayerInventory().showInventory();
             } catch (IOException e) {
                 e.printStackTrace();
             }
