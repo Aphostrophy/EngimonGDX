@@ -270,18 +270,23 @@ public class DialogueController extends InputAdapter {
         dialogState = DIALOG_STATE.CHOOSESKILL;
         this.skillList = skillList;
         Dialogue dialogue = new Dialogue();
-        DialogueNode skillDialog = new DialogueNode("You already have 4 skills, choose one to unlearn",0);
-        DialogueNode endingDialogue = new DialogueNode("Wise choice, enjoy your new skill",1);
-        DialogueNode cancelDialogue = new DialogueNode("Cancelled learn skill",2);
-        skillDialog.addChoice(skillList.get(0).getSkillName(),1);
-        skillDialog.addChoice(skillList.get(1).getSkillName(),1);
-        skillDialog.addChoice(skillList.get(2).getSkillName(),1);
-        skillDialog.addChoice(skillList.get(3).getSkillName(),1);
-        skillDialog.addChoice("Cancel",2);
+        DialogueNode a = new DialogueNode("Your engimon already has 4 skills learned" ,0);
+        DialogueNode b = new DialogueNode("You already have 4 skills, choose one to unlearn", 1);
+        DialogueNode c = new DialogueNode("Wise Choice", 2);
+        DialogueNode d = new DialogueNode("Cancelled learn skill!",3);
 
-        dialogue.addNode(skillDialog);
-        dialogue.addNode(endingDialogue);
-        dialogue.addNode(cancelDialogue);
+        a.makeLinear(b.getId());
+        c.makeLinear(d.getId());
+        b.addChoice(skillList.get(0).getSkillName(),2);
+        b.addChoice(skillList.get(1).getSkillName(),2);
+        b.addChoice(skillList.get(2).getSkillName(),2);
+        b.addChoice(skillList.get(3).getSkillName(),2);
+        b.addChoice("Cancel",3);
+
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
+        dialogue.addNode(d);
 
         startDialogue(dialogue);
     }
