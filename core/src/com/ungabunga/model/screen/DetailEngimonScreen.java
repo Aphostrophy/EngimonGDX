@@ -1,11 +1,13 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,6 +18,7 @@ import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.ActiveEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
 import com.ungabunga.model.utilities.ResourceProvider;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -40,8 +43,13 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
     private Table detailsWrapper;
     private Table backButton;
     private Table title;
+    private Table nameInputWrapper;
+    private Table left;
+    private Table right;
 
-    public DetailEngimonScreen(EngimonGame app, GameScreen gameScreen,ActiveEngimon activeEngimon, ResourceProvider provider, PlayerController controller) throws IOException {
+    private TextField nameInput;
+
+    public DetailEngimonScreen(EngimonGame app, GameScreen gameScreen, ActiveEngimon activeEngimon, ResourceProvider provider, PlayerController controller) throws IOException {
         super(app);
 
         this.activeEngimon = activeEngimon;
@@ -72,6 +80,9 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         detailsWrapper = new Table();
         backButton = new Table();
         title = new Table();
+        left = new Table();
+        right = new Table();
+        nameInputWrapper = new Table();
 
         // add background
         engimonPic.add(image);
@@ -89,18 +100,18 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         textButtonStyle.font = getApp().getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
-        Image bg = new Image(new Texture("img/inventory_title.png"));
+        Image bg = new Image(new Texture("img/detail_engimon_title.png"));
         title.add(bg).width(500);
 
         TextButton nameText = new TextButton(this.activeEngimon.getName(), textButtonStyle);
-        nameText.getLabel().setFontScale(1, 1);
+        nameText.getLabel().setFontScale(1.5f, 1.5f);
         name.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
-        name.add(nameText).expand().align(Align.center).width(400).height(25).space(11f);
+        name.add(nameText).expand().align(Align.center).width(600).height(25).space(11f);
 
         TextButton detailsText = new TextButton(this.activeEngimon.displayInfoToString(), textButtonStyle);
-        detailsText.getLabel().setFontScale(1, 1);
+        detailsText.getLabel().setFontScale(1.5f, 1.5f);
         details.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
-        details.add(detailsText).expand().align(Align.center).width(400).height(200).space(11f);
+        details.add(detailsText).expand().align(Align.center).width(600).height(250).space(11f);
 
         skills.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
 
@@ -118,12 +129,15 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
             skillPic.add(masteryLevelLabel);
 
             TextButton skillDetailsText = new TextButton(activeEngimon.getSkills().get(i).displaySkillInfoDetailString(), textButtonStyle);
-            skillDetailsText.getLabel().setFontScale(1, 1);
+            skillDetailsText.getLabel().setFontScale(1f, 1f);
 
             skillWrapper.add(skillPic).size(72, 72);
-            skillWrapper.add(skillDetailsText).expand().align(Align.center).width(100).height(50).space(11f);
+            skillWrapper.add(skillDetailsText).expand().align(Align.center).width(150).height(50).space(5f);
 
             skills.add(skillWrapper).expand().width(100).height(50).pad(5f);
+            if((i + 1) % 2 == 0) {
+                skills.row();
+            }
         }
 
         TextButton back = new TextButton("Back", textButtonStyle);
@@ -131,25 +145,48 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         backButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
+        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
+        textFieldStyle.font = getApp().getSkin().getFont("font");
+        textFieldStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
+
+        nameInput = new TextField("", textFieldStyle);
+
+        nameInputWrapper.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
+        nameInputWrapper.add(nameInput);
+
         topBar.add(backButton).align(Align.topLeft);
         topBar.add(title).align(Align.center);
 
+        left.add(topBar).row();
+        left.add(engimonPic).center().width(400).height(500).row();
+        right.add(detailsWrapper).center().row();
+
         detailsWrapper.add(name).top().align(Align.center).row();
+        detailsWrapper.add(nameInputWrapper).center().width(625).height(35).row();
         detailsWrapper.add(details).top().align(Align.center).row();
-        detailsWrapper.add(skills).width(400).height(200).top().align(Align.center).row();
+        detailsWrapper.add(skills).width(625).height(350).top().align(Align.center).row();
 
-        root.add(topBar).top().fillX().row();
-        root.add(engimonPic).left();
-        root.add(detailsWrapper).right();
-        root.row();
-
-        uiStage.setDebugAll(true);
+        root.add(left).top().fillX();
+        root.add(right).center().fillX();
 
         uiStage.addActor(root);
 
         back.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 controller.closeDetail();
+            }
+        });
+
+        uiStage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if(keycode == Input.Keys.ENTER) {
+                    activeEngimon.setName(nameInput.getText());
+                    System.out.println(activeEngimon.getName());
+                    nameText.setText(nameInput.getText());
+                    nameInput.setText("");
+                }
+                return super.keyDown(event, keycode);
             }
         });
     }
