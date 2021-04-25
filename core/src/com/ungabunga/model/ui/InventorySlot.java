@@ -11,14 +11,18 @@ public class InventorySlot extends Stack {
     private Label numItemsLabel;
     private int numItemsVal;
     private int idx;
+    private int id;
+    private String skillItemName;
     private InventoryItem.ItemType itemType;
 
-    public InventorySlot(Skin skin, InventoryItem item, int numItemsVal, int idx){
+    public InventorySlot(Skin skin, InventoryItem item, int numItemsVal, int idx, int id, String skillItemName){
         defaultBackground = new Stack();
         Image image = new Image(skin, "optionbox");
 
         this.idx = idx;
         this.numItemsVal = numItemsVal;
+        this.id = id;
+        this.skillItemName = skillItemName;
 
         numItemsLabel = new Label(String.valueOf(numItemsVal), skin);
         numItemsLabel.setAlignment(Align.bottomRight);
@@ -73,5 +77,13 @@ public class InventorySlot extends Stack {
 
     public int getIdx() {
         return idx;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getSkillItemName() {
+        return skillItemName;
     }
 }

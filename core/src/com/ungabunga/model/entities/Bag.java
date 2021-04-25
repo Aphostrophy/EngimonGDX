@@ -22,7 +22,7 @@ public class Bag {
         this.skillItemInventory.deleteFromInventory(skillitem);
     }
     public void deleteFromBag(PlayerEngimon engimon){
-        this.skillItemInventory.deleteFromInventory(engimon);
+        this.engimonInventory.deleteFromInventory(engimon);
     }
     public PlayerEngimon getEngimonByIndex(int index){
         return engimonInventory.getItemByIndex(index);

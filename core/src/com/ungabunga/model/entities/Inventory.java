@@ -76,8 +76,9 @@ public class Inventory<T> {
     }
 
     public void deleteFromInventory(PlayerEngimon engimon) {
-        this.items.remove(((T)engimon));
-        this.neff--;
+        if(this.items.remove(((T)engimon))){
+            this.neff--;
+        }
     }
 
     public void deleteFromInventory(SkillItem skillitem){
@@ -93,8 +94,9 @@ public class Inventory<T> {
         }
         if (((SkillItem) this.items.get(i)).getAmount() == 0)
         {
-            this.items.remove(((T)skillitem));
-            this.neff--;
+            if(this.items.remove(((T)skillitem))){
+                this.neff--;
+            }
         }
     }
 
