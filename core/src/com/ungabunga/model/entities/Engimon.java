@@ -15,7 +15,7 @@ public class Engimon {
     protected int level, exp, cumulativeExp;
     protected List<IElements> elements;
     protected Pair<String, String> parentName, parentSpecies;
-    protected List<com.ungabunga.model.entities.Skill> skills;
+    protected List<Skill> skills;
 
     public Engimon(){
 
