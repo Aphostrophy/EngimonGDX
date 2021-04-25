@@ -54,33 +54,6 @@ public class GameOverScreen implements Screen {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 int x = Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2;
-
-                //Play game button
-                if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
-                    try {
-                        game.setScreen(new GameScreen(game));
-                        splash.dispose();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                //Load game button
-                if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() * 3 / 8 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() * 3 / 8) {
-                    try {
-                        GameScreen gameScreen = new GameScreen(game);
-                        FileHandle file = Gdx.files.local("mysave.json");
-                        String mysave = file.readString();
-                        Json json = new Json();
-                        Save save = json.fromJson(Save.class, mysave);
-                        gameScreen.getGameState().loadSave(save);
-                        game.setScreen(gameScreen);
-                        splash.dispose();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
                 //Exit button
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 4 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 4) {
                     Gdx.app.exit();
@@ -110,18 +83,6 @@ public class GameOverScreen implements Screen {
         batch.begin();
         heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 125);
         heading.draw(batch);
-
-        if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {
-            batch.draw(playButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
-        } else {
-            batch.draw(playButtonInactive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() / 2, BUTTON_WIDTH, BUTTON_HEIGHT);
-        }
-
-        if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() * 3 / 8 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() * 3 / 8) {
-            batch.draw(loadButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
-        } else {
-            batch.draw(loadButtonInactive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() * 3 / 8, BUTTON_WIDTH, BUTTON_HEIGHT);
-        }
 
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 4 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 4) {
             batch.draw(exitButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() / 4, BUTTON_WIDTH, BUTTON_HEIGHT);

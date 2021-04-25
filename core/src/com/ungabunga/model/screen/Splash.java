@@ -52,6 +52,9 @@ public class Splash implements Screen {
                 if (keyCode == Input.Keys.SPACE) {
                     game.setScreen(new MainMenu(game, splash));
                 }
+//                if (keyCode == Input.Keys.SPACE) {
+//                    game.setScreen(new GameOverScreen(game));
+//                }
                 return true;
             }
         });
