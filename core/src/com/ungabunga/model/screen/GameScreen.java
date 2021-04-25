@@ -141,7 +141,6 @@ public class GameScreen extends AbstractScreen {
         dialogueController.update(delta);
 
         gameState.update(delta);
-        gameState.player.update(delta);
 
         if (controller.isBreederOpen) {
             try {

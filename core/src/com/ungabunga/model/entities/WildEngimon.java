@@ -27,25 +27,9 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     }
 
     @Override
-    public void moveUp() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
+    public void move(int dx, int dy) {
 
-    @Override
-    public void moveDown() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
     }
-
-    @Override
-    public void moveLeft() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
-
-    @Override
-    public void moveRight() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
-
 
     @Override
     public void repositionOnCellConflict() throws FeatureNotImplementedException {

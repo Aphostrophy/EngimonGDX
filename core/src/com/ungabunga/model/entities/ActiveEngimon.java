@@ -1,9 +1,12 @@
 package com.ungabunga.model.entities;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.utilities.Pair;
+
+import static com.ungabunga.Settings.ANIM_TIMER;
 
 /*
 Active Engimon merepresentasikan Player Engimon yang sedang aktif merupakan turunan dari PlayerEngimon
@@ -15,6 +18,15 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     DIRECTION direction;
     AVATAR_STATE state;
 
+    Player player;
+
+    private float srcX,srcY;
+    private float destX,destY;
+    private float worldX,worldY;
+    private float animTimer;
+
+    private float stateTimer;
+
     public ActiveEngimon(){
 
     }
@@ -25,26 +37,64 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.position = new Pair<Integer,Integer>(x,y);
         this.direction = P.getDirection();
         this.state = P.getState();
+
+        this.player = P;
+
+        this.worldX = x;
+        this.worldY = y;
     }
 
-    @Override
-    public void moveUp() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Feature Not Available");
+    private void initializeMove(int dx,int dy){
+        this.srcX = this.getX();
+        this.srcY = this.getY();
+        this.destX = this.getX() + dx;
+        this.destY = this.getY() + dy;
+        this.worldX = this.getX();
+        this.worldY = this.getY();
+        this.animTimer = 0f;
+        this.state = AVATAR_STATE.WALKING;
     }
 
-    @Override
-    public void moveDown() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    private void finishMove(){
+        this.state = AVATAR_STATE.STANDING;
+        this.worldX = this.getX();
+        this.worldY = this.getY();
     }
 
-    @Override
-    public void moveLeft() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void update(float delta){
+        if(state == AVATAR_STATE.WALKING) {
+            animTimer += delta;
+            stateTimer += delta;
+            worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
+            worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+
+            if(animTimer > ANIM_TIMER){
+                stateTimer -= (animTimer - ANIM_TIMER);
+                finishMove();
+                if(player.getMoveFrameRequest()){
+                    if(direction == DIRECTION.UP){
+                        move(0,1);
+                    }
+                    if(direction == DIRECTION.DOWN){
+                        move(0,-1);
+                    }
+                    if(direction == DIRECTION.LEFT){
+                        move(-1,0);
+                    }
+                    if(direction == DIRECTION.RIGHT){
+                        move(1,0);
+                    }
+                } else{
+                    stateTimer = 0f;
+                }
+            }
+        }
     }
 
-    @Override
-    public void moveRight() throws FeatureNotImplementedException{
-        throw new FeatureNotImplementedException("Feature Not Available");
+    public void move(int dx, int dy){
+        initializeMove(dx,dy);
+        this.position.setFirst(this.getX()+dx);
+        this.position.setSecond(this.getY()+dy);
     }
 
     @Override

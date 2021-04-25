@@ -92,6 +92,9 @@ public class Player {
     }
 
     public void update(float delta){
+        if(activeEngimon!=null){
+            activeEngimon.update(delta);
+        }
         if(state == AVATAR_STATE.WALKING) {
             animTimer += delta;
             stateTimer += delta;
@@ -206,5 +209,9 @@ public class Player {
 
     public AVATAR_STATE getState(){
         return this.state;
+    }
+
+    public boolean getMoveFrameRequest(){
+        return this.moveFrameRequest;
     }
 }

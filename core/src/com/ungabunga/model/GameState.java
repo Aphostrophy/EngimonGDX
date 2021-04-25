@@ -94,6 +94,7 @@ public class GameState {
     }
 
     public void update(float delta){
+        player.update(delta);
         timeDelta += delta;
         if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
             int spawnX = ThreadLocalRandom.current().nextInt(0,map.length());
