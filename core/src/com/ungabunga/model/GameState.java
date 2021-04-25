@@ -123,11 +123,11 @@ public class GameState {
 
     public void loadSave(Save save){
         player.loadSave(save);
-        for(int y=0;y<save.map.length;y++){
-            for(int x=0;x<save.map[0].length;x++){
-                this.map.get(y).set(x, save.map[y][x]);
-            }
-        }
+//        for(int y=0;y<save.map.length;y++){
+//            for(int x=0;x<save.map[0].length;x++){
+//                this.map.get(y).set(x, save.map[y][x]);
+//            }
+//        }
         this.playerInventory = save.playerInventory;
         this.wildEngimonCount = save.wildEngimonCount;
     }
