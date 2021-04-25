@@ -2,12 +2,10 @@ package com.ungabunga.model.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.ungabunga.model.enums.AVATAR_MODE;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.save.Save;
-import com.ungabunga.model.ui.InventoryUI;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 
@@ -18,8 +16,7 @@ public class Player {
     private ActiveEngimon activeEngimon;
 
     public AVATAR_STATE state;
-    public AVATAR_MODE currMode;
-    public AVATAR_MODE nextMode;
+    public boolean isRunning;
 
     public String name;
 
@@ -44,8 +41,6 @@ public class Player {
         this.worldY = y;
 
         this.state = AVATAR_STATE.STANDING;
-        this.currMode = AVATAR_MODE.WALKING;
-        this.nextMode = AVATAR_MODE.WALKING;
         this.direction = DIRECTION.DOWN;
 
         this.animTimer = 0f;
@@ -90,7 +85,6 @@ public class Player {
         this.worldY = this.getY();
         this.animTimer = 0f;
         this.state = AVATAR_STATE.WALKING;
-        this.currMode = nextMode;
     }
 
     private void finishMove(){
@@ -107,9 +101,9 @@ public class Player {
         animTimer += delta;
         stateTimer += delta;
 
-        if(currMode == AVATAR_MODE.WALKING) {
+        if(state == AVATAR_STATE.WALKING && !isRunning) {
             anime_time = ANIM_TIMER;
-        } else if (currMode == AVATAR_MODE.RUNNING) {
+        } else if (state == AVATAR_STATE.WALKING && isRunning) {
             anime_time = RUN_ANIM_TIMER;
         }
         worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/anime_time);
@@ -193,9 +187,9 @@ public class Player {
     }
 
     public TextureRegion getSprite(){
-        if(currMode == AVATAR_MODE.WALKING){
+        if(state == AVATAR_STATE.WALKING && !isRunning){
             return animations.getWalking(direction).getKeyFrame(stateTimer);
-        } else if (currMode == AVATAR_MODE.RUNNING ) {
+        } else if (state == AVATAR_STATE.WALKING && isRunning) {
             return animations.getRunning(direction).getKeyFrame(stateTimer);
         }
         return animations.getStanding(direction);

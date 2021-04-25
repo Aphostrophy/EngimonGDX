@@ -3,7 +3,6 @@ package com.ungabunga.model.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.enums.AVATAR_MODE;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
@@ -27,6 +26,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     GameState gameState;
 
     ResourceProvider resourceProvider;
+
+    private boolean isRunning;
 
     private float srcX,srcY;
     private float destX,destY;
@@ -52,6 +53,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.worldX = x;
         this.worldY = y;
 
+        this.isRunning = false;
+
         this.animTimer = 0f;
     }
 
@@ -76,9 +79,9 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         float anime_time = 0f;
         animTimer += delta;
         stateTimer += delta;
-        if(player.currMode == AVATAR_MODE.WALKING) {
+        if(player.state == AVATAR_STATE.WALKING && !player.isRunning) {
             anime_time = ANIM_TIMER;
-        } else if (player.currMode == AVATAR_MODE.RUNNING) {
+        } else if (player.state == AVATAR_STATE.WALKING && player.isRunning) {
             anime_time = RUN_ANIM_TIMER;
         }
         worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/anime_time);
