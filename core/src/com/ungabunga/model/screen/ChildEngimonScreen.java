@@ -119,11 +119,6 @@ public class ChildEngimonScreen implements Screen {
         textButtonStyle.font = app.getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
-        TextButton back = new TextButton("Back", textButtonStyle);
-        back.getLabel().setFontScale(2,2);
-        backButton.setBackground(app.getSkin().getDrawable("optionbox"));
-        backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
-
         enterButton = new Table();
 
         TextButton enter = new TextButton("Enter", textButtonStyle);
@@ -155,11 +150,6 @@ public class ChildEngimonScreen implements Screen {
         root.add(nameWrapper);
         root.add(enter);
 
-        back.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                controller.finishBreeding();
-            }
-        });
 
         enter.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
