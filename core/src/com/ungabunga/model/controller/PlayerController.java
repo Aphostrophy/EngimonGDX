@@ -75,9 +75,9 @@ public class PlayerController extends InputAdapter{
         if (keycode == Keys.B) {
            battleHandler();
         }
-//        if(keycode == Keys.ENTER){
-//            gameScreen.dialogueBox.setVisible(false);
-//        }
+        if(keycode == Keys.H){
+            gameScreen.dialogueController.startTutorialDialogue();
+        }
         if(keycode == Keys.F5){
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);

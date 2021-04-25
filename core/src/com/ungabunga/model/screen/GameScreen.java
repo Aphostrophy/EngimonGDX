@@ -32,8 +32,8 @@ public class GameScreen extends AbstractScreen {
 
     private GameState gameState;
 
-    public InputMultiplexer multiplexer;
-    public PlayerController controller;
+    private InputMultiplexer multiplexer;
+    private PlayerController controller;
     private SpriteBatch batch;
 
     private SpriteBatch HUDBatch;
@@ -53,7 +53,7 @@ public class GameScreen extends AbstractScreen {
     private Stage uiStage;
     private Table root;
 
-    public DialogueBox dialogueBox,dialogueCommand;
+    public DialogueBox dialogueBox;
 
     public OptionBox optionBox;
     public DialogueController dialogueController;
