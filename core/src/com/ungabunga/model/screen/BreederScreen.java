@@ -65,9 +65,6 @@ public class BreederScreen implements Screen {
     private Table parentAButton;
     private Table parentBButton;
 
-
-    private BreederEngimonUI ParentA;
-    private BreederEngimonUI ParentB;
     private BreederEngimonUI breedableEngimon;
 
     private boolean isBreeding;
@@ -181,10 +178,7 @@ public class BreederScreen implements Screen {
                     throw new NoParentException("Please choose two Engimons to breed!");
                 }
             } catch (Exception e) {
-                System.out.println("Exception catched");
                 dialogueController.startExceptionDialogue(e);
-                ParentA.resetParent();
-                ParentB.resetParent();
                 stopBreeding();
             }
         }
@@ -274,14 +268,9 @@ public class BreederScreen implements Screen {
 
         breedableEngimon = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
 
-        ParentA = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
-        ParentB = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
-
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());
         Label labelC = new Label("Breedable Engimons", app.getSkin());
-        ParentA.add(labelA);
-        ParentB.add(labelB);
         breedableEngimon.add(labelC);
 
         parentABox.setBackground(app.getSkin().getDrawable("optionbox"));
@@ -290,9 +279,7 @@ public class BreederScreen implements Screen {
         parentWrapper.add(parentBBox).width(200).height(200).row();
 
         breederWrapper.add(breedableEngimon).align(Align.topLeft);
-//        breederWrapper.add(ParentA).expand().align(Align.topLeft);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
-//        breederWrapper.add(ParentB).expand().align(Align.topLeft).space(11f);
 
         root.add(topBar).top().fillX().row();
         root.add(parentBar).top().fillX().row();
