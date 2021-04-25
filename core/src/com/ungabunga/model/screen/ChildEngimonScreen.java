@@ -46,9 +46,12 @@ public class ChildEngimonScreen implements Screen {
 
     private Engimon ParentA;
     private Engimon ParentB;
+    private Engimon child;
 
     private Table root;
     private Table topBar;
+    private Table childBox;
+    private Table childWrapper;
     private Table nameWrapper;
 
     private Table backButton;
@@ -155,19 +158,6 @@ public class ChildEngimonScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
-                // cuma buat mastiin childnya kebreed
-                System.out.println("Nama: " + child.getName());
-                System.out.println("Lvl. " + child.getLevel());
-                System.out.println("Species: " + child.getSpecies());
-                System.out.println("Parent:");
-                System.out.println("- " + child.getParentName().getFirst() + "(" + child.getParentSpecies().getFirst() + ")");
-                System.out.println("- " + child.getParentName().getSecond() + "(" + child.getParentSpecies().getSecond() + ")");
-                System.out.print("Skills: \n.");
-
-                for (Skill s : child.getSkills()) {
-                    System.out.println("- " + s.getSkillName());
-                }
-//                System.out.println("Breeding is in progress...");
                 controller.finishBreeding();
             }
         });

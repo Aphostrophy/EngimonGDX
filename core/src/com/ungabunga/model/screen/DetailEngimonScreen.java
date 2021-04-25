@@ -18,7 +18,6 @@ import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.ActiveEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
 import com.ungabunga.model.utilities.ResourceProvider;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -36,7 +35,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
     private Table root;
     private Table topBar;
     private Stack engimonPic;
-    private Stack skillPic;
     private Table name;
     private Table details;
     private Table skills;
@@ -69,11 +67,8 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         root = new Table();
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
 
-        Image image = new Image(getApp().getSkin(), "optionbox");
-
         topBar = new Table();
         engimonPic = new Stack();
-        skillPic = new Stack();
         name = new Table();
         details = new Table();
         skills = new Table();
@@ -83,10 +78,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         left = new Table();
         right = new Table();
         nameInputWrapper = new Table();
-
-        // add background
-        engimonPic.add(image);
-        skillPic.add(image);
 
 //        name.setBackground("dialoguebox");
 //        details.setBackground("dialoguebox");
@@ -116,7 +107,10 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         skills.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
 
         for(int i = 0; i < activeEngimon.getSkills().size(); i++) {
+            Image backgroundImage = new Image(getApp().getSkin(), "optionbox");
+            Stack skillPic = new Stack();
             Table skillWrapper = new Table();
+            skillPic.add(backgroundImage);
 
             Label masteryLevelLabel = new Label(String.valueOf(activeEngimon.getSkills().get(i).getMasteryLevel()), getApp().getSkin());
             masteryLevelLabel.setAlignment(Align.bottomRight);

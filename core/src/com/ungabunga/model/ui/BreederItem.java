@@ -11,6 +11,10 @@ public class BreederItem extends Table {
     private Engimon engimon;
     private Image sprite;
 
+    public BreederItem() {
+
+    }
+
     public BreederItem(TextureRegion texture, Engimon engimon){
         this.sprite = new Image(texture);
         this.engimon = engimon;

@@ -12,7 +12,9 @@ import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
+import com.ungabunga.model.utilities.ResourceProvider;
 
+import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +22,8 @@ public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
     private DialogueBox Dbox;
     private OptionBox Obox;
+
+    private ResourceProvider provider;
 
     private GameScreen gameScreen;
 
@@ -30,7 +34,8 @@ public class DialogueController extends InputAdapter {
     private float TIMER_TIMEOUT = 2f;
     private float BATTLE_TIMEOUT = 4f;
 
-    private List<SkillItem> skillItemList;
+    private List<Skill> skillList;
+    private Skill newSkill;
     private WildEngimon wildEngimon;
 
     public enum DIALOG_STATE{
@@ -42,6 +47,8 @@ public class DialogueController extends InputAdapter {
     public DialogueController(DialogueBox Dbox, OptionBox Obox, GameScreen gameScreen) {
         this.Dbox = Dbox;
         this.Obox = Obox;
+
+        this.provider = gameScreen.getApp().getResourceProvider();
 
         this.gameScreen = gameScreen;
         this.startCountdown = false;
@@ -124,7 +131,11 @@ public class DialogueController extends InputAdapter {
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.CHOOSESKILL){
                 progress(Obox.getSelected());
-                System.out.println(skillItemList.get(Obox.getSelected()).getName());
+                if(Obox.getSelected() <= 3) {
+                    System.out.println(skillList.get(Obox.getSelected()).getSkillName());
+                    gameScreen.getGameState().player.getActiveEngimon().deleteSkill(skillList.get(Obox.getSelected()).getSkillName());
+                    gameScreen.getGameState().player.getActiveEngimon().addSkill(provider.getSkill(this.newSkill.getSkillName()));
+                }
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.ELSE) {
                 progress(Obox.getSelected());
@@ -265,23 +276,29 @@ public class DialogueController extends InputAdapter {
         startDialogue(dialogue);
     }
 
-    // I.S skillItemList 4
-    public void startSkillChoiceDialogue(List<SkillItem> skillItemList){
+    // I.S SkillList 4
+    public void startSkillChoiceDialogue(List<Skill> skillList, Skill newSkill){
         dialogState = DIALOG_STATE.CHOOSESKILL;
-        this.skillItemList = skillItemList;
+        this.skillList = skillList;
+        this.newSkill = newSkill;
         Dialogue dialogue = new Dialogue();
-        DialogueNode skillDialog = new DialogueNode("You already have 4 skills, choose one to unlearn",0);
-        DialogueNode endingDialogue = new DialogueNode("Wise choice, enjoy your new skill",1);
-        DialogueNode cancelDialogue = new DialogueNode("Cancelled learn skill",2);
-        skillDialog.addChoice(skillItemList.get(0).getName(),1);
-        skillDialog.addChoice(skillItemList.get(1).getName(),1);
-        skillDialog.addChoice(skillItemList.get(2).getName(),1);
-        skillDialog.addChoice(skillItemList.get(3).getName(),1);
-        skillDialog.addChoice("Cancel",2);
+        DialogueNode a = new DialogueNode("Your engimon already has 4 skills learned" ,0);
+        DialogueNode b = new DialogueNode("You already have 4 skills, choose one to unlearn", 1);
+        DialogueNode c = new DialogueNode("Wise Choice", 2);
+        DialogueNode d = new DialogueNode("Cancelled learn skill!",3);
 
-        dialogue.addNode(skillDialog);
-        dialogue.addNode(endingDialogue);
-        dialogue.addNode(cancelDialogue);
+        a.makeLinear(b.getId());
+        c.makeLinear(d.getId());
+        b.addChoice(skillList.get(0).getSkillName(),2);
+        b.addChoice(skillList.get(1).getSkillName(),2);
+        b.addChoice(skillList.get(2).getSkillName(),2);
+        b.addChoice(skillList.get(3).getSkillName(),2);
+        b.addChoice("Cancel",3);
+
+        dialogue.addNode(a);
+        dialogue.addNode(b);
+        dialogue.addNode(c);
+        dialogue.addNode(d);
 
         startDialogue(dialogue);
     }
