@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.CellType;
+import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.EngimonConflictException;
@@ -140,6 +141,7 @@ public class GameState {
     public void movePlayerUp() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
+        player.setDirection(DIRECTION.UP);
         if(y+1<map.length()){
             if(map.get(y+1).get(x).occupier==null && map.get(y+1).get(x).cellType!=CellType.BLOCKED){
                 player.moveUp();
@@ -154,6 +156,7 @@ public class GameState {
     public void movePlayerDown() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
+        player.setDirection(DIRECTION.DOWN);
         if(y-1>=0){
             if(map.get(y-1).get(x).occupier==null &&map.get(y-1).get(x).cellType!=CellType.BLOCKED){
                 player.moveDown();
@@ -168,6 +171,7 @@ public class GameState {
     public void movePlayerLeft() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
+        player.setDirection(DIRECTION.LEFT);
         if(x-1>=0){
             if(map.get(y).get(x-1).occupier==null && map.get(y).get(x-1).cellType!=CellType.BLOCKED){
                 player.moveLeft();
@@ -182,6 +186,7 @@ public class GameState {
     public void movePlayerRight() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
         int x = player.getPosition().getFirst();
         int y = player.getPosition().getSecond();
+        player.setDirection(DIRECTION.RIGHT);
         if(x+1<map.get(y).length()){
             if(map.get(y).get(x+1).occupier==null && map.get(y).get(x+1).cellType!=CellType.BLOCKED){
                 player.moveRight();
