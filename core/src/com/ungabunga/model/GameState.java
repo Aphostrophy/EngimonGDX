@@ -32,9 +32,7 @@ public class GameState {
 
     private Bag playerInventory;
     public DialogueBox dialogueBox;
-    public boolean Occupied = false;
     private float timeDelta;
-    private String stringException;
     private float SPAWN_INTERVAL = 5.0f;
 
     private int wildEngimonCount;
