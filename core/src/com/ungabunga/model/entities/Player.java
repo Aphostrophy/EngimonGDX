@@ -218,4 +218,9 @@ public class Player {
     public boolean getMoveFrameRequest(){
         return this.moveFrameRequest;
     }
+
+    public void setPosition(int x,int y){
+        this.position.setFirst(x);
+        this.position.setSecond(y);
+    }
 }
