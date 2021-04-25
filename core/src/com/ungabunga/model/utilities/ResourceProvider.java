@@ -431,7 +431,7 @@ public class ResourceProvider {
         return null;
     }
 
-    public Engimon randomizeEngimon(CellType biomes){
+    public Engimon randomizeEngimon(CellType biomes,int level){
         ArrayList<Engimon> candidates = new ArrayList<>();
         for(Engimon engimon: this.engimon){
             for(IElements engimonElement: engimon.getElements()){
@@ -444,7 +444,9 @@ public class ResourceProvider {
             return null;
         }
         int x = ThreadLocalRandom.current().nextInt(0,candidates.size());
-        return candidates.get(x);
+        Engimon engimon = candidates.get(x);
+        engimon.setLevel(level);
+        return engimon;
     }
 
     public Engimon getEngimon(String species) throws OutOfBoundException {
