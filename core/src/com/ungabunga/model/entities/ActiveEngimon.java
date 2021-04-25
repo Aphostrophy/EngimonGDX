@@ -41,6 +41,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.state = P.getState();
 
         this.player = P;
+        this.gameState = gameState;
 
         this.worldX = x;
         this.worldY = y;
@@ -97,10 +98,14 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         }
     }
 
+    // I.S. Movement bisa dilakukan dengan valid
+    // F.S Engimon langsung berpindah ke tujuan secara memori namun secara visual seolah-olah berjalan
     public void move(int dx, int dy){
         initializeMove(dx,dy);
+        gameState.map.get(this.getY()).get(this.getX()).occupier=null;
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
+        gameState.map.get(this.getY()).get(this.getX()).occupier=this;
     }
 
     public void moveUp() {
