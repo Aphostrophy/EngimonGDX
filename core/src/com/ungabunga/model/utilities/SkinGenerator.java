@@ -26,7 +26,7 @@ public class SkinGenerator {
         skin.add("optionbox", optionbox);
         skin.add("arrow", uiAtlas.findRegion("arrow"), TextureRegion.class);
 
-        NinePatch red = new NinePatch(uiAtlas.findRegion("red"),1, 1, 1, 1);
+        NinePatch red = new NinePatch(uiAtlas.findRegion("red"),3, 3, 3, 3);
         skin.add("red", red);
 
         NinePatch yellow = new NinePatch(uiAtlas.findRegion("yellow"),1, 1, 1, 1);

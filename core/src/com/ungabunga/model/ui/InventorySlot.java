@@ -42,8 +42,8 @@ public class InventorySlot extends Stack {
         this.add(numItemsLabel);
     }
 
-    public void decrementItemCount() {
-        numItemsVal--;
+    public void decrementItemCount(int count) {
+        numItemsVal -= count;
         numItemsLabel.setText(String.valueOf(numItemsVal));
         if( numItemsVal == 0){
             defaultBackground.getChildren().pop();

@@ -45,8 +45,12 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private Table bottomBar;
     private Table deleteButton;
     private Table detailButton;
+    private Table plusButton;
+    private Table minusButton;
+    private Table amountUI;
     private Table title;
 
+    private Integer amount = 0;
     private boolean isDelete;
     private boolean isDetail;
 
@@ -77,15 +81,21 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         }
 
         if(isDelete) {
-            deleteButton.setBackground(getApp().getSkin().getDrawable("red"));
+            deleteButton.setColor(1, 0, 0, 1);
+            amountUI.setVisible(true);
+            plusButton.setVisible(true);
+            minusButton.setVisible(true);
         } else {
-            deleteButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+            deleteButton.setColor(1, 1, 1, 1);;
+            amountUI.setVisible(false);
+            plusButton.setVisible(false);
+            minusButton.setVisible(false);
         }
 
         if(isDetail) {
-            detailButton.setBackground(getApp().getSkin().getDrawable("yellow"));
+            detailButton.setColor(1, 1, 0, 1);
         } else {
-            detailButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+            detailButton.setColor(1, 1, 1, 1);
         }
 
         uiStage.act(delta);
@@ -135,6 +145,9 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         backButton = new Table();
         deleteButton = new Table();
         detailButton = new Table();
+        plusButton = new Table();
+        amountUI = new Table();
+        minusButton = new Table();
         title = new Table();
 
         Image bg = new Image(new Texture("img/inventory_title.png"));
@@ -179,8 +192,26 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         detailButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         detailButton.add(detail).expand().align(Align.center).width(200).height(25).space(11f);
 
+        TextButton plus = new TextButton("+", textButtonStyle);
+        plus.getLabel().setFontScale(2,2);
+        plusButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        plusButton.add(plus).expand().align(Align.center).width(25).height(25).space(11f);
+
+        TextButton amountUIButton = new TextButton(this.amount.toString(), textButtonStyle);
+        amountUIButton.getLabel().setFontScale(2,2);
+        amountUI.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
+        amountUI.add(amountUIButton).expand().align(Align.center).width(25).height(25).space(11f);
+
+        TextButton minus = new TextButton("-", textButtonStyle);
+        minus.getLabel().setFontScale(2,2);
+        minusButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        minusButton.add(minus).expand().align(Align.center).width(25).height(25).space(11f);
+
         topBar.add(deleteButton).align(Align.center);
         topBar.add(detailButton).align(Align.center).space(11f);
+        topBar.add(minusButton).align(Align.center).space(11f);
+        topBar.add(amountUI).align(Align.center).space(11f);
+        topBar.add(plusButton).align(Align.center).space(11f);
 
         root.add(topBar).top().fillX().row();
         root.add(inventoryWrapper).top().fillX().align(Align.center).row();
@@ -205,6 +236,24 @@ public class InventoryScreen extends AbstractScreen implements Screen {
                 isDetail = !isDetail;
                 engimonInventory.setDetail(isDetail);
                 skillitemInventory.setDetail(isDetail);
+            }
+        });
+
+        plus.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                amount++;
+                amountUIButton.setText(amount.toString());
+                skillitemInventory.setAmount(amount);
+            }
+        });
+
+        minus.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                if(amount > 0) {
+                    amount--;
+                    amountUIButton.setText(amount.toString());
+                    skillitemInventory.setAmount(amount);
+                }
             }
         });
     }

@@ -20,6 +20,8 @@ public class InventoryUI extends Table {
     private boolean isDelete;
     private boolean isDetail;
 
+    private int amount;
+
     public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType, ResourceProvider provider, GameState gameState){
        super(skin);
        this.setBackground("dialoguebox");
@@ -51,7 +53,7 @@ public class InventoryUI extends Table {
                                PlayerEngimon chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(slot.getIdx());
                                if(isDelete) {
                                     inventory.deleteFromInventory(chosenEngimon);
-                                    slot.decrementItemCount();
+                                    slot.decrementItemCount(1);
                                } else if (isDetail) {
                                    chosenEngimon.displayInfo();
                                } else {
@@ -65,7 +67,12 @@ public class InventoryUI extends Table {
                            } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
                                SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
                                if(isDelete) {
-                                   System.out.println("Delete " + chosenSkillItem.getName());
+                                   if(amount <= slot.getNumItemsVal()) {
+                                       for(int i = 0; i < amount; i++) {
+                                           inventory.deleteFromInventory(chosenSkillItem);
+                                       }
+                                       slot.decrementItemCount(amount);
+                                   }
                                } else if (isDetail){
                                    Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
                                    chosenSkill.displaySkillInfo();
@@ -77,7 +84,7 @@ public class InventoryUI extends Table {
                                            try {
                                                gameState.player.getActiveEngimon().learnSkill(chosenSkill);
                                                inventory.deleteFromInventory(chosenSkillItem);
-                                               slot.decrementItemCount();
+                                               slot.decrementItemCount(1);
                                            } catch (FeatureNotImplementedException e) {
                                                e.printStackTrace();
                                            }
@@ -107,5 +114,9 @@ public class InventoryUI extends Table {
 
     public void setDetail(boolean detail) {
         isDetail = detail;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
