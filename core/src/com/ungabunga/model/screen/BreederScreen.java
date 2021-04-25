@@ -52,17 +52,28 @@ public class BreederScreen implements Screen {
 
     private Table root;
     private Table topBar;
+    private Table parentBar;
     private Table breederWrapper;
     private Table breedButton;
     private Table dialogueTable;
     private Table backButton;
     private Table title;
+    private Table parentABox;
+    private Table parentBBox;
+    private Table parentWrapper;
+    private Table parentAButton;
+    private Table parentBButton;
 
 
     private BreederEngimonUI ParentA;
     private BreederEngimonUI ParentB;
+    private BreederEngimonUI breedableEngimon;
 
     private boolean isBreeding;
+    private boolean parentA;
+    private boolean parentB;
+    private boolean parentASprite;
+    private boolean parentBSprite;
 
 
 
@@ -75,6 +86,12 @@ public class BreederScreen implements Screen {
         this.gameScreen = gameScreen;
 
         this.isBreeding = false;
+
+        this.parentA = false;
+        this.parentB = false;
+
+        this.parentASprite = false;
+        this.parentBSprite = false;
 
         initUI();
 
@@ -117,20 +134,45 @@ public class BreederScreen implements Screen {
             app.setScreen(gameScreen);
         }
 
+        if (parentA) {
+            parentAButton.setColor(1, 1, 0, 1);
+        } else {
+            parentAButton.setColor(1, 1, 1, 1);
+        }
+
+        if (parentB) {
+            parentBButton.setColor(1, 1, 0, 1);
+        } else {
+            parentBButton.setColor(1, 1, 1, 1);
+        }
+
+        if (breedableEngimon.parentAFilled()) {
+            parentABox.clearChildren();
+            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(breedableEngimon.getParentAIdx())));
+            parentABox.add(sprite).width(150).height(150);
+
+        }
+
+        if (breedableEngimon.parentBFilled()) {
+            parentBBox.clearChildren();
+            Image sprite = new Image(app.getResourceProvider().getSprite((PlayerEngimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(breedableEngimon.getParentBIdx())));
+            parentBBox.add(sprite).width(150).height(150);;
+        }
+
         if (isBreeding) {
-            System.out.println("ok");
             try {
-                if (ParentA.isParentFilled() && ParentB.isParentFilled()) {
-                    if (ParentA.getParentIdx() != ParentB.getParentIdx()) {
-                            ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, ParentA.getParentEngimon(), ParentB.getParentEngimon(), gameScreen, gameState);
-                            app.setScreen(childEngimonScreen);
-                            stopBreeding();
+                breedableEngimon.parentStatus();
+                breedableEngimon.parentInfo();
+                System.out.println(breedableEngimon.isParentFilled());
+                if (breedableEngimon.isParentFilled()) {
+                    if (!breedableEngimon.isParentSame()) {
+                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
+                        app.setScreen(childEngimonScreen);
+                        stopBreeding();
                     } else {
-                        System.out.println("same engimon");
                         throw new SameParentException("Please choose two different Engimons!");
                     }
                 } else {
-                    System.out.println("no engimon");
                     throw new NoParentException("Please choose two Engimons to breed!");
                 }
             } catch (Exception e) {
@@ -160,12 +202,19 @@ public class BreederScreen implements Screen {
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
 
         topBar = new Table();
+        parentBar = new Table();
         breederWrapper = new Table();
         dialogueTable = new Table();
 
         breedButton = new Table();
         backButton = new Table();
+        parentAButton = new Table();
+        parentBButton = new Table();
         title = new Table();
+
+        parentABox = new Table();
+        parentBBox = new Table();
+        parentWrapper = new Table();
 
         dialogueBox =  new DialogueBox(app.getSkin());
         dialogueBox.setVisible(false);
@@ -182,6 +231,7 @@ public class BreederScreen implements Screen {
         Image bg = new Image(new Texture("img/breeder_title.png"));
         title.add(bg).width(500);
 
+
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = app.getSkin().getFont("font");
         textButtonStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
@@ -196,6 +246,18 @@ public class BreederScreen implements Screen {
         backButton.setBackground(app.getSkin().getDrawable("optionbox"));
         backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
+        TextButton parentA = new TextButton("Parent A", textButtonStyle);
+        parentA.getLabel().setFontScale(2, 2);
+        TextButton parentB = new TextButton("Parent B", textButtonStyle);
+        parentB.getLabel().setFontScale(2, 2);
+
+        parentAButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentAButton.add(parentA).expand().align(Align.center).width(100).height(25).space(11f);
+        parentBButton.add(parentB).expand().align(Align.center).width(100).height(25).space(11f);
+        parentBButton.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentBar.add(parentAButton);
+        parentBar.add(parentBButton);
+
         topBar.add(backButton).align(Align.topLeft);
         topBar.add(title);
 
@@ -205,23 +267,49 @@ public class BreederScreen implements Screen {
 
         uiStage.addActor(root);
 
+        breedableEngimon = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
+
         ParentA = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
         ParentB = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
 
         Label labelA = new Label("Parent A", app.getSkin());
         Label labelB = new Label("Parent B", app.getSkin());
+        Label labelC = new Label("Breedable Engimons", app.getSkin());
         ParentA.add(labelA);
         ParentB.add(labelB);
+        breedableEngimon.add(labelC);
 
-        breederWrapper.add(ParentA).expand().align(Align.topLeft);
+        parentABox.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentBBox.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentWrapper.add(parentABox).width(200).height(200).row();
+        parentWrapper.add(parentBBox).width(200).height(200).row();
+
+        breederWrapper.add(breedableEngimon).align(Align.topLeft);
+//        breederWrapper.add(ParentA).expand().align(Align.topLeft);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
-        breederWrapper.add(ParentB).expand().align(Align.topLeft).space(11f);
+//        breederWrapper.add(ParentB).expand().align(Align.topLeft).space(11f);
 
         root.add(topBar).top().fillX().row();
-        root.add(breederWrapper).top().align(Align.center).row();
+        root.add(parentBar).top().fillX().row();
+        root.add(breederWrapper).top().align(Align.center);
+        root.add(parentWrapper);
         breed.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 startBreeding();
+            }
+        });
+
+        parentAButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                breedableEngimon.parentA();
+                selectA();
+            }
+        });
+
+        parentBButton.addListener(new ClickListener() {
+            public void clicked(InputEvent event, float x, float y) {
+                breedableEngimon.parentB();
+                selectB();
             }
         });
 
@@ -258,6 +346,16 @@ public class BreederScreen implements Screen {
         return gameState;
     }
 
+    public void selectA() {
+        this.parentA = true;
+        this.parentB = false;
+    }
+
+
+    public void selectB() {
+        this.parentB = true;
+        this.parentA = false;
+    }
     @Override
     public  void show() {
         Gdx.input.setInputProcessor(multiplexer);
