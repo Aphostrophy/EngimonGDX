@@ -211,9 +211,9 @@ public class PlayerController extends InputAdapter{
                         B.BattleEngimon(PlayerEngimons, EnemyEngimons);
                         String AllBattleDialogue = B.showTotalPower();
                         if(B.BattleStatusIsWin()) {
-                            AllBattleDialogue += "Engimon anda jago juga !\n";
+                            AllBattleDialogue += "Engimon anda jago juga !";
                         } else {
-                            AllBattleDialogue += "Engimon anda cupu kali !\n";
+                            AllBattleDialogue += "Engimon anda cupu kali !";
                         }
                         ArrayList<String> Dialog = new ArrayList<String>();
                         Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
