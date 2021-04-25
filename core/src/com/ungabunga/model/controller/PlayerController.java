@@ -4,27 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
-import com.ungabunga.model.dialogue.Dialogue;
-import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.*;
-import com.ungabunga.model.enums.AVATAR_MODE;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
-import com.ungabunga.model.screen.BreederScreen;
 import com.ungabunga.model.screen.GameScreen;
-import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PlayerController extends InputAdapter{
@@ -71,8 +61,8 @@ public class PlayerController extends InputAdapter{
             direction = DIRECTION.RIGHT;
             state = AVATAR_STATE.WALKING;
         }
-        if(keycode == Keys.SHIFT_LEFT  && gameState.player.currMode == AVATAR_MODE.WALKING) {
-            gameState.player.nextMode = AVATAR_MODE.RUNNING;
+        if(keycode == Keys.SHIFT_LEFT  && gameState.player.state == AVATAR_STATE.WALKING) {
+            gameState.player.isRunning = true;
         }
         if(keycode == Keys.R){
             gameState.removePlayerEngimon();
@@ -154,8 +144,8 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.D) {
             state = AVATAR_STATE.STANDING;
         }
-        if (keycode == Keys.SHIFT_LEFT && gameState.player.currMode == AVATAR_MODE.RUNNING) {
-            gameState.player.nextMode = AVATAR_MODE.WALKING;
+        if (keycode == Keys.SHIFT_LEFT && gameState.player.state == AVATAR_STATE.WALKING) {
+            gameState.player.isRunning= false;
         }
         return false;
     }
@@ -219,9 +209,9 @@ public class PlayerController extends InputAdapter{
                         B.BattleEngimon(PlayerEngimons, EnemyEngimons);
                         String AllBattleDialogue = B.showTotalPower();
                         if(B.BattleStatusIsWin()) {
-                            AllBattleDialogue += "Engimon anda jago juga !\n";
+                            AllBattleDialogue += "Engimon anda jago juga !";
                         } else {
-                            AllBattleDialogue += "Engimon anda cupu kali !\n";
+                            AllBattleDialogue += "Engimon anda cupu kali !";
                         }
                         ArrayList<String> Dialog = new ArrayList<String>();
                         Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());

@@ -1,12 +1,15 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
 import com.ungabunga.EngimonGame;
+import com.ungabunga.model.save.Save;
 
 import java.io.IOException;
 
@@ -65,7 +68,18 @@ public class MainMenu implements Screen {
 
                 //Load game button
                 if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() * 3 / 8 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() * 3 / 8) {
-                    System.out.println("Load Game clicked!!");
+                    try {
+                        GameScreen gameScreen = new GameScreen(game);
+                        FileHandle file = Gdx.files.local("mysave.json");
+                        String mysave = file.readString();
+                        Json json = new Json();
+                        Save save = json.fromJson(Save.class, mysave);
+                        gameScreen.getGameState().loadSave(save);
+                        game.setScreen(gameScreen);
+                        splash.dispose();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 //Exit button

@@ -58,7 +58,6 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private InventoryUI engimonInventory;
     private InventoryUI skillitemInventory;
 
-    private String message;
     private Integer amount = 0;
     private boolean isDelete;
     private boolean isDetail;
