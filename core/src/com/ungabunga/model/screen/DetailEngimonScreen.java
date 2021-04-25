@@ -18,7 +18,6 @@ import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.ActiveEngimon;
 import com.ungabunga.model.entities.PlayerEngimon;
 import com.ungabunga.model.utilities.ResourceProvider;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -36,7 +35,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
     private Table root;
     private Table topBar;
     private Stack engimonPic;
-    private Stack skillPic;
     private Table name;
     private Table details;
     private Table skills;
@@ -73,7 +71,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
 
         topBar = new Table();
         engimonPic = new Stack();
-        skillPic = new Stack();
         name = new Table();
         details = new Table();
         skills = new Table();
@@ -86,7 +83,6 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
 
         // add background
         engimonPic.add(image);
-        skillPic.add(image);
 
 //        name.setBackground("dialoguebox");
 //        details.setBackground("dialoguebox");
@@ -116,7 +112,9 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         skills.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
 
         for(int i = 0; i < activeEngimon.getSkills().size(); i++) {
+            Stack skillPic = new Stack();
             Table skillWrapper = new Table();
+            skillPic.add(image);
 
             Label masteryLevelLabel = new Label(String.valueOf(activeEngimon.getSkills().get(i).getMasteryLevel()), getApp().getSkin());
             masteryLevelLabel.setAlignment(Align.bottomRight);
@@ -170,6 +168,7 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         root.add(right).center().fillX();
 
         uiStage.addActor(root);
+        uiStage.setDebugAll(true);
 
         back.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
