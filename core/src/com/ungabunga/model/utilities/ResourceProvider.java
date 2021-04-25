@@ -463,13 +463,13 @@ public class ResourceProvider {
         return engimon;
     }
 
-    public Engimon getEngimon(String species) throws OutOfBoundException {
+    public Engimon getEngimon(String species) {
         for(Engimon engimon: this.engimon){
             if(engimon.getSpecies().equals(species)){
                 return engimon;
             }
         }
-        throw new OutOfBoundException("Engimon not found!");
+        return this.engimon.get(0);
     }
 
     public TextureRegion getSprite(LivingEngimon engimon){

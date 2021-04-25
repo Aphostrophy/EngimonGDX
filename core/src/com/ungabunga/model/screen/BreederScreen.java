@@ -96,7 +96,7 @@ public class BreederScreen implements Screen {
         initUI();
 
         multiplexer = new InputMultiplexer();
-        dialogueController = new DialogueController(dialogueBox,optionBox);
+        dialogueController = new DialogueController(dialogueBox,optionBox,gameScreen);
 
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);

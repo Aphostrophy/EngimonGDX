@@ -71,7 +71,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         this.isDetail = false;
 
         initUI();
-        this.dialogueController = new DialogueController(dialogueBox, optionBox);
+        this.dialogueController = new DialogueController(dialogueBox, optionBox,gameScreen);
     }
 
     @Override

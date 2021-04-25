@@ -46,10 +46,9 @@ public class Inventory<T> {
             int i;
             for (i = 0; i < this.neff; i++)
             {
-                if (((SkillItem) this.items.get(i)).equals(skillitem))
+                if (((SkillItem) this.items.get(i)).getName().equals(skillitem.getName()))
                 {
-                    int newAmount = skillitem.getAmount() + 1;
-                    skillitem.setAmount(newAmount);
+                    ((SkillItem) this.items.get(i)).setAmount(((SkillItem) this.items.get(i)).getAmount() + 1);
                     return;
                 }
             }
@@ -242,6 +241,22 @@ public class Inventory<T> {
             }
         }
         return level;
+    }
+
+    public ArrayList<PlayerEngimon> getBreedableEngimonList() throws NoBreedableEngimon {
+        int i;
+        ArrayList<PlayerEngimon> result = new ArrayList<>();
+        for (i = 0; i < this.neff; i++)
+        {
+            if (((PlayerEngimon) this.items.get(i)).getLevel() >= 4)
+            {
+                result.add(((PlayerEngimon) this.items.get(i)));
+            }
+        }
+        if (result.size() <= 1){
+            throw new NoBreedableEngimon("Tidak ada Engimon yang dapat di breed");
+        }
+        return result;
     }
 
 }

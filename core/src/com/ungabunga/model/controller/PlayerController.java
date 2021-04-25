@@ -203,32 +203,64 @@ public class PlayerController extends InputAdapter{
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     if (occupier != null) {
-                        Battle B = new Battle();
-                        Engimon PlayerEngimons =(Engimon)this.gameState.player.getActiveEngimon();
-                        Engimon EnemyEngimons = (Engimon)occupier;
-                        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
-                        String AllBattleDialogue = B.showTotalPower();
-                        if(B.BattleStatusIsWin()) {
-                            AllBattleDialogue += "Engimon anda jago juga !";
-                        } else {
-                            AllBattleDialogue += "Engimon anda cupu kali !";
-                        }
-                        ArrayList<String> Dialog = new ArrayList<String>();
-                        Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
-                        Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
-                        Dialog.add(AllBattleDialogue);
-                        System.out.println(AllBattleDialogue);
-                        gameScreen.dialogueController.startBattleDialogue(Dialog);
-                        System.out.println(occupier.getName());
+                        gameScreen.dialogueController.startBattleDialogue(occupier);
                     }
-                    System.out.println("HAHA");
                 }
             }
             else {
-                System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
+                System.out.println("ITU ENGIMON KITA");
             }
         }
     }
+
+//    public void battleHandlerA(){
+//        if(this.gameState.player.getActiveEngimon()!=null){
+//            Pair<Integer,Integer> dir = new Pair<>(0,0);
+//            DIRECTION d = this.gameState.player.getDirection();
+//            if(d == DIRECTION.UP) {
+//                dir = new Pair<>(0,1);
+//            } else if(d == DIRECTION.DOWN) {
+//                dir = new Pair<>(0,-1);
+//            } else if(d == DIRECTION.RIGHT) {
+//                dir = new Pair<>(1,0);
+//            } else if(d == DIRECTION.LEFT) {
+//                dir = new Pair<>(-1,0);
+//            }
+//            System.out.println("Jessonn");
+//
+//            if((this.gameState.player.getY() + dir.getSecond())
+//                    != this.gameState.player.getActiveEngimon().getY()
+//                    || (this.gameState.player.getX() + dir.getFirst())
+//                    != this.gameState.player.getActiveEngimon().getX() ) {
+//                if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
+//                    WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+//                    if (occupier != null) {
+//                        Battle B = new Battle();
+//                        Engimon PlayerEngimons =(Engimon)this.gameState.player.getActiveEngimon();
+//                        Engimon EnemyEngimons = (Engimon)occupier;
+//                        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
+//                        String AllBattleDialogue = B.showTotalPower();
+//                        if(B.BattleStatusIsWin()) {
+//                            AllBattleDialogue += "Engimon anda jago juga !";
+//                        } else {
+//                            AllBattleDialogue += "Engimon anda cupu kali !";
+//                        }
+//                        ArrayList<String> Dialog = new ArrayList<String>();
+//                        Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
+//                        Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
+//                        Dialog.add(AllBattleDialogue);
+//                        System.out.println(AllBattleDialogue);
+//                        gameScreen.dialogueController.startBattleDialogue(Dialog);
+//                        System.out.println(occupier.getName());
+//                    }
+//                    System.out.println("HAHA");
+//                }
+//            }
+//            else {
+//                System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
+//            }
+//        }
+//    }
 
     public void instantKill(){
         if(this.gameState.player.getActiveEngimon()!=null){
