@@ -109,7 +109,7 @@ public class GameScreen extends AbstractScreen {
 
         initUI();
         multiplexer = new InputMultiplexer();
-        dialogueController = new DialogueController(dialogueBox,optionBox);
+        dialogueController = new DialogueController(dialogueBox,optionBox,this);
 
         multiplexer.addProcessor(0, controller);
         multiplexer.addProcessor(1, dialogueController);
