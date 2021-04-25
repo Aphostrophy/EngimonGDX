@@ -233,4 +233,9 @@ public class Player {
         this.position.setFirst(x);
         this.position.setSecond(y);
     }
+
+    public void setDirection(DIRECTION direction){
+        this.direction = direction;
+    }
+
 }

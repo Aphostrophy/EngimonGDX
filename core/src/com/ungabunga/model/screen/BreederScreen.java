@@ -19,6 +19,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.*;
+import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.exceptions.NoParentException;
@@ -166,9 +167,13 @@ public class BreederScreen implements Screen {
                 System.out.println(breedableEngimon.isParentFilled());
                 if (breedableEngimon.isParentFilled()) {
                     if (!breedableEngimon.isParentSame()) {
-                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
-                        app.setScreen(childEngimonScreen);
-                        stopBreeding();
+                        if (gameState.getPlayerInventory().getCurrBagCapacity() < CONSTANTS.INVENTORYCAPACITY) {
+                            ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
+                            app.setScreen(childEngimonScreen);
+                            stopBreeding();
+                        } else {
+                            throw new FullInventoryException("Inventory is full!");
+                        }
                     } else {
                         throw new SameParentException("Please choose two different Engimons!");
                     }
