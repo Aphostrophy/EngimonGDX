@@ -26,6 +26,12 @@ public class SkinGenerator {
         skin.add("optionbox", optionbox);
         skin.add("arrow", uiAtlas.findRegion("arrow"), TextureRegion.class);
 
+        NinePatch red = new NinePatch(uiAtlas.findRegion("red"),1, 1, 1, 1);
+        skin.add("red", red);
+
+        NinePatch yellow = new NinePatch(uiAtlas.findRegion("yellow"),1, 1, 1, 1);
+        skin.add("yellow", yellow);
+
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("pic/font/pkmnrsi.ttf"));
         FreeTypeFontParameter parameter = new FreeTypeFontParameter();
         parameter.size = 12;

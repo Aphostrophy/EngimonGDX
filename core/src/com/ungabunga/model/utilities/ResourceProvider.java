@@ -87,7 +87,8 @@ public class ResourceProvider {
        assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/vulpix.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
-       assetManager.load("pic/packed/SkillLogo.atlas", TextureAtlas.class);
+       assetManager.load("pic/packed/skillLogo.atlas", TextureAtlas.class);
+        assetManager.load("pic/packed/skillItemLogo.atlas", TextureAtlas.class);
 
         assetManager.finishLoading();
 
@@ -699,7 +700,12 @@ public class ResourceProvider {
     }
 
     public TextureRegion getSprite(SkillItem skillitem){
-        TextureAtlas atlas = assetManager.get("pic/packed/SkillLogo.atlas", TextureAtlas.class);
+        TextureAtlas atlas = assetManager.get("pic/packed/skillItemLogo.atlas", TextureAtlas.class);
         return atlas.findRegion(skillitem.getName());
+    }
+
+    public TextureRegion getSprite(Skill skill){
+        TextureAtlas atlas = assetManager.get("pic/packed/skillLogo.atlas", TextureAtlas.class);
+        return atlas.findRegion(skill.getSkillName());
     }
 }

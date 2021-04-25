@@ -43,15 +43,20 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private Table dialogTable;
     private Table backButton;
     private Table bottomBar;
-    private Table sortEngimonButton;
-    private Table sortSkillItemButton;
+    private Table deleteButton;
+    private Table detailButton;
     private Table title;
+
+    private boolean isDelete;
+    private boolean isDetail;
 
     public InventoryScreen(EngimonGame app, PlayerController controller, Bag bag, GameScreen gameScreen) throws IOException {
         super(app);
         this.controller = controller;
         this.bag = bag;
         this.gameScreen = gameScreen;
+        this.isDelete = false;
+        this.isDetail = false;
         initUI();
     }
 
@@ -69,6 +74,18 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         if (!controller.isInventoryOpen) {
             getApp().setScreen(gameScreen);
             this.dispose();
+        }
+
+        if(isDelete) {
+            deleteButton.setBackground(getApp().getSkin().getDrawable("red"));
+        } else {
+            deleteButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        }
+
+        if(isDetail) {
+            detailButton.setBackground(getApp().getSkin().getDrawable("yellow"));
+        } else {
+            detailButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         }
 
         uiStage.act(delta);
@@ -116,10 +133,9 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         inventoryWrapper = new Table();
         dialogTable = new Table();
         backButton = new Table();
-        sortEngimonButton = new Table();
-        sortSkillItemButton = new Table();
+        deleteButton = new Table();
+        detailButton = new Table();
         title = new Table();
-
 
         Image bg = new Image(new Texture("img/inventory_title.png"));
         title.add(bg).width(500);
@@ -153,18 +169,18 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         inventoryWrapper.add(engimonInventory).expand().align(Align.topLeft);
         inventoryWrapper.add(skillitemInventory).expand().align(Align.topLeft).space(11f);
 
-        TextButton engimonSort = new TextButton("Sort Engimon", textButtonStyle);
-        engimonSort.getLabel().setFontScale(2,2);
-        sortEngimonButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
-        sortEngimonButton.add(engimonSort).expand().align(Align.center).width(200).height(25).space(11f);
+        TextButton delete = new TextButton("Delete", textButtonStyle);
+        delete.getLabel().setFontScale(2,2);
+        deleteButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        deleteButton.add(delete).expand().align(Align.center).width(200).height(25).space(11f);
 
-        TextButton skillitemSort = new TextButton("Sort SkillItem", textButtonStyle);
-        skillitemSort.getLabel().setFontScale(2,2);
-        sortSkillItemButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
-        sortSkillItemButton.add(skillitemSort).expand().align(Align.center).width(200).height(25).space(11f);
+        TextButton detail = new TextButton("Detail", textButtonStyle);
+        detail.getLabel().setFontScale(2,2);
+        detailButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
+        detailButton.add(detail).expand().align(Align.center).width(200).height(25).space(11f);
 
-        topBar.add(sortEngimonButton).align(Align.center);
-        topBar.add(sortSkillItemButton).align(Align.center).space(11f);
+        topBar.add(deleteButton).align(Align.center);
+        topBar.add(detailButton).align(Align.center).space(11f);
 
         root.add(topBar).top().fillX().row();
         root.add(inventoryWrapper).top().fillX().align(Align.center).row();
@@ -176,15 +192,19 @@ public class InventoryScreen extends AbstractScreen implements Screen {
             }
         });
 
-        engimonSort.addListener(new ClickListener() {
+        delete.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Sort Engimon");
+                isDelete = !isDelete;
+                engimonInventory.setDelete(isDelete);
+                skillitemInventory.setDelete(isDelete);
             }
         });
 
-        skillitemSort.addListener(new ClickListener() {
+        detail.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Sort SkillItem");
+                isDetail = !isDetail;
+                engimonInventory.setDetail(isDetail);
+                skillitemInventory.setDetail(isDetail);
             }
         });
     }
