@@ -9,15 +9,19 @@ import com.ungabunga.model.dialogue.DialogueTraverser;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 
+import java.util.ArrayList;
+
 public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
     private DialogueBox Dbox;
     private OptionBox Obox;
 
     private boolean startCountdown;
+    private boolean isBattle = false;
 
     private float dialogueBoxTimer;
     private float TIMER_TIMEOUT = 2f;
+    private float BATTLE_TIMEOUT = 4f;
 
     public DialogueController(DialogueBox Dbox, OptionBox Obox) {
         this.Dbox = Dbox;
@@ -73,10 +77,17 @@ public class DialogueController extends InputAdapter {
                     startCountdown = true;
                 } else{
                     dialogueBoxTimer+= delta;
-                    if(dialogueBoxTimer> TIMER_TIMEOUT){
+                    float time;
+                    if(isBattle) {
+                        time = BATTLE_TIMEOUT;
+                    } else {
+                        time = TIMER_TIMEOUT;
+                    }
+                    if(dialogueBoxTimer> time){
                         dialogueBoxTimer = 0f;
                         startCountdown = false;
                         Dbox.setVisible(false);
+                        isBattle = false;
                     }
                 }
             }
@@ -136,10 +147,19 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startExceptionDialogue(Exception e){
+        isBattle = false;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode(e.getMessage(), 0);
 
         dialogue.addNode(a);
+        Obox.setVisible(false);
+        startDialogue(dialogue);
+    }
+
+    public void startBattleDialogue(ArrayList<String> Dialog) {
+        isBattle = true;
+        Dialogue dialogue = new Dialogue();
+        dialogue = dialogue.generateDialogue(Dialog);
         Obox.setVisible(false);
         startDialogue(dialogue);
     }

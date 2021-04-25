@@ -14,9 +14,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
-import com.ungabunga.model.entities.LivingEngimon;
-import com.ungabunga.model.entities.PlayerEngimon;
-import com.ungabunga.model.entities.WildEngimon;
+import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.save.Save;
@@ -26,6 +24,7 @@ import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.Pair;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class PlayerController extends InputAdapter{
     private GameScreen gameScreen;
@@ -181,13 +180,29 @@ public class PlayerController extends InputAdapter{
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     if (occupier != null) {
+                        Battle B = new Battle();
+                        Engimon PlayerEngimons =(Engimon)this.gameState.player.getActiveEngimon();
+                        Engimon EnemyEngimons = (Engimon)occupier;
+                        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
+                        String AllBattleDialogue = B.showTotalPower();
+                        if(B.BattleStatusIsWin()) {
+                            AllBattleDialogue += "Engimon anda jago juga !\n";
+                        } else {
+                            AllBattleDialogue += "Engimon anda cupu kali !\n";
+                        }
+                        ArrayList<String> Dialog = new ArrayList<String>();
+                        Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
+                        Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
+                        Dialog.add(AllBattleDialogue);
+                        System.out.println(AllBattleDialogue);
+                        gameScreen.dialogueController.startBattleDialogue(Dialog);
                         System.out.println(occupier.getName());
                     }
                     System.out.println("HAHA");
                 }
-            } else {
+            }   else {
                 System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-            }
+                }
         }
     }
 }

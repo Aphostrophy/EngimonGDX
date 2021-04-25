@@ -183,6 +183,21 @@ public class Engimon {
         System.out.println("Slogan \t:\t" + this.slogan);
     }
 
+    public String displayInfoToString() {
+        String str = new String();
+        str += ("ID \t\t:\t" + this.id+ "\n");
+        str += ("Name \t\t:\t" + this.name+ "\n");
+        str += ("Species \t:\t" + this.species+ "\n");
+        str += ("Level \t\t:\t" + this.level+ "\n");
+        str += ("Exp \t\t:\t" + this.exp+ "\n");
+        str += ("Cumulative Exp \t:\t" + this.cumulativeExp+ "\n");
+        str += ("Parents \t:\t"+ "\n");
+        str += ("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")"+ "\n");
+        str += ("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")"+ "\n");
+        str += ("Slogan \t:\t" + this.slogan);
+        return str;
+    }
+
     public void displaySkills() throws FeatureNotImplementedException {
         throw new FeatureNotImplementedException("Blom diimplementasiin krn bingung ama GUI-nya");
     }
