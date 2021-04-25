@@ -41,7 +41,7 @@ public class InventoryUI extends Table {
                    } else {
                        inventory.displaySkillItem();
                        item = new InventoryItem(provider.getSprite((SkillItem) inventory.getItemByIndex(idx)), itemType);
-                       inventorySlot = new InventorySlot(skin, item, inventory.getSkillItemAmount(), count);
+                       inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count);
                    }
 
                    inventorySlot.addListener(new ClickListener() {

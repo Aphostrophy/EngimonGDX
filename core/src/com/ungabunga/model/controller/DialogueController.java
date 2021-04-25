@@ -106,6 +106,7 @@ public class DialogueController extends InputAdapter {
                             gameScreen.getGameState().getPlayerInventory().insertToBag(new SkillItem(EnemyEngimons.getSkills().get(0).getSkillName(),EnemyEngimons.getSkills().get(0).getBasePower()));
                         } catch (FullInventoryException e) {
                             e.printStackTrace();
+                            gameScreen.dialogueController.startExceptionDialogue(e);
                         }
                         gameScreen.getGameState().getPlayerInventory().showInventory();
                     } else {
@@ -216,10 +217,11 @@ public class DialogueController extends InputAdapter {
     }
 
     public void startExceptionDialogue(Exception e){
+        System.out.println(e.getMessage());
         dialogState = DIALOG_STATE.ELSE;
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode(e.getMessage(), 0);
-
+        System.out.println(e.getMessage());
         dialogue.addNode(a);
         Obox.setVisible(false);
         startDialogue(dialogue);
