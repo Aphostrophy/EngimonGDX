@@ -39,6 +39,7 @@ public class ChildEngimonScreen implements Screen {
 
     private PlayerController controller;
     private GameState gameState;
+    private final GameScreen gameScreen;
 
     private Stage uiStage;
     private Bag bag;
@@ -57,10 +58,11 @@ public class ChildEngimonScreen implements Screen {
     private TextField childName;
 
 
-    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, GameState gameState) throws IOException {
+    public ChildEngimonScreen(EngimonGame app, PlayerController controller, Engimon ParentA, Engimon ParentB, GameScreen gameScreen, GameState gameState) throws IOException {
         this.app = app;
         this.controller = controller;
         this.gameState = gameState;
+        this.gameScreen = gameScreen;
 
         this.ParentA = ParentA;
         this.ParentB = ParentB;
@@ -97,11 +99,7 @@ public class ChildEngimonScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (!controller.isBreederOpen) {
-            try {
-                app.setScreen(new GameScreen(app));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            app.setScreen(gameScreen);
         }
 
         uiStage.act(delta);
