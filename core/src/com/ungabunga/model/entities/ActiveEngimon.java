@@ -1,6 +1,7 @@
 package com.ungabunga.model.entities;
 
 import com.badlogic.gdx.math.Interpolation;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
@@ -19,6 +20,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     AVATAR_STATE state;
 
     Player player;
+    GameState gameState;
 
     private float srcX,srcY;
     private float destX,destY;
@@ -31,7 +33,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     }
 
-    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y){
+    public ActiveEngimon(PlayerEngimon PE, Player P, int x, int y, GameState gameState){
         super(PE);
         Pair<Integer,Integer> playerPosition = P.getPosition();
         this.position = new Pair<Integer,Integer>(x,y);

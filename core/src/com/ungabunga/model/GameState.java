@@ -188,32 +188,31 @@ public class GameState {
     }
 
     public void spawnActiveEngimon(PlayerEngimon playerEngimon) throws CellOccupiedException{
-        if(player.getActiveEngimon()!=null){
-            removePlayerEngimon();
+        if(player.getActiveEngimon()==null){
+            if(map.get(player.getY()-1).get(player.getX()).occupier==null && map.get(player.getY()-1).get(player.getX()).cellType != CellType.BLOCKED){
+                ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player,player.getX(), player.getY()-1, this);
+                player.setActiveEngimon(activeEngimon);
+                map.get(player.getY()-1).get(player.getX()).occupier = activeEngimon;
+            }
+            else if(map.get(player.getY()+1).get(player.getX()).occupier==null && map.get(player.getY()+1).get(player.getX()).cellType != CellType.BLOCKED){
+                ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX(), player.getY()+1,this);
+                player.setActiveEngimon(activeEngimon);
+                map.get(player.getY()+1).get(player.getX()).occupier = activeEngimon;
+            }
+            else if(map.get(player.getY()).get(player.getX()-1).occupier==null && map.get(player.getY()).get(player.getX()-1).cellType != CellType.BLOCKED){
+                ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()-1, player.getY(),this);
+                player.setActiveEngimon(activeEngimon);
+                map.get(player.getY()).get(player.getX()-1).occupier = activeEngimon;
+            }
+            else if(map.get(player.getY()).get(player.getX()+1).occupier==null && map.get(player.getY()).get(player.getX()+1).cellType != CellType.BLOCKED){
+                ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()+1,player.getY(),this);
+                player.setActiveEngimon(activeEngimon);
+                map.get(player.getY()).get(player.getX()+1).occupier = activeEngimon;
+            } else{
+                throw new CellOccupiedException("No place to spawn player engimon");
+            }
         }
 
-        if(map.get(player.getY()-1).get(player.getX()).occupier==null && map.get(player.getY()-1).get(player.getX()).cellType != CellType.BLOCKED){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player,player.getX(), player.getY()-1);
-            player.setActiveEngimon(activeEngimon);
-            map.get(player.getY()-1).get(player.getX()).occupier = activeEngimon;
-        }
-        else if(map.get(player.getY()+1).get(player.getX()).occupier==null && map.get(player.getY()+1).get(player.getX()).cellType != CellType.BLOCKED){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX(), player.getY()+1);
-            player.setActiveEngimon(activeEngimon);
-            map.get(player.getY()+1).get(player.getX()).occupier = activeEngimon;
-        }
-        else if(map.get(player.getY()).get(player.getX()-1).occupier==null && map.get(player.getY()).get(player.getX()-1).cellType != CellType.BLOCKED){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()-1, player.getY());
-            player.setActiveEngimon(activeEngimon);
-            map.get(player.getY()).get(player.getX()-1).occupier = activeEngimon;
-        }
-        else if(map.get(player.getY()).get(player.getX()+1).occupier==null && map.get(player.getY()).get(player.getX()+1).cellType != CellType.BLOCKED){
-            ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()+1,player.getY());
-            player.setActiveEngimon(activeEngimon);
-            map.get(player.getY()).get(player.getX()+1).occupier = activeEngimon;
-        } else{
-            throw new CellOccupiedException("No place to spawn player engimon");
-        }
     }
 
     public void removePlayerEngimon(){
