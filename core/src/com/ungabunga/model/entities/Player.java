@@ -14,8 +14,6 @@ import static com.ungabunga.Settings.ANIM_TIMER;
 public class Player {
     private ActiveEngimon activeEngimon;
 
-    private InventoryUI inventoryUI;
-
     public AVATAR_STATE state;
 
     public String name;
@@ -46,8 +44,6 @@ public class Player {
         this.animTimer = 0f;
         this.stateTimer = 0f;
         this.animations = animations;
-
-//        this.inventoryUI = new InventoryUI();
     }
 
     public void loadSave(Save save){
