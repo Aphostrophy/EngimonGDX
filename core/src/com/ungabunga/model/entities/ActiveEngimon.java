@@ -261,4 +261,8 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public TextureRegion getSprite(){
         return resourceProvider.getSprite((LivingEngimon) this);
     }
+
+    public TextureRegion getSpriteAura(){
+        return resourceProvider.getSpriteAura((LivingEngimon) this);
+    }
 }
