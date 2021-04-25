@@ -14,6 +14,7 @@ import com.ungabunga.model.exceptions.EngimonConflictException;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.exceptions.OutOfBoundException;
 import com.ungabunga.model.save.Save;
+import com.ungabunga.model.thread.WildEngimonThread;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
@@ -109,7 +110,10 @@ public class GameState {
                 return;
             }
             Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
-            map.get(spawnY).get(spawnX).occupier = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider());
+            WildEngimon wildEngimon = new WildEngimon(engimon,spawnX,spawnY, app.getResourceProvider());
+            map.get(spawnY).get(spawnX).occupier = wildEngimon;
+            WildEngimonThread wildEngimonThread = new WildEngimonThread();
+            wildEngimonThread.start();
 
             wildEngimonCount++;
             timeDelta = 0;
