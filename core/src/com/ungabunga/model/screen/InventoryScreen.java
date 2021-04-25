@@ -1,6 +1,7 @@
 package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,6 +36,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private PlayerController controller;
 
     public DialogueController dialogueController;
+
+    private InputMultiplexer multiplexer;
 
     private Stage uiStage;
 
@@ -72,11 +75,16 @@ public class InventoryScreen extends AbstractScreen implements Screen {
 
         initUI();
         this.dialogueController = new DialogueController(dialogueBox, optionBox,gameScreen);
+        multiplexer = new InputMultiplexer();
+
+        multiplexer.addProcessor(0, controller);
+        multiplexer.addProcessor(1, dialogueController);
+        multiplexer.addProcessor(2, uiStage);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(uiStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
@@ -228,6 +236,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         root.add(topBar).top().fillX().row();
         root.add(inventoryWrapper).top().fillX().align(Align.center).row();
         root.add(bottomBar).top().fillX().align(Align.center).row();
+        root.add(optionBox).top().fillX().align(Align.right).row();
         root.add(dialogueBox).top().fillX().align(Align.bottom).row();
 
         back.addListener(new ClickListener() {
