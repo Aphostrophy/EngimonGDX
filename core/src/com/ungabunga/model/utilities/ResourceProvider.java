@@ -14,6 +14,7 @@ import com.ungabunga.model.exceptions.OutOfBoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -707,5 +708,14 @@ public class ResourceProvider {
     public TextureRegion getSprite(Skill skill){
         TextureAtlas atlas = assetManager.get("pic/packed/skillLogo.atlas", TextureAtlas.class);
         return atlas.findRegion(skill.getSkillName());
+    }
+
+    public boolean isCompatible(List<IElements> elementsList, CellType biome){
+        for(IElements element : elementsList){
+            if(mapElementToBiome.get(element).equals(biome)){
+                return true;
+            }
+        }
+        return false;
     }
 }

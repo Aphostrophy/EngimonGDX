@@ -9,6 +9,7 @@ import com.ungabunga.model.entities.Skill;
 import com.ungabunga.model.enums.CellType;
 import com.ungabunga.model.enums.IElements;
 
+import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
