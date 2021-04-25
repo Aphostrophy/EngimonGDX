@@ -15,6 +15,11 @@ public interface LivingEngimon {
     public int getRemainingLives();
     public boolean isDead();
     public void reduceLives();
+
+    public int getLevel();
+    public float getWorldX();
+    public float getWorldY();
+
     public String getEngimonSpecies();
     public AVATAR_STATE getState();
 

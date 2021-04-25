@@ -103,8 +103,8 @@ public class GameState {
             if(map.get(spawnY).get(spawnX).cellType == CellType.BLOCKED || map.get(spawnY).get(spawnX).occupier!=null){
                 return;
             }
-            Engimon wildEngimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
-            map.get(spawnY).get(spawnX).occupier = new WildEngimon(wildEngimon);
+            Engimon engimon = app.getResourceProvider().randomizeEngimon(map.get(spawnY).get(spawnX).cellType);
+            map.get(spawnY).get(spawnX).occupier = new WildEngimon(engimon,spawnX,spawnY);
 
             wildEngimonCount++;
             timeDelta = 0;

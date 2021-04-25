@@ -8,6 +8,9 @@ import com.ungabunga.model.utilities.Pair;
 
 public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
+    float worldX;
+    float worldY;
+
     int remainingLives;
 
     DIRECTION direction;
@@ -17,13 +20,22 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     }
 
-    public WildEngimon(Engimon E){
+    public WildEngimon(Engimon E,int spawnX,int spawnY){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
 
         this.direction = DIRECTION.DOWN;
         this.state = AVATAR_STATE.STANDING;
+
+        Pair<Integer,Integer> position = new Pair<>();
+        position.setFirst(spawnX);
+        position.setSecond(spawnY);
+
+        this.position = position;
+
+        this.worldX =  this.position.getFirst();
+        this.worldY = this.position.getSecond();
     }
 
     @Override
@@ -59,6 +71,16 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public void reduceLives() {
         this.remainingLives--;
+    }
+
+    @Override
+    public float getWorldX() {
+        return this.worldX;
+    }
+
+    @Override
+    public float getWorldY() {
+        return this.worldY;
     }
 
     @Override
