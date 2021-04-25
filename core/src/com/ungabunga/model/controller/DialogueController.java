@@ -100,12 +100,14 @@ public class DialogueController extends InputAdapter {
                         {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
                         }
+                        gameScreen.getGameState().getPlayerInventory().showInventory();
                         try {
                             gameScreen.getGameState().getPlayerInventory().insertToBag(new PlayerEngimon(EnemyEngimons));
                             gameScreen.getGameState().getPlayerInventory().insertToBag(new SkillItem(EnemyEngimons.getSkills().get(0).getSkillName(),EnemyEngimons.getSkills().get(0).getBasePower()));
                         } catch (FullInventoryException e) {
                             e.printStackTrace();
                         }
+                        gameScreen.getGameState().getPlayerInventory().showInventory();
                     } else {
                         AllBattleDialogue += "Engimon anda cupu kali !";
 

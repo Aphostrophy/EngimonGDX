@@ -46,10 +46,9 @@ public class Inventory<T> {
             int i;
             for (i = 0; i < this.neff; i++)
             {
-                if (((SkillItem) this.items.get(i)).equals(skillitem))
+                if (((SkillItem) this.items.get(i)).getName().equals(skillitem.getName()))
                 {
-                    int newAmount = skillitem.getAmount() + 1;
-                    skillitem.setAmount(newAmount);
+                    ((SkillItem) this.items.get(i)).setAmount(((SkillItem) this.items.get(i)).getAmount() + 1);
                     return;
                 }
             }
