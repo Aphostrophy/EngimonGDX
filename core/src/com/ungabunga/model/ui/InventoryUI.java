@@ -8,7 +8,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.DuplicateSkillException;
-import com.ungabunga.model.exceptions.FeatureNotImplementedException;
+import com.ungabunga.model.exceptions.NotEnoughSkillItemException;
 import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
 
@@ -61,6 +61,7 @@ public class InventoryUI extends Table {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
                                } else {
                                    try {
+                                       gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
@@ -72,18 +73,19 @@ public class InventoryUI extends Table {
                                SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
                                if(isDelete) {
                                    if(amount <= slot.getNumItemsVal()) {
-                                       for(int i = 0; i < amount; i++) {
-                                           inventory.deleteFromInventory(chosenSkillItem);
+                                       try {
+                                           inventory.deleteFromInventory(chosenSkillItem, amount);
+                                           slot.decrementItemCount(amount);
+                                           inventoryScreen.dialogueController.startInventoryDialogue(amount + " " + chosenSkillItem.getName() + " removed");
+                                       } catch (NotEnoughSkillItemException e) {
+                                           inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
                                        }
-                                       slot.decrementItemCount(amount);
-                                       inventoryScreen.dialogueController.startInventoryDialogue(amount + " " + chosenSkillItem.getName() + " removed");
                                    }
                                } else if (isDetail){
                                    Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
                                    inventoryScreen.dialogueController.startInventoryDialogue(chosenSkill.displaySkillInfoString());
                                } else {
                                    if(gameState.player.getActiveEngimon() != null) {
-                                       System.out.println(chosenSkillItem.getAmount());
                                        if (chosenSkillItem.getAmount() > 0) {
                                            Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
                                            if(gameState.player.getActiveEngimon().getSkills().size()<4){

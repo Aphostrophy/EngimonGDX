@@ -13,8 +13,8 @@ public class Breeder {
     }
     // Mengurangi level parent
     public static void reduceLevel(Engimon A, Engimon B) {
-        A.setLevel(A.getLevel() - 30);
-        B.setLevel(B.getLevel() - 30);
+        A.setLevel(A.getLevel() - 3);
+        B.setLevel(B.getLevel() - 3);
     }
     // Mengembalikan index skill yang sama di vector
     public static int getSameSkillIdx(ArrayList<Skill> skills, Skill s) {

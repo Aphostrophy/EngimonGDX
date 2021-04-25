@@ -230,6 +230,7 @@ public class Engimon {
                     throw new DuplicateSkillException("Blom diimplementasiin soalnya berhubungan ama GUI juga :'v");
                 } else {
                     this.skills.add(skill);
+                    break;
                 }
             }
         }
