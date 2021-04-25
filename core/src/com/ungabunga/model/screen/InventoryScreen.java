@@ -16,12 +16,14 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.Bag;
 import com.ungabunga.model.entities.Player;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.InventoryItem;
 import com.ungabunga.model.ui.InventoryUI;
+import com.ungabunga.model.ui.OptionBox;
 
 import java.io.IOException;
 
@@ -31,6 +33,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private GameScreen gameScreen;
 
     private PlayerController controller;
+
+    public DialogueController dialogueController;
 
     private Stage uiStage;
 
@@ -50,6 +54,10 @@ public class InventoryScreen extends AbstractScreen implements Screen {
     private Table amountUI;
     private Table title;
 
+    private InventoryUI engimonInventory;
+    private InventoryUI skillitemInventory;
+
+    private String message;
     private Integer amount = 0;
     private boolean isDelete;
     private boolean isDetail;
@@ -61,7 +69,12 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         this.gameScreen = gameScreen;
         this.isDelete = false;
         this.isDetail = false;
+
+        OptionBox optionBox = new OptionBox(getApp().getSkin());
+        optionBox.setVisible(false);
+
         initUI();
+        this.dialogueController = new DialogueController(dialogueBox, optionBox);
     }
 
     @Override
@@ -74,6 +87,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         controller.update(delta);
         Gdx.gl.glClearColor(0.50f, 0.79f, 0.61f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        dialogueController.update(delta);
 
         if (!controller.isInventoryOpen) {
             getApp().setScreen(gameScreen);
@@ -154,7 +169,6 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         title.add(bg).width(500);
 
         dialogueBox =  new DialogueBox(getApp().getSkin());
-        dialogueBox.animateText("Kamu mendapatkan Engimon baru!");
         dialogTable.add(dialogueBox).width(uiStage.getWidth()).height(uiStage.getHeight()/3);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -171,8 +185,8 @@ public class InventoryScreen extends AbstractScreen implements Screen {
 
         uiStage.addActor(root);
 
-        InventoryUI engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider(), gameScreen.getGameState());
-        InventoryUI skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider(), gameScreen.getGameState());
+        engimonInventory = new InventoryUI(getApp().getSkin(), bag.getEngimonInventory(), InventoryItem.ItemType.ENGIMON, getApp().getResourceProvider(), gameScreen.getGameState(),this);
+        skillitemInventory = new InventoryUI(getApp().getSkin(), bag.getSkillItemInventory(), InventoryItem.ItemType.SKILLITEM, getApp().getResourceProvider(), gameScreen.getGameState(), this);
 
         Label labelA = new Label("Engimon", getApp().getSkin());
         Label labelB = new Label("SkillItem", getApp().getSkin());
@@ -216,6 +230,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         root.add(topBar).top().fillX().row();
         root.add(inventoryWrapper).top().fillX().align(Align.center).row();
         root.add(bottomBar).top().fillX().align(Align.center).row();
+        root.add(dialogueBox).top().fillX().align(Align.bottom).row();
 
         back.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {

@@ -99,6 +99,28 @@ public class Inventory<T> {
         }
     }
 
+    public void deleteFromInventory(SkillItem skillitem,int count) throws NotEnoughSkillItemException{
+        int i;
+
+        for (i = 0; i < this.neff; i++)
+        {
+            if (((SkillItem) this.items.get(i)).equals(skillitem))
+            {
+                if ((((SkillItem) this.items.get(i)).getAmount() - count) >= 0 ){
+                    ((SkillItem) this.items.get(i)).setAmount(((SkillItem) this.items.get(i)).getAmount() - count);
+                    break;
+                } else {
+                    throw new NotEnoughSkillItemException("Jumlah item tidak cukup");
+                }
+            }
+        }
+        if (((SkillItem) this.items.get(i)).getAmount() == 0)
+        {
+            this.items.remove(((T)skillitem));
+            this.neff--;
+        }
+    }
+
     public int getSkillItemAmount() {
         int sum = 0;
         for (int i = 0; i < this.neff; i++)
