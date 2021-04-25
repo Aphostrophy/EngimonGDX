@@ -59,10 +59,11 @@ public class InventoryUI extends Table {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " removed");
                                } else if (isDetail) {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
-                               } else {
+                               } else if (slot.getNumItemsVal() > 0){
                                    try {
                                        gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
+                                       slot.decrementItemCount(1);
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
@@ -101,7 +102,8 @@ public class InventoryUI extends Table {
                                            else{
                                                inventoryScreen.setOptionBoxVisibility(true);
                                                inventoryScreen.dialogueController.startSkillChoiceDialogue(gameState.player.getActiveEngimon().getSkills(), chosenSkill);
-//                                               inventoryScreen.dialogueController.startTutorialDialogue();
+                                               inventory.deleteFromInventory(chosenSkillItem);
+                                               slot.decrementItemCount(1);
                                            }
                                        }
                                    }
