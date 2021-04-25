@@ -166,7 +166,7 @@ public class BreederScreen implements Screen {
                 System.out.println(breedableEngimon.isParentFilled());
                 if (breedableEngimon.isParentFilled()) {
                     if (!breedableEngimon.isParentSame()) {
-                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), ParentB.getParentB(), gameScreen, gameState);
+                        ChildEngimonScreen childEngimonScreen = new ChildEngimonScreen(app, controller, breedableEngimon.getParentA(), breedableEngimon.getParentB(), gameScreen, gameState);
                         app.setScreen(childEngimonScreen);
                         stopBreeding();
                     } else {
