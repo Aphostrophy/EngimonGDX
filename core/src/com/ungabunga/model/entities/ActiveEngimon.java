@@ -175,35 +175,43 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     @Override
     public void repositionOnCellConflict() throws EngimonConflictException {
         if(gameState.map.get(player.getY()).get(player.getX()-1).occupier == null){
+            gameState.map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             this.position.setFirst(player.getX()-1);
             this.position.setSecond(player.getY());
 
             this.worldX = player.getX()-1;
             this.worldY = player.getY();
+            gameState.map.get(position.getSecond()).get(position.getFirst()).occupier = this;
             return;
         }
         if(gameState.map.get(player.getY()).get(player.getX()+1).occupier == null){
+            gameState.map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             this.position.setFirst(player.getX()+1);
             this.position.setSecond(player.getY());
 
             this.worldX = player.getX()+1;
             this.worldY = player.getY();
+            gameState.map.get(position.getSecond()).get(position.getFirst()).occupier = this;
             return;
         }
         if(gameState.map.get(player.getY()-1).get(player.getX()).occupier == null){
+            gameState.map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             this.position.setFirst(player.getX());
             this.position.setSecond(player.getY()-1);
 
             this.worldX = player.getX();
             this.worldY = player.getY()-1;
+            gameState.map.get(position.getSecond()).get(position.getFirst()).occupier = this;
             return;
         }
         if(gameState.map.get(player.getY()+1).get(player.getX()).occupier == null){
+            gameState.map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             this.position.setFirst(player.getX());
             this.position.setSecond(player.getY()+1);
 
             this.worldX = player.getX();
             this.worldY = player.getY()+1;
+            gameState.map.get(position.getSecond()).get(position.getFirst()).occupier = this;
             return;
         }
         throw new EngimonConflictException("Can't reposition your engimon as you're surrounded by wild engimons");
@@ -258,5 +266,9 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     public TextureRegion getSprite(){
         return resourceProvider.getSprite((LivingEngimon) this);
+    }
+
+    public TextureRegion getSpriteAura(){
+        return resourceProvider.getSpriteAura((LivingEngimon) this);
     }
 }

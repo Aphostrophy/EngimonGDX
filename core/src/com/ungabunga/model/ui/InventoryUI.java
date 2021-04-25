@@ -8,6 +8,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
+import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
 
 public class InventoryUI extends Table {
@@ -22,7 +23,7 @@ public class InventoryUI extends Table {
 
     private int amount;
 
-    public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType, ResourceProvider provider, GameState gameState){
+    public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType, ResourceProvider provider, GameState gameState, InventoryScreen inventoryScreen){
        super(skin);
        this.setBackground("dialoguebox");
 
@@ -54,13 +55,15 @@ public class InventoryUI extends Table {
                                if(isDelete) {
                                     inventory.deleteFromInventory(chosenEngimon);
                                     slot.decrementItemCount(1);
+                                    inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " removed");
                                } else if (isDetail) {
-                                   chosenEngimon.displayInfo();
+                                    inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
                                } else {
                                    try {
                                        gameState.spawnActiveEngimon(chosenEngimon);
+                                       inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
-                                       e.printStackTrace();
+                                       inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
                                    }
                                }
 
@@ -72,10 +75,11 @@ public class InventoryUI extends Table {
                                            inventory.deleteFromInventory(chosenSkillItem);
                                        }
                                        slot.decrementItemCount(amount);
+                                       inventoryScreen.dialogueController.startInventoryDialogue(amount + " " + chosenSkillItem.getName() + " removed");
                                    }
                                } else if (isDetail){
                                    Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
-                                   chosenSkill.displaySkillInfo();
+                                   inventoryScreen.dialogueController.startInventoryDialogue(chosenSkill.displaySkillInfoString());
                                } else {
                                    if(gameState.player.getActiveEngimon() != null) {
                                        System.out.println(chosenSkillItem.getAmount());
@@ -85,10 +89,10 @@ public class InventoryUI extends Table {
                                                gameState.player.getActiveEngimon().learnSkill(chosenSkill);
                                                inventory.deleteFromInventory(chosenSkillItem);
                                                slot.decrementItemCount(1);
+                                               inventoryScreen.dialogueController.startInventoryDialogue(gameState.player.getActiveEngimon().getName() + " learned " + chosenSkillItem.getName() + "!!");
                                            } catch (FeatureNotImplementedException e) {
                                                e.printStackTrace();
                                            }
-                                           gameState.player.getActiveEngimon().displayInfo();
                                        }
                                    }
                                }

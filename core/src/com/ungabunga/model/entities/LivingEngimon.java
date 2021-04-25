@@ -29,5 +29,7 @@ public interface LivingEngimon {
 
     public TextureRegion getSprite();
 
+    public TextureRegion getSpriteAura();
+
     public float getKeyFrame();
 }

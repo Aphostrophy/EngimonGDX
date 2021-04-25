@@ -89,7 +89,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveUp() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
-            if(this.getY()+1>=gameState.map.length() || gameState.map.get(this.getY()+1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()+1).get(this.getX()).cellType == CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()+1==gameState.player.getY())){
+            if(this.getY()+1>=gameState.map.length() || gameState.map.get(this.getY()+1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()+1).get(this.getX()).cellType == CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()+1==gameState.player.getY()) || !resourceProvider.isCompatible(this.elements,gameState.map.get(this.getY()+1).get(this.getX()).cellType)){
                 repositionOnCellConflict();
             }
             move(0,1);
@@ -99,7 +99,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
-            if(this.getY()-1<0 || gameState.map.get(this.getY()-1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()-1).get(this.getX()).cellType== CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()-1==gameState.player.getY())){
+            if(this.getY()-1<0 || gameState.map.get(this.getY()-1).get(this.getX()).occupier!=null || gameState.map.get(this.getY()-1).get(this.getX()).cellType== CellType.BLOCKED ||  (this.getX()==gameState.player.getX() && this.getY()-1==gameState.player.getY()) || !resourceProvider.isCompatible(this.elements,gameState.map.get(this.getY()-1).get(this.getX()).cellType)){
                 repositionOnCellConflict();
             }
             move(0,-1);
@@ -109,7 +109,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
-            if(this.getX()-1<0 || gameState.map.get(this.getY()).get(this.getX()-1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()-1).cellType==CellType.BLOCKED || (this.getX()-1==gameState.player.getX() && this.getY()==gameState.player.getY())){
+            if(this.getX()-1<0 || gameState.map.get(this.getY()).get(this.getX()-1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()-1).cellType==CellType.BLOCKED || (this.getX()-1==gameState.player.getX() && this.getY()==gameState.player.getY()) || !resourceProvider.isCompatible(this.elements,gameState.map.get(this.getY()).get(this.getX()-1).cellType)){
                 repositionOnCellConflict();
             }
             move(-1,0);
@@ -119,7 +119,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     public void moveRight() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
-            if(this.getX()+1 >= gameState.map.get(0).length() || gameState.map.get(this.getY()).get(this.getX()+1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()+1).cellType == CellType.BLOCKED ||  (this.getX()+1==gameState.player.getX() && this.getY()==gameState.player.getY())){
+            if(this.getX()+1 >= gameState.map.get(0).length() || gameState.map.get(this.getY()).get(this.getX()+1).occupier!=null || gameState.map.get(this.getY()).get(this.getX()+1).cellType == CellType.BLOCKED ||  (this.getX()+1==gameState.player.getX() && this.getY()==gameState.player.getY()) || !resourceProvider.isCompatible(this.elements,gameState.map.get(this.getY()).get(this.getX()+1).cellType)){
                 repositionOnCellConflict();
             }
             move(1,0);
@@ -176,6 +176,11 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public TextureRegion getSprite() {
         return resourceProvider.getSprite(this);
+    }
+
+    @Override
+    public TextureRegion getSpriteAura() {
+        return resourceProvider.getSpriteAura(this);
     }
 
     @Override
