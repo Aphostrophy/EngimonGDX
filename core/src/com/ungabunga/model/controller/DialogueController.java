@@ -8,10 +8,12 @@ import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.dialogue.DialogueNode.NODE_TYPE;
 import com.ungabunga.model.dialogue.DialogueTraverser;
 import com.ungabunga.model.entities.*;
+import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
+import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.ResourceProvider;
 
 import javax.xml.stream.events.EntityReference;
@@ -37,6 +39,8 @@ public class DialogueController extends InputAdapter {
     private List<Skill> skillList;
     private Skill newSkill;
     private WildEngimon wildEngimon;
+
+    public boolean isFullInventory = false;
 
     public enum DIALOG_STATE{
         BATTLE,
@@ -89,7 +93,29 @@ public class DialogueController extends InputAdapter {
                     Engimon EnemyEngimons = this.wildEngimon;
                     B.BattleEngimon(PlayerEngimons, EnemyEngimons);
                     String AllBattleDialogue = B.showTotalPower();
+                    Pair<Integer,Integer> dir = new Pair<>(0,0);
+                    DIRECTION d = this.gameScreen.getGameState().player.getDirection();
+                    if(d == DIRECTION.UP) {
+                        dir = new Pair<>(0,1);
+                        System.out.println("atas");
+                    } else if(d == DIRECTION.DOWN) {
+                        dir = new Pair<>(0,-1);
+                        System.out.println("bawah");
+                    } else if(d == DIRECTION.RIGHT) {
+                        dir = new Pair<>(1,0);
+                        System.out.println("kanan");
+                    } else if(d == DIRECTION.LEFT) {
+                        dir = new Pair<>(-1,0);
+                        System.out.println("kiri");
+                    }
                     if(B.BattleStatusIsWin()) {
+                        try {
+                            gameScreen.getGameState().getPlayerInventory().insertToBag(new PlayerEngimon(EnemyEngimons));
+                            gameScreen.getGameState().getPlayerInventory().insertToBag(new SkillItem(EnemyEngimons.getSkills().get(0).getSkillName(),EnemyEngimons.getSkills().get(0).getBasePower()));
+                        } catch (FullInventoryException e) {
+                            e.printStackTrace();
+                            isFullInventory = true;
+                        }
                         AllBattleDialogue += "Engimon anda jago juga !";
                         if (PlayerEngimons.getLevel() < 5)
                         {
@@ -108,22 +134,34 @@ public class DialogueController extends InputAdapter {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
                         }
                         gameScreen.getGameState().getPlayerInventory().showInventory();
-                        try {
-                            gameScreen.getGameState().getPlayerInventory().insertToBag(new PlayerEngimon(EnemyEngimons));
-                            gameScreen.getGameState().getPlayerInventory().insertToBag(new SkillItem(EnemyEngimons.getSkills().get(0).getSkillName(),EnemyEngimons.getSkills().get(0).getBasePower()));
-                        } catch (FullInventoryException e) {
-                            e.printStackTrace();
-                            gameScreen.dialogueController.startExceptionDialogue(e);
-                        }
+
+
                         gameScreen.getGameState().getPlayerInventory().showInventory();
+                        if(this.gameScreen.getGameState().player.getActiveEngimon()!=null){
+                            System.out.println("X DIPENCET");
+                            if((this.gameScreen.getGameState().player.getY() + dir.getSecond()) != this.gameScreen.getGameState().player.getActiveEngimon().getY() || (this.gameScreen.getGameState().player.getX() + dir.getFirst()) != this.gameScreen.getGameState().player.getActiveEngimon().getX() ) {
+                                System.out.println("Ya itu engimon musuh");
+                                if(this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier != null){
+                                    WildEngimon occupier = (WildEngimon) this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier;
+                                    occupier.reduceLives();
+                                    System.out.println("mati lo anjeng");
+                                }
+                            }   else {
+                                System.out.println("Itu engimon anda sendiri");
+                            }
+                        }
                     } else {
                         AllBattleDialogue += "Engimon anda cupu kali !";
-
+                        this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
                     }
                     ArrayList<String> Dialog = new ArrayList<String>();
                     Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
                     Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
                     Dialog.add(AllBattleDialogue);
+                    if(isFullInventory) {
+                        Dialog.add("Inventory anda sudah penuh!\n anda tidak dapat menambah engimon dan item baru.");
+                        isFullInventory = false;
+                    }
                     System.out.println(AllBattleDialogue);
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
                     System.out.println(wildEngimon.getName());
