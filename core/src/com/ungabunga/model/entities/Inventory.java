@@ -63,7 +63,7 @@ public class Inventory<T> {
         }
     }
 
-    public void insertToInventory(Engimon engimon, int currCapacity) throws FullInventoryException {
+    public void insertToInventory(PlayerEngimon engimon, int currCapacity) throws FullInventoryException {
         if (currCapacity < this.capacity)
         {
             this.items.add(this.neff,((T)engimon));
@@ -76,7 +76,7 @@ public class Inventory<T> {
         }
     }
 
-    public void deleteFromInventory(Engimon engimon) {
+    public void deleteFromInventory(PlayerEngimon engimon) {
         this.items.remove(((T)engimon));
     }
 
@@ -112,7 +112,7 @@ public class Inventory<T> {
         int count = 0, i;
         for (i = 0; i < this.neff; i++)
         {
-            System.out.printf("%d. ID:%d %s %s %d\n",count+1,((Engimon) this.items.get(i)).getId(), ((Engimon) this.items.get(i)).getName(),getEngimonElementInString(((Engimon) this.items.get(i))) , ((Engimon) this.items.get(i)).getLevel() );
+            System.out.printf("%d. ID:%d %s %s %d\n",count+1,((PlayerEngimon) this.items.get(i)).getId(), ((PlayerEngimon) this.items.get(i)).getName(),getEngimonElementInString(((PlayerEngimon) this.items.get(i))) , ((PlayerEngimon) this.items.get(i)).getLevel() );
             count++;
         }
         if (count == 0)
@@ -142,10 +142,10 @@ public class Inventory<T> {
         int count = 0, i;
         for (i = 0; i < this.neff; i++)
         {
-            if (((Engimon) this.items.get(i)).getLevel() > 30)
+            if (((PlayerEngimon) this.items.get(i)).getLevel() > 30)
             {
 
-                System.out.printf("%d. ID:%d %s %d\n",count+1,((Engimon) this.items.get(i)).getId(), ((Engimon) this.items.get(i)).getName(), ((Engimon) this.items.get(i)).getLevel() );
+                System.out.printf("%d. ID:%d %s %d\n",count+1,((PlayerEngimon) this.items.get(i)).getId(), ((PlayerEngimon) this.items.get(i)).getName(), ((PlayerEngimon) this.items.get(i)).getLevel() );
                 count++;
             }
         }
@@ -157,9 +157,9 @@ public class Inventory<T> {
 
     public void sortEngimon(){
         Comparator<T> compareByElementLevel = (T e1, T e2) -> {
-            int c = ( getEngimonElementInString(((Engimon) e1)).compareTo(getEngimonElementInString(((Engimon) e2))));
+            int c = ( getEngimonElementInString(((PlayerEngimon) e1)).compareTo(getEngimonElementInString(((PlayerEngimon) e2))));
             if (c == 0){
-                c = (((Integer) ((Engimon)e1).getLevel()).compareTo(((Integer) ((Engimon)e2).getLevel())));
+                c = (((Integer) ((PlayerEngimon)e1).getLevel()).compareTo(((Integer) ((PlayerEngimon)e2).getLevel())));
             }
             return c;
         };
@@ -171,7 +171,7 @@ public class Inventory<T> {
         Collections.sort(this.items,compareByPower);
     }
 
-    public String getEngimonElementInString(Engimon engimon){
+    public String getEngimonElementInString(PlayerEngimon engimon){
         ArrayList<String> result = new ArrayList<>();
         for (IElements elemen : engimon.getElements()){
             result.add(elemen.toString());
@@ -187,7 +187,7 @@ public class Inventory<T> {
         int i;
         for (i = 0; i < this.neff; i++)
         {
-            if (((Engimon) this.items.get(i)).getId() == id)
+            if (((PlayerEngimon) this.items.get(i)).getId() == id)
             {
                 return i;
             }
