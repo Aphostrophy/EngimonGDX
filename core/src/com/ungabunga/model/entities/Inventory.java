@@ -76,16 +76,8 @@ public class Inventory<T> {
     }
 
     public void deleteFromInventory(PlayerEngimon engimon) {
-        for(int i=0;i<neff;i++){
-            if(this.items.get(i).equals(engimon)){
-                System.out.println("ENGIMONNN");
-            }
-        }
         if(this.items.remove(((T)engimon))){
-            System.out.println("BBBB");
             this.neff--;
-        } else{
-            System.out.println("AAAAAAAA");
         }
     }
 
