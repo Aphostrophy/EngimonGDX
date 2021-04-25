@@ -249,7 +249,7 @@ public class Inventory<T> {
         ArrayList<PlayerEngimon> result = new ArrayList<>();
         for (i = 0; i < this.neff; i++)
         {
-            if (((PlayerEngimon) this.items.get(i)).getLevel() > 30)
+            if (((PlayerEngimon) this.items.get(i)).getLevel() >= 4)
             {
                 result.add(((PlayerEngimon) this.items.get(i)));
             }
