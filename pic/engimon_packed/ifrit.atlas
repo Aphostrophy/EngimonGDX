@@ -1,0 +1,90 @@
+
+ifrit.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ifrit_standing_east
+  rotate: false
+  xy: 148, 3
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+ifrit_walking_east
+  rotate: false
+  xy: 148, 3
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: 0
+ifrit_standing_north
+  rotate: false
+  xy: 78, 4
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: -1
+ifrit_walking_north
+  rotate: false
+  xy: 78, 4
+  size: 22, 23
+  orig: 22, 23
+  offset: 0, 0
+  index: 0
+ifrit_standing_south
+  rotate: false
+  xy: 2, 2
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: -1
+ifrit_walking_south
+  rotate: false
+  xy: 2, 2
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: 0
+ifrit_standing_west
+  rotate: false
+  xy: 170, 3
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: -1
+ifrit_walking_west
+  rotate: false
+  xy: 170, 3
+  size: 20, 24
+  orig: 20, 24
+  offset: 0, 0
+  index: 0
+ifrit_walking_east
+  rotate: false
+  xy: 102, 3
+  size: 21, 24
+  orig: 21, 24
+  offset: 0, 0
+  index: 1
+ifrit_walking_north
+  rotate: false
+  xy: 53, 4
+  size: 23, 23
+  orig: 23, 23
+  offset: 0, 0
+  index: 1
+ifrit_walking_south
+  rotate: false
+  xy: 28, 2
+  size: 23, 25
+  orig: 23, 25
+  offset: 0, 0
+  index: 1
+ifrit_walking_west
+  rotate: false
+  xy: 125, 3
+  size: 21, 24
+  orig: 21, 24
+  offset: 0, 0
+  index: 1
