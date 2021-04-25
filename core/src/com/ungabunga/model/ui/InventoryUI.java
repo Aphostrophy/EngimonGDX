@@ -57,7 +57,7 @@ public class InventoryUI extends Table {
                                    Skill chosenSkill = provider.getSkill(chosenSkillItem.getName());
                                    try {
                                        gameState.player.getActiveEngimon().learnSkill(chosenSkill);
-                                       chosenSkillItem.setAmount(chosenSkillItem.getAmount() - 1);
+                                       inventory.deleteFromInventory(chosenSkillItem);
                                        slot.decrementItemCount();
                                    } catch (FeatureNotImplementedException e) {
                                        e.printStackTrace();
@@ -65,7 +65,6 @@ public class InventoryUI extends Table {
                                    gameState.player.getActiveEngimon().displayInfo();
                                }
                            }
-
                        }
                    });
 

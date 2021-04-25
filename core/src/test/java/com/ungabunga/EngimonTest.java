@@ -201,8 +201,7 @@ public class EngimonTest {
         Assertions.assertEquals(6, engimon.getSkills().get(0).getBasePower());
         Assertions.assertEquals(1, engimon.getSkills().get(0).getMasteryLevel());
     }
-    
-    }
+
     @Test
     public void testGetPosition(AnimationSet animationSet){
         Player player = new Player("NamaPlayer",animationSet,1,1);
