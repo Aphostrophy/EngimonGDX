@@ -127,9 +127,6 @@ public class Player {
 
     private void move(int dx,int dy){
         initializeMove(dx,dy);
-        if(activeEngimon!=null){
-            activeEngimon.move(dx,dy);
-        }
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
     }
@@ -138,6 +135,9 @@ public class Player {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
             move(0,1);
+            if(activeEngimon!=null){
+                activeEngimon.moveUp();
+            }
         } else{
             if(direction == DIRECTION.UP){
                 moveFrameRequest = true;
@@ -149,6 +149,9 @@ public class Player {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
             move(0,-1);
+            if(activeEngimon!=null){
+                activeEngimon.moveDown();
+            }
         } else{
             if(direction == DIRECTION.DOWN){
                 moveFrameRequest = true;
@@ -160,6 +163,9 @@ public class Player {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
             move(-1,0);
+            if(activeEngimon!=null){
+                activeEngimon.moveLeft();
+            }
         } else{
             if(direction == DIRECTION.LEFT){
                 moveFrameRequest = true;
@@ -171,6 +177,9 @@ public class Player {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
             move(1,0);
+            if(activeEngimon!=null){
+                activeEngimon.moveRight();
+            }
         } else{
             if(direction == DIRECTION.RIGHT){
                 moveFrameRequest = true;

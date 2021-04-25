@@ -101,6 +101,54 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.position.setSecond(this.getY()+dy);
     }
 
+    public void moveUp() {
+        if(state == AVATAR_STATE.STANDING){
+            direction = DIRECTION.UP;
+            move(0,1);
+        }
+//        else{
+//            if(direction == DIRECTION.UP){
+//                moveFrameRequest = true;
+//            }
+//        }
+    }
+
+    public void moveDown() {
+        if(state == AVATAR_STATE.STANDING){
+            direction = DIRECTION.DOWN;
+            move(0,-1);
+        }
+//        else{
+//            if(direction == DIRECTION.DOWN){
+//                moveFrameRequest = true;
+//            }
+//        }
+    }
+
+    public void moveLeft() {
+        if(state == AVATAR_STATE.STANDING){
+            direction = DIRECTION.LEFT;
+            move(-1,0);
+        }
+//        else{
+//            if(direction == DIRECTION.LEFT){
+//                moveFrameRequest = true;
+//            }
+//        }
+    }
+
+    public void moveRight() {
+        if(state == AVATAR_STATE.STANDING){
+            direction = DIRECTION.RIGHT;
+            move(1,0);
+        }
+//        else{
+//            if(direction == DIRECTION.RIGHT){
+//                moveFrameRequest = true;
+//            }
+//        }
+    }
+
     @Override
     public Pair<Integer,Integer> getPosition() {
         return this.position;
