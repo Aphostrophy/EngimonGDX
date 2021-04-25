@@ -55,8 +55,17 @@ public class GameState {
         ArrayList<Skill> skills = new ArrayList<Skill>();
         Pair<String, String> parents = new Pair<String, String>("A", "B");
 
-        Engimon a = new Engimon("Test", "Squirtle", "X",100, elmt, skills, parents, parents);
-        Engimon b = new Engimon("Hola", "Raichu", "X",100, elmt2, skills, parents, parents);
+        Engimon a = app.getResourceProvider().getEngimon("Squirtle");
+        a.setName("Test");
+        a.setLevel(30);
+        a.setParentName(new Pair<String,String>("A","B"));
+
+        a.getSkills().get(0).displaySkillInfo();
+
+        Engimon b = app.getResourceProvider().getEngimon("Raichu");
+        b.setName("Hola");
+        b.setLevel(30);
+        b.setParentName(new Pair<String,String>("C","D"));
 
         SkillItem hehe = new SkillItem("Buffer", app.getResourceProvider().getSkill("Buffer").getBasePower());
         this.playerInventory = new Bag();
