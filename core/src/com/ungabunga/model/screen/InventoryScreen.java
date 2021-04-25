@@ -87,7 +87,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
 
     @Override
     public void update(float delta) {
-
+        controller.update(delta);
     }
 
     @Override
