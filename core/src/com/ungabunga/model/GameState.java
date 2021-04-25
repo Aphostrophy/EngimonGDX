@@ -219,21 +219,25 @@ public class GameState {
                 ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player,player.getX(), player.getY()-1, this,app.getResourceProvider());
                 player.setActiveEngimon(activeEngimon);
                 map.get(player.getY()-1).get(player.getX()).occupier = activeEngimon;
+                this.getPlayerInventory().deleteFromBag(playerEngimon);
             }
             else if(map.get(player.getY()+1).get(player.getX()).occupier==null && map.get(player.getY()+1).get(player.getX()).cellType != CellType.BLOCKED){
                 ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX(), player.getY()+1,this, app.getResourceProvider());
                 player.setActiveEngimon(activeEngimon);
                 map.get(player.getY()+1).get(player.getX()).occupier = activeEngimon;
+                this.getPlayerInventory().deleteFromBag(playerEngimon);
             }
             else if(map.get(player.getY()).get(player.getX()-1).occupier==null && map.get(player.getY()).get(player.getX()-1).cellType != CellType.BLOCKED){
                 ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()-1, player.getY(),this,app.getResourceProvider());
                 player.setActiveEngimon(activeEngimon);
                 map.get(player.getY()).get(player.getX()-1).occupier = activeEngimon;
+                this.getPlayerInventory().deleteFromBag(playerEngimon);
             }
             else if(map.get(player.getY()).get(player.getX()+1).occupier==null && map.get(player.getY()).get(player.getX()+1).cellType != CellType.BLOCKED){
                 ActiveEngimon activeEngimon = new ActiveEngimon(playerEngimon, player, player.getX()+1,player.getY(),this,app.getResourceProvider());
                 player.setActiveEngimon(activeEngimon);
                 map.get(player.getY()).get(player.getX()+1).occupier = activeEngimon;
+                this.getPlayerInventory().deleteFromBag(playerEngimon);
             } else{
                 throw new CellOccupiedException("No place to spawn player engimon");
             }
