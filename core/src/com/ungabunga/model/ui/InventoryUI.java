@@ -63,6 +63,7 @@ public class InventoryUI extends Table {
                                    try {
                                        gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
+                                       slot.decrementItemCount(1);
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
