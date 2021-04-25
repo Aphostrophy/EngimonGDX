@@ -76,8 +76,17 @@ public class Inventory<T> {
     }
 
     public void deleteFromInventory(PlayerEngimon engimon) {
-        this.items.remove(((T)engimon));
-        this.neff--;
+        for(int i=0;i<neff;i++){
+            if(this.items.get(i).equals(engimon)){
+                System.out.println("ENGIMONNN");
+            }
+        }
+        if(this.items.remove(((T)engimon))){
+            System.out.println("BBBB");
+            this.neff--;
+        } else{
+            System.out.println("AAAAAAAA");
+        }
     }
 
     public void deleteFromInventory(SkillItem skillitem){
@@ -93,8 +102,9 @@ public class Inventory<T> {
         }
         if (((SkillItem) this.items.get(i)).getAmount() == 0)
         {
-            this.items.remove(((T)skillitem));
-            this.neff--;
+            if(this.items.remove(((T)skillitem))){
+                this.neff--;
+            }
         }
     }
 
