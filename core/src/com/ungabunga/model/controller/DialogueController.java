@@ -6,10 +6,12 @@ import com.ungabunga.model.dialogue.Dialogue;
 import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.dialogue.DialogueNode.NODE_TYPE;
 import com.ungabunga.model.dialogue.DialogueTraverser;
+import com.ungabunga.model.entities.SkillItem;
 import com.ungabunga.model.ui.DialogueBox;
 import com.ungabunga.model.ui.OptionBox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
@@ -22,6 +24,8 @@ public class DialogueController extends InputAdapter {
     private float dialogueBoxTimer;
     private float TIMER_TIMEOUT = 2f;
     private float BATTLE_TIMEOUT = 4f;
+
+    private List<SkillItem> skillItemList;
 
     public enum DIALOG_STATE{
         BATTLE,
@@ -70,6 +74,10 @@ public class DialogueController extends InputAdapter {
                 } else{
                     System.out.println("CABUT");
                 }
+            }
+            else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.CHOOSESKILL){
+                progress(Obox.getSelected());
+                System.out.println(skillItemList.get(Obox.getSelected()).getName());
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.ELSE) {
                 progress(Obox.getSelected());
@@ -208,7 +216,26 @@ public class DialogueController extends InputAdapter {
         startDialogue(dialogue);
     }
 
-//    public int startSkillChoiceDialogue(SkilI)
+    // I.S skillItemList 4
+    public void startSkillChoiceDialogue(List<SkillItem> skillItemList){
+        dialogState = DIALOG_STATE.CHOOSESKILL;
+        this.skillItemList = skillItemList;
+        Dialogue dialogue = new Dialogue();
+        DialogueNode skillDialog = new DialogueNode("You already have 4 skills, choose one to unlearn",0);
+        DialogueNode endingDialogue = new DialogueNode("Wise choice, enjoy your new skill",1);
+        DialogueNode cancelDialogue = new DialogueNode("Cancelled learn skill",2);
+        skillDialog.addChoice(skillItemList.get(0).getName(),1);
+        skillDialog.addChoice(skillItemList.get(1).getName(),1);
+        skillDialog.addChoice(skillItemList.get(2).getName(),1);
+        skillDialog.addChoice(skillItemList.get(3).getName(),1);
+        skillDialog.addChoice("Cancel",2);
+
+        dialogue.addNode(skillDialog);
+        dialogue.addNode(endingDialogue);
+        dialogue.addNode(cancelDialogue);
+
+        startDialogue(dialogue);
+    }
 
 
 }
