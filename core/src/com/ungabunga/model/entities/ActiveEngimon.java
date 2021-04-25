@@ -73,24 +73,11 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
             worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
             worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
 
-            System.out.println(worldX);
-
             if(animTimer > ANIM_TIMER){
                 stateTimer -= (animTimer - ANIM_TIMER);
                 finishMove();
                 if(player.getMoveFrameRequest()){
-                    if(direction == DIRECTION.UP){
-                        move(0,1);
-                    }
-                    if(direction == DIRECTION.DOWN){
-                        move(0,-1);
-                    }
-                    if(direction == DIRECTION.LEFT){
-                        move(-1,0);
-                    }
-                    if(direction == DIRECTION.RIGHT){
-                        move(1,0);
-                    }
+                    followPlayer(player.getX(),player.getY());
                 } else{
                     stateTimer = 0f;
                 }
@@ -154,6 +141,30 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 //                moveFrameRequest = true;
 //            }
 //        }
+    }
+
+    public boolean followPlayer(int playerLastX, int playerLastY){
+        if(this.getX()<this.player.getWorldX()){
+            System.out.println("Belok kanan");
+            moveRight();
+            return true;
+        }
+        if(this.getX()>this.player.getWorldX()){
+            System.out.println("Belok kiri");
+            moveLeft();
+            return true;
+        }
+        if(this.getY()<this.player.getWorldY()){
+            System.out.println("Naik");
+            moveUp();
+            return true;
+        }
+        if(this.getY()>this.player.getWorldY()){
+            System.out.println("Turun");
+            moveDown();
+            return true;
+        }
+        return false;
     }
 
     @Override
