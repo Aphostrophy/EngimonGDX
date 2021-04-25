@@ -141,14 +141,11 @@ public class GameScreen extends AbstractScreen {
         dialogueController.update(delta);
 
         gameState.update(delta);
-        gameState.player.update(delta);
 
         if (controller.isBreederOpen) {
             try {
                 BreederScreen breederScreen = new BreederScreen(getApp(), controller, gameState,this);
                 getApp().setScreen(breederScreen);
-                setGameState(breederScreen.getGameState());
-                getGameState().getPlayerInventory().showInventory();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -177,7 +174,8 @@ public class GameScreen extends AbstractScreen {
         for(int y=0;y<gameState.map.length();y++){
             for(int x=0;x<gameState.map.get(y).length();x++){
                 if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())){
-                    batch.draw(getApp().getResourceProvider().getSprite((LivingEngimon) gameState.map.get(y).get(x).occupier), x*Settings.SCALED_TILE_SIZE, y*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                    LivingEngimon occupier = gameState.map.get(y).get(x).occupier;
+                    batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
                 }
             }
         }

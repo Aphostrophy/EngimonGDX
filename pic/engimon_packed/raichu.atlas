@@ -17,7 +17,7 @@ raichu_walking_east
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
-  index: 0
+  index: 1
 raichu_standing_north
   rotate: false
   xy: 2, 2
@@ -59,14 +59,14 @@ raichu_walking_west
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
-  index: 1
+  index: 0
 raichu_walking_east
   rotate: false
   xy: 110, 2
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
-  index: 1
+  index: 0
 raichu_walking_north
   rotate: false
   xy: 40, 2
@@ -87,4 +87,4 @@ raichu_walking_west
   size: 14, 16
   orig: 14, 16
   offset: 0, 0
-  index: 0
+  index: 1

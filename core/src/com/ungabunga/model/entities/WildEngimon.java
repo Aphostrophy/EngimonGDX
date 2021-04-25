@@ -1,51 +1,58 @@
 package com.ungabunga.model.entities;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FeatureNotImplementedException;
 import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.utilities.Pair;
+import com.ungabunga.model.utilities.ResourceProvider;
 
 public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
+
+    ResourceProvider resourceProvider;
+
     int remainingLives;
 
     DIRECTION direction;
     AVATAR_STATE state;
 
+    private float srcX,srcY;
+    private float destX,destY;
+    private float worldX,worldY;
+    private float animTimer;
+
+    private float stateTimer;
+
     public WildEngimon(){
 
     }
 
-    public WildEngimon(Engimon E){
+    public WildEngimon(Engimon E, int spawnX, int spawnY, ResourceProvider resourceProvider){
 //        super(E.name, E.species, E.slogan, E.level, E.elements, E.skills, E.parentName, E.parentSpecies);
         super(E);
         this.remainingLives = CONSTANTS.WILDENGIMONDEFAULTLIVES;
 
         this.direction = DIRECTION.DOWN;
         this.state = AVATAR_STATE.STANDING;
+
+        this.resourceProvider = resourceProvider;
+
+        Pair<Integer,Integer> position = new Pair<>();
+        position.setFirst(spawnX);
+        position.setSecond(spawnY);
+
+        this.position = position;
+
+        this.worldX =  this.position.getFirst();
+        this.worldY = this.position.getSecond();
     }
 
     @Override
-    public void moveUp() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
+    public void move(int dx, int dy) {
 
-    @Override
-    public void moveDown() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
     }
-
-    @Override
-    public void moveLeft() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
-
-    @Override
-    public void moveRight() throws FeatureNotImplementedException {
-        throw new FeatureNotImplementedException("Wild Pokemon move feature is not ready");
-    }
-
 
     @Override
     public void repositionOnCellConflict() throws FeatureNotImplementedException {
@@ -63,6 +70,16 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     }
 
     @Override
+    public TextureRegion getSprite() {
+        return resourceProvider.getSprite(this);
+    }
+
+    @Override
+    public float getKeyFrame() {
+        return stateTimer;
+    }
+
+    @Override
     public int getRemainingLives() {
         return this.remainingLives;
     }
@@ -75,6 +92,16 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     @Override
     public void reduceLives() {
         this.remainingLives--;
+    }
+
+    @Override
+    public float getWorldX() {
+        return this.worldX;
+    }
+
+    @Override
+    public float getWorldY() {
+        return this.worldY;
     }
 
     @Override

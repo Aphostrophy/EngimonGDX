@@ -77,6 +77,10 @@ public class PlayerController extends InputAdapter{
         if(keycode == Keys.H){
             gameScreen.dialogueController.startTutorialDialogue();
         }
+        if(keycode == Keys.M){
+            gameState.player.setPosition(gameState.map.length()/2,gameState.map.get(0).length()/2);
+            gameState.removePlayerEngimon();
+        }
         if(keycode == Keys.F5){
             Json json = new Json();
             json.setOutputType(JsonWriter.OutputType.json);

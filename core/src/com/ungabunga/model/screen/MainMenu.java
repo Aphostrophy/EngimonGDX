@@ -2,6 +2,7 @@ package com.ungabunga.model.screen;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -88,6 +89,10 @@ public class MainMenu implements Screen {
         int x = Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2;
         Gdx.gl.glClearColor(0, 0, .25f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        Pixmap pm = new Pixmap(Gdx.files.internal("img/cursor_32.png"));
+        Gdx.graphics.setCursor(Gdx.graphics.newCursor(pm, 0, 0));
+        pm.dispose();
         
         batch.begin();
         heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 125);

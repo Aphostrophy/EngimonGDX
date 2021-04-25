@@ -27,7 +27,7 @@ public class BreederEngimonUI extends Table {
     private final int slotHeight = 70;
 
     private Engimon parent;
-    private Engimon temp;
+    private int parentIdx;
 
     private boolean isParent;
     private ArrayList<Engimon> breedableEngimon;
@@ -66,7 +66,7 @@ public class BreederEngimonUI extends Table {
                         public void clicked(InputEvent event, float x, float y) {
                             super.clicked(event, x, y);
                             BreederSlot slot = (BreederSlot) event.getListenerActor();
-                            setParent((Engimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(slot.getIdx()));
+                            setParent((Engimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(slot.getIdx()), slot.getIdx());
                         }
                     });
                     k++;
@@ -79,9 +79,10 @@ public class BreederEngimonUI extends Table {
         }
     }
 
-    public void setParent(Engimon engimon) {
+    public void setParent(Engimon engimon, int idx) {
         this.parent = engimon;
         this.isParent = true;
+        this.parentIdx = idx;
     }
 
     public void printParent() {
@@ -94,5 +95,13 @@ public class BreederEngimonUI extends Table {
 
     public boolean isParentFilled() {
         return this.isParent;
+    }
+
+    public void resetParent() {
+        this.isParent = false;
+    }
+
+    public int getParentIdx() {
+        return this.parentIdx;
     }
 }
