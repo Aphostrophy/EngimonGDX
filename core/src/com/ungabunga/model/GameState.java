@@ -150,7 +150,6 @@ public class GameState {
 //            }
 //        }
         this.playerInventory = save.playerInventory;
-        this.wildEngimonCount = save.wildEngimonCount;
     }
 
     public void movePlayerUp() throws CellOccupiedException, OutOfBoundException, EngimonConflictException {
