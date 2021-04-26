@@ -8,6 +8,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.exceptions.CellOccupiedException;
 import com.ungabunga.model.exceptions.DuplicateSkillException;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.exceptions.NotEnoughSkillItemException;
 import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
@@ -67,6 +68,8 @@ public class InventoryUI extends Table {
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
+                                   } catch (FullInventoryException e){
+                                       inventoryScreen.dialogueController.startExceptionDialogue(e);
                                    }
                                }
 

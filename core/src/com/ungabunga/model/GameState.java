@@ -113,7 +113,12 @@ public class GameState {
         try {
             player.update(delta);
         } catch (EngimonConflictException e) {
-           removePlayerEngimon();
+            try{
+                removePlayerEngimon();
+            } catch (FullInventoryException fe){
+
+            }
+
         }
         timeDelta += delta;
         if(timeDelta > SPAWN_INTERVAL && wildEngimonCount <=15){
@@ -135,7 +140,7 @@ public class GameState {
     }
 
     public void loadSave(Save save){
-        player.loadSave(save);
+        player.loadSave(save,this);
 //        for(int y=0;y<save.map.length;y++){
 //            for(int x=0;x<save.map[0].length;x++){
 //                this.map.get(y).set(x, save.map[y][x]);
@@ -242,11 +247,11 @@ public class GameState {
                 throw new CellOccupiedException("No place to spawn player engimon");
             }
         }
-
     }
 
-    public void removePlayerEngimon(){
+    public void removePlayerEngimon() throws FullInventoryException {
         if(player.getActiveEngimon()!=null){
+            this.getPlayerInventory().insertToBag(new PlayerEngimon(player.getActiveEngimon()));
             map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             player.removeActiveEngimon();
         }
