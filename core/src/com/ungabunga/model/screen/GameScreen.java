@@ -145,7 +145,7 @@ public class GameScreen extends AbstractScreen {
 
     }
 
-    public  void update(float delta) {
+    public  void update(float delta) {g
         camera.position.set(gameState.player.getWorldX() * Settings.SCALED_TILE_SIZE,gameState.player.getWorldY() * Settings.SCALED_TILE_SIZE,0);
         camera.update();
         uiStage.act(delta);
