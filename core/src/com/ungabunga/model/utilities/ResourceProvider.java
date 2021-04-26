@@ -48,7 +48,6 @@ public class ResourceProvider {
     AnimationSet raichuAnimationSet;
     AnimationSet sandshrewAnimationSet;
     AnimationSet sharkAnimationSet;
-    AnimationSet snoruntAnimationSet;
     AnimationSet squirtleAnimationSet;
     AnimationSet tongkolAnimationSet;
     AnimationSet voltorbAnimationSet;
@@ -83,7 +82,6 @@ public class ResourceProvider {
        assetManager.load("pic/engimon_packed/raichu.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/sandshrew.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/shark.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/snorunt.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/squirtle.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/tongkol.atlas", TextureAtlas.class);
        assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
@@ -336,17 +334,6 @@ public class ResourceProvider {
                atlas.findRegion("shark_standing_east")
        );
 
-       atlas = assetManager.get("pic/engimon_packed/snorunt.atlas", TextureAtlas.class);
-       snoruntAnimationSet = new AnimationSet(
-               new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("snorunt_walking_south"), Animation.PlayMode.LOOP_PINGPONG),
-               new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("snorunt_walking_north"),Animation.PlayMode.LOOP_PINGPONG),
-               new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("snorunt_walking_west"),Animation.PlayMode.LOOP_PINGPONG),
-               new Animation<TextureRegion>(ANIM_TIMER/3f, atlas.findRegions("snorunt_walking_east"),Animation.PlayMode.LOOP_PINGPONG),
-               atlas.findRegion("snorunt_standing_south"),
-               atlas.findRegion("snorunt_standing_north"),
-               atlas.findRegion("snorunt_standing_west"),
-               atlas.findRegion("snorunt_standing_east")
-       );
 
        atlas = assetManager.get("pic/engimon_packed/squirtle.atlas", TextureAtlas.class);
        squirtleAnimationSet = new AnimationSet(
@@ -593,12 +580,6 @@ public class ResourceProvider {
             }else {
                 return sharkAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
             }
-        } else if (engimon.getEngimonSpecies().equals("Snorunt")){
-            if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
-                return snoruntAnimationSet.getStanding(engimon.getDirection());
-            }else {
-                return snoruntAnimationSet.getWalking(engimon.getDirection()).getKeyFrame(engimon.getKeyFrame());
-            }
         } else if (engimon.getEngimonSpecies().equals("Squirtle")){
             if (engimon.getState().equals(AVATAR_STATE.STANDING)) {
                 return squirtleAnimationSet.getStanding(engimon.getDirection());
@@ -700,9 +681,6 @@ public class ResourceProvider {
         if (engimon.getSpecies().equals("Shark")) {
             return sharkAnimationSet.getStanding(DIRECTION.DOWN);
         }
-        if (engimon.getSpecies().equals("Snorunt")) {
-            return snoruntAnimationSet.getStanding(DIRECTION.DOWN);
-        }
         if (engimon.getSpecies().equals("Squirtle")) {
             return squirtleAnimationSet.getStanding(DIRECTION.DOWN);
         }
@@ -796,9 +774,6 @@ public class ResourceProvider {
         }
         if (engimon.getEngimonSpecies().equals("Shark")) {
             return atlas.findRegion("Water-ice");
-        }
-        if (engimon.getEngimonSpecies().equals("Snorunt")) {
-            return atlas.findRegion("Ice");
         }
         if (engimon.getEngimonSpecies().equals("Squirtle")) {
             return atlas.findRegion("Water-ground");

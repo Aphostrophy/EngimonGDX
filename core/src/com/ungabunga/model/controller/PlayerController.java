@@ -11,6 +11,7 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.utilities.Pair;
@@ -63,7 +64,12 @@ public class PlayerController extends InputAdapter{
             gameState.player.isRunning = true;
         }
         if(keycode == Keys.R){
-            gameState.removePlayerEngimon();
+            try{
+                gameState.removePlayerEngimon();
+            } catch (FullInventoryException e){
+                gameScreen.dialogueController.startDialogue("Can't remove engimon as your inventory is full");
+            }
+
         }
         if(keycode == Keys.E) {
             if(gameState.player.getActiveEngimon()!=null){
@@ -90,7 +96,14 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.M){
             gameState.player.setPosition(gameState.map.length()/2,gameState.map.get(0).length()/2);
-            gameState.removePlayerEngimon();
+            try{
+                gameState.removePlayerEngimon();
+            } catch(FullInventoryException e){
+                gameScreen.dialogueController.startDialogue("Your engimon got a heart attack and dies");
+                gameState.map.get(gameState.player.getActiveEngimon().getY()).get(gameState.player.getActiveEngimon().getX()).occupier = null;
+                gameState.player.removeActiveEngimon();
+            }
+
         }
         if(keycode == Keys.F5){
             Json json = new Json();

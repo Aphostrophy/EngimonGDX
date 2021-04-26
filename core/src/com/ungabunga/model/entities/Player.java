@@ -2,6 +2,7 @@ package com.ungabunga.model.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.EngimonConflictException;
@@ -48,12 +49,14 @@ public class Player {
         this.animations = animations;
     }
 
-    public void loadSave(Save save){
+    public void loadSave(Save save, GameState gameState){
         this.name = save.playerName;
         this.position.setFirst(save.playerPosX);
         this.position.setSecond(save.playerPosY);
         this.worldX = save.playerPosX;
         this.worldY = save.playerPosY;
+
+        this.activeEngimon = new ActiveEngimon(save.engimon,this, save.engimonX, save.engimonY,gameState,gameState.app.getResourceProvider());
     }
 
     public void setName(String name){

@@ -19,9 +19,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ungabunga.EngimonGame;
 import com.ungabunga.model.GameState;
+import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
+import com.ungabunga.model.exceptions.EmptyNameException;
 import com.ungabunga.model.ui.*;
 import com.ungabunga.model.utilities.Pair;
 import org.lwjgl.Sys;
@@ -37,22 +39,33 @@ import java.util.List;
 public class ChildEngimonScreen implements Screen {
     private EngimonGame app;
 
+    private InputMultiplexer multiplexer;
     private PlayerController controller;
+    private DialogueController dialogueController;
+
     private GameState gameState;
     private final GameScreen gameScreen;
 
     private Stage uiStage;
+    private Stage dialogueStage;
+
+    private DialogueBox dialogueBox;
+    private OptionBox optionBox;
+
     private Bag bag;
 
     private Engimon ParentA;
     private Engimon ParentB;
     private Engimon child;
 
+    private boolean isEnterClicked;
+
     private Table root;
     private Table topBar;
     private Table childBox;
     private Table childWrapper;
     private Table nameWrapper;
+    private Table dialogueTable;
 
     private Table backButton;
     private Table title;
@@ -70,7 +83,16 @@ public class ChildEngimonScreen implements Screen {
         this.ParentA = ParentA;
         this.ParentB = ParentB;
 
+        this.isEnterClicked = false;
+
         initUI();
+
+        multiplexer = new InputMultiplexer();
+        dialogueController = new DialogueController(dialogueBox,optionBox,gameScreen);
+
+        multiplexer.addProcessor(0, controller);
+        multiplexer.addProcessor(1, uiStage);
+        multiplexer.addProcessor(2, dialogueController);
 
 
 
@@ -98,6 +120,8 @@ public class ChildEngimonScreen implements Screen {
     @Override
     public void render(float delta) {
         controller.update(delta);
+        dialogueController.update(delta);
+
         Gdx.gl.glClearColor(0.50f, 0.79f, 0.61f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -105,13 +129,46 @@ public class ChildEngimonScreen implements Screen {
             app.setScreen(gameScreen);
         }
 
+        if (isEnterClicked) {
+            System.out.println("ok");
+            try {
+                if (childName.getText().length() > 0) {
+                    Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
+                    controller.finishBreeding();
+                } else {
+                    throw new EmptyNameException("Name cannot be empty!");
+                }
+                isEnterClicked = false;
+            } catch (Exception e) {
+                dialogueController.startExceptionDialogue(e);
+                isEnterClicked = false;
+            }
+        }
+
         uiStage.act(delta);
         uiStage.draw();
+
+        dialogueStage.act(delta);
+        dialogueStage.draw();
 
     }
 
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
+        dialogueStage = new Stage(new ScreenViewport());
+//        dialogueStage.getViewport().update(Gdx.graphics.getWidth()/2,Gdx.graphics.getWidth()/3);
+
+        dialogueBox =  new DialogueBox(app.getSkin());
+        dialogueBox.setVisible(false);
+
+        optionBox = new OptionBox(app.getSkin());
+        optionBox.setVisible(false);
+
+        dialogueTable = new Table();
+        dialogueTable.add(dialogueBox).bottom().fillX();
+        dialogueTable.add(optionBox).bottom().fillX();
+        dialogueTable.setSize(uiStage.getWidth(),uiStage.getHeight());
+        dialogueStage.addActor(dialogueTable);
 
         root = new Table();
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
@@ -147,26 +204,32 @@ public class ChildEngimonScreen implements Screen {
 
         nameWrapper = new Table();
         nameWrapper.setBackground(app.getSkin().getDrawable("dialoguebox"));
-        nameWrapper.add(childName).width(uiStage.getWidth()/2).height(200).space(11f);
+        nameWrapper.add(childName).width(uiStage.getWidth()/2).height(50).space(11f);
 
         root.add(topBar).top().fillX().row();
         root.add(nameWrapper);
-        root.add(enter);
+        root.add(enterButton);
 
 
-        enter.addListener(new ClickListener() {
+        enterButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-
-                Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
-                controller.finishBreeding();
+                isEnterClicked = true;
+//                try {
+//                    if (childName.getText().length() > 0) {
+//                        Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
+//                        controller.finishBreeding();
+//                    } else {
+//                        throw new EmptyNameException("Name cannot be empty!");
+//                    }
+//                } catch (Exception e) {
+//                    dialogueController.startExceptionDialogue(e);
+//                }
             }
         });
+
+        dialogueStage.addActor(dialogueTable);
         uiStage.addActor(root);
 
-    }
-
-    public GameState getNewGameState() {
-        return gameState;
     }
 
     @Override
@@ -181,7 +244,7 @@ public class ChildEngimonScreen implements Screen {
 
     @Override
     public  void show() {
-        Gdx.input.setInputProcessor(uiStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
 }

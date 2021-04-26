@@ -54,8 +54,8 @@ public class InventoryUI extends Table {
 
                                try {
                                    chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(inventory.getEngimonIndexByID(slot.getId()));
-                               } catch (EngimonNotFound engimonNotFound) {
-                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFound.getMessage());
+                               } catch (EngimonNotFoundException engimonNotFoundException) {
+                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFoundException.getMessage());
                                }
 
                                if(isDelete) {
@@ -72,6 +72,8 @@ public class InventoryUI extends Table {
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
+                                   } catch (FullInventoryException e){
+                                       inventoryScreen.dialogueController.startExceptionDialogue(e);
                                    }
                                }
 
