@@ -117,11 +117,15 @@ public class PlayerController extends InputAdapter{
 
         }
         if(keycode == Keys.F5){
-            Json json = new Json();
-            json.setOutputType(JsonWriter.OutputType.json);
-            FileHandle file = Gdx.files.local("mysave.json");
-            file.writeString(json.toJson(new Save(gameState)), false);
-            gameScreen.dialogueController.startDialogue("Game saved");
+            if(gameScreen.getGameState().player.getActiveEngimon()!=null){
+                Json json = new Json();
+                json.setOutputType(JsonWriter.OutputType.json);
+                FileHandle file = Gdx.files.local("mysave.json");
+                file.writeString(json.toJson(new Save(gameState)), false);
+                gameScreen.dialogueController.startDialogue("Game saved");
+            } else{
+                gameScreen.dialogueController.startDialogue("You need to select a companion to save your game");
+            }
         }
         return false;
     }
