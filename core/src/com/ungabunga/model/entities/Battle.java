@@ -20,13 +20,17 @@ public class Battle {
     private static final int ICE_INDEX = 4;
 
     private float powerPlayer,powerEnemy;
-    private float[][] advantageChart = new float[arrSize][arrSize];
+    public float[][] advantageChart = new float[arrSize][arrSize];
     private  Engimon playerEngimons, enemyEngimons;
+    private boolean unitTest;
 
     public Battle() {
         this.generateChart();
     }
 
+    public Battle(Boolean unitTest) {
+
+    }
     //setter and getter
     public void HitungPower(Engimon engimon1, Engimon engimon2)
     {
