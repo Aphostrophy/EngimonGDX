@@ -57,9 +57,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
         this.animTimer = 0f;
 
-        System.out.println("HMMM");
         System.out.println(PE.getRemainingLives());
-        System.out.println("HAAA");
         System.out.println(this.getRemainingLives());
     }
 
