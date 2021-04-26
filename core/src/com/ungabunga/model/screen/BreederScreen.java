@@ -161,9 +161,6 @@ public class BreederScreen implements Screen {
 
         if (isBreeding) {
             try {
-                breedableEngimon.parentStatus();
-                breedableEngimon.parentInfo();
-                System.out.println(breedableEngimon.isParentFilled());
                 if (breedableEngimon.isParentFilled()) {
                     if (!breedableEngimon.isParentSame()) {
                         if (gameState.getPlayerInventory().getCurrBagCapacity() < CONSTANTS.INVENTORYCAPACITY) {

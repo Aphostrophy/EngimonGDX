@@ -21,7 +21,6 @@ public class BreederSlot extends Stack {
             Image image = new Image(skin, "optionbox");
             defaultBackground.add(image);
         }
-        System.out.println("ok");
         defaultBackground.setName("background");
         this.add(defaultBackground);
         defaultBackground.add(item);
@@ -34,14 +33,7 @@ public class BreederSlot extends Stack {
 
     public BreederSlot(Skin skin) {
         defaultBackground = new Stack();
-//        Image image = new Image(skin, "optionbox");
-//        defaultBackground.add(image);
-//        defaultBackground.setName("background");
         this.add(defaultBackground);
-    }
-
-    public void isSelected() {
-        selected = true;
     }
 
     public int getIdx() {return this.idx;}

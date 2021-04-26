@@ -97,14 +97,6 @@ public class BreederEngimonUI extends Table {
         }
     }
 
-    public int getParentAIdx() {
-        return parentAIdx;
-    }
-
-    public int getParentBIdx() {
-        return parentBIdx;
-    }
-
     public void setParentA(Engimon engimon, int idx) {
         this.isParentA = true;
         this.parentA = engimon;
@@ -125,15 +117,6 @@ public class BreederEngimonUI extends Table {
         return this.parentB;
     }
 
-
-    public Engimon getParentEngimon() {
-        return this.parent;
-    }
-
-
-    public void resetParent() {
-        this.isParent = false;
-    }
 
     public void parentA() {
         this.isParentA = true;
@@ -161,13 +144,4 @@ public class BreederEngimonUI extends Table {
         return this.parentB.getSpecies() != "X";
     }
 
-    public void parentStatus() {
-        System.out.println("parent A = " + isParentA);
-        System.out.println("parent B = " + isParentB);
-    }
-
-    public void parentInfo() {
-        System.out.println("parent A = " + parentA.getName() + ", " + parentAIdx);
-        System.out.println("parent B = " + parentB.getName() + ", " + parentBIdx);
-    }
 }
