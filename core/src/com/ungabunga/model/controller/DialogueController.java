@@ -292,7 +292,7 @@ public class DialogueController extends InputAdapter {
         DialogueNode lebihawal = new DialogueNode("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString(), 0);
         DialogueNode awal = new DialogueNode(AllBattleDialogue,1);
         DialogueNode a = new DialogueNode("Fight?", 2);
-        DialogueNode b = new DialogueNode("Goodluck!", 3);
+        DialogueNode b = new DialogueNode("You escaped!", 3);
         DialogueNode c = new DialogueNode("Okay!", 4);
         lebihawal.makeLinear(awal.getId());
         awal.makeLinear(a.getId());
