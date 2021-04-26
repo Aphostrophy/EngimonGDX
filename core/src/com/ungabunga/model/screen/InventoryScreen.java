@@ -187,7 +187,7 @@ public class InventoryScreen extends AbstractScreen implements Screen {
         backButton.setBackground(getApp().getSkin().getDrawable("optionbox"));
         backButton.add(back).expand().align(Align.center).width(100).height(25).space(11f);
 
-        topBar.add(backButton).align(Align.topLeft);
+        topBar.add(backButton).align(Align.topLeft).pad(30f);
         topBar.add(title);
 
         uiStage.addActor(root);
