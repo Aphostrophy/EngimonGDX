@@ -18,7 +18,7 @@ public class BagTest {
         Inventory skillItemInventory = new Inventory<SkillItem>();
         Inventory engimonInventory = new Inventory<PlayerEngimon>();
         Assertions.assertEquals(1, skillItemInventory.getSkillItemAmount());
-        Assertions.assertEquals(10,engimonInventory.getFilledSlot() );
+        Assertions.assertEquals(10,engimonInventory.getFilledSlot());
     }
     @Test
     public void testInsertToBag(){

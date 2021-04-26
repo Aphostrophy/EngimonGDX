@@ -47,7 +47,7 @@ public class BreederTest {
         int indexSkill = 2;
 
         Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 2, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(indexSkill, engimon.getSkills().get(1));
+        Assertions.assertEquals(indexSkill, engimon.getSkills().get(0));
     }
     @Test
     public void testGetLowSkillIdx(){
