@@ -227,6 +227,10 @@ public class WildEngimon extends Engimon implements LivingEngimon {
         return this.position.getSecond();
     }
 
+    public int getLevel(){
+        return this.level;
+    }
+
     public void killEngimon(){
         gameState.map.get(this.getY()).get(this.getX()).occupier=null;
         reduceLives();

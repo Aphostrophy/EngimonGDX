@@ -98,16 +98,12 @@ public class DialogueController extends InputAdapter {
                     DIRECTION d = this.gameScreen.getGameState().player.getDirection();
                     if(d == DIRECTION.UP) {
                         dir = new Pair<>(0,1);
-                        System.out.println("atas");
                     } else if(d == DIRECTION.DOWN) {
                         dir = new Pair<>(0,-1);
-                        System.out.println("bawah");
                     } else if(d == DIRECTION.RIGHT) {
                         dir = new Pair<>(1,0);
-                        System.out.println("kanan");
                     } else if(d == DIRECTION.LEFT) {
                         dir = new Pair<>(-1,0);
-                        System.out.println("kiri");
                     }
                     if(B.BattleStatusIsWin()) {
                         try {
@@ -117,7 +113,7 @@ public class DialogueController extends InputAdapter {
                             e.printStackTrace();
                             isFullInventory = true;
                         }
-                        AllBattleDialogue += "Engimon anda jago juga !";
+                        AllBattleDialogue += "Good fight you defeated " + this.wildEngimon.getSpecies() + "!";
                         if (PlayerEngimons.getLevel() < 5)
                         {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 10);
@@ -135,25 +131,15 @@ public class DialogueController extends InputAdapter {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
                         }
                         gameScreen.getGameState().getPlayerInventory().showInventory();
-
-
-                        gameScreen.getGameState().getPlayerInventory().showInventory();
-                        if(this.gameScreen.getGameState().player.getActiveEngimon()!=null){
-                            System.out.println("X DIPENCET");
-                            if((this.gameScreen.getGameState().player.getY() + dir.getSecond()) != this.gameScreen.getGameState().player.getActiveEngimon().getY() || (this.gameScreen.getGameState().player.getX() + dir.getFirst()) != this.gameScreen.getGameState().player.getActiveEngimon().getX() ) {
-                                System.out.println("Ya itu engimon musuh");
-                                if(this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier != null){
-                                    WildEngimon occupier = (WildEngimon) this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier;
-                                    occupier.reduceLives();
-                                    System.out.println("mati lo anjeng");
-                                }
-                            }   else {
-                                System.out.println("Itu engimon anda sendiri");
-                            }
-                        }
+                        this.wildEngimon.reduceLives();
                     } else {
-                        AllBattleDialogue += "Engimon anda cupu kali !";
+                        AllBattleDialogue += "You lose !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
+                        AllBattleDialogue += "Remaining engimon lives :" + this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives();
+                        if(this.gameScreen.getGameState().player.getActiveEngimon().isDead()){
+                            AllBattleDialogue += "Your engimon has died";
+                            this.gameScreen.getGameState().disposePlayerEngimon();
+                        }
                     }
                     ArrayList<String> Dialog = new ArrayList<String>();
                     Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
@@ -163,7 +149,6 @@ public class DialogueController extends InputAdapter {
                         Dialog.add("Inventory anda sudah penuh!\n anda tidak dapat menambah engimon dan item baru.");
                         isFullInventory = false;
                     }
-                    System.out.println(AllBattleDialogue);
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
                     System.out.println(wildEngimon.getName());
                     this.wildEngimon.isInBattle = false;
@@ -251,19 +236,24 @@ public class DialogueController extends InputAdapter {
         DialogueNode c = new DialogueNode("To walk, use W A S D." +
                 "\nPress H to restart the tutorial. " +
                 "\nPress B for Battle", 2);
+        DialogueNode c1 = new DialogueNode("Press I to open your inventory"+
+                "\nPress R to remove active engimon"+
+                "\nPress shift to walk faster",3);
         DialogueNode d = new DialogueNode("Press F5 to save the game"+
                 "\nYou can breed and open the inventory by"+
-                "\nclicking the icons at the top left of the screen",3);
-        DialogueNode e = new DialogueNode("Enjoy the game!", 4);
+                "\nclicking the icons at the top left of the screen",4);
+        DialogueNode e = new DialogueNode("Enjoy the game!", 5);
 
         a.makeLinear(b.getId());
-        c.makeLinear(d.getId());
-        b.addChoice("Yes",4);
+        c.makeLinear(c1.getId());
+        c1.makeLinear(d.getId());
+        b.addChoice("Yes",5);
         b.addChoice("No",2);
 
         dialogue.addNode(a);
         dialogue.addNode(b);
         dialogue.addNode(c);
+        dialogue.addNode(c1);
         dialogue.addNode(d);
         dialogue.addNode(e);
 
@@ -285,9 +275,9 @@ public class DialogueController extends InputAdapter {
         this.dialogState = DIALOG_STATE.BATTLE;
         this.wildEngimon = wildEngimon;
         Dialogue dialogue = new Dialogue();
-        DialogueNode awal = new DialogueNode("Hellow nub", 0);
-        DialogueNode a = new DialogueNode("Anda mau gelud?", 1);
-        DialogueNode b = new DialogueNode("Mari kita coba!", 2);
+        DialogueNode awal = new DialogueNode("You encountered a level " + wildEngimon.getLevel() + " " + wildEngimon.getSpecies(), 0);
+        DialogueNode a = new DialogueNode("Fight?", 1);
+        DialogueNode b = new DialogueNode("Goodluck!", 2);
         DialogueNode c = new DialogueNode("Okay!", 3);
         awal.makeLinear(a.getId());
         a.addChoice("Proceed",2);
