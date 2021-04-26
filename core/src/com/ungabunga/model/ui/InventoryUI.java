@@ -6,10 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
-import com.ungabunga.model.exceptions.CellOccupiedException;
-import com.ungabunga.model.exceptions.DuplicateSkillException;
-import com.ungabunga.model.exceptions.FullInventoryException;
-import com.ungabunga.model.exceptions.NotEnoughSkillItemException;
+import com.ungabunga.model.exceptions.*;
 import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
 
@@ -57,8 +54,8 @@ public class InventoryUI extends Table {
 
                                try {
                                    chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(inventory.getEngimonIndexByID(slot.getId()));
-                               } catch (EngimonNotFound engimonNotFound) {
-                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFound.getMessage());
+                               } catch (EngimonNotFoundException engimonNotFoundException) {
+                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFoundException.getMessage());
                                }
 
                                if(isDelete) {
