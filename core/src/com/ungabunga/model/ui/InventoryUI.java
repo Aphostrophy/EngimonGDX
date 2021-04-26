@@ -115,9 +115,7 @@ public class InventoryUI extends Table {
                                            }
                                            else{
                                                inventoryScreen.setOptionBoxVisibility(true);
-                                               inventoryScreen.dialogueController.startSkillChoiceDialogue(gameState.player.getActiveEngimon().getSkills(), chosenSkill);
-                                               inventory.deleteFromInventory(chosenSkillItem);
-                                               slot.decrementItemCount(1);
+                                               inventoryScreen.dialogueController.startSkillChoiceDialogue(gameState.player.getActiveEngimon().getSkills(), chosenSkill, inventory, slot, chosenSkillItem);
                                            }
                                        }
                                    }
