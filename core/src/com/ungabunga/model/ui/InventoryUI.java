@@ -6,9 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
-import com.ungabunga.model.exceptions.CellOccupiedException;
-import com.ungabunga.model.exceptions.DuplicateSkillException;
-import com.ungabunga.model.exceptions.NotEnoughSkillItemException;
+import com.ungabunga.model.exceptions.*;
 import com.ungabunga.model.screen.InventoryScreen;
 import com.ungabunga.model.utilities.ResourceProvider;
 
@@ -37,11 +35,11 @@ public class InventoryUI extends Table {
                if(idx < inventory.getFilledSlot()) {
                    if(itemType == InventoryItem.ItemType.ENGIMON) {
                        item = new InventoryItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(idx)), itemType);
-                       inventorySlot = new InventorySlot(skin, item, 1, count);
+                       inventorySlot = new InventorySlot(skin, item, ((PlayerEngimon) inventory.getItemByIndex(idx)).getLevel(), count, ((PlayerEngimon) inventory.getItemByIndex(idx)).getId(), null);
                    } else {
                        inventory.displaySkillItem();
                        item = new InventoryItem(provider.getSprite((SkillItem) inventory.getItemByIndex(idx)), itemType);
-                       inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count);
+                       inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count, -1, ((SkillItem) inventory.getItemByIndex(idx)).getName());
                    }
 
                    inventorySlot.addListener(new ClickListener() {
@@ -52,10 +50,17 @@ public class InventoryUI extends Table {
 
                            if (slot.getItemType() == InventoryItem.ItemType.ENGIMON) {
 
-                               PlayerEngimon chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(slot.getIdx());
+                               PlayerEngimon chosenEngimon = null;
+
+                               try {
+                                   chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(inventory.getEngimonIndexByID(slot.getId()));
+                               } catch (EngimonNotFoundException engimonNotFoundException) {
+                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFoundException.getMessage());
+                               }
+
                                if(isDelete) {
                                     inventory.deleteFromInventory(chosenEngimon);
-                                    slot.decrementItemCount(1);
+                                    slot.decrementItemCount(chosenEngimon.getLevel());
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " removed");
                                } else if (isDetail) {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
@@ -63,15 +68,24 @@ public class InventoryUI extends Table {
                                    try {
                                        gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
-                                       slot.decrementItemCount(1);
+                                       slot.decrementItemCount(chosenEngimon.getLevel());
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
+                                   } catch (FullInventoryException e){
+                                       inventoryScreen.dialogueController.startExceptionDialogue(e);
                                    }
                                }
 
                            } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
-                               SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
+                               SkillItem chosenSkillItem = null;
+
+                               try {
+                                   chosenSkillItem = (SkillItem) inventory.getItemByIndex(inventory.getSkillItemIndexByName(slot.getSkillItemName()));
+                               } catch (SkillItemNotFound skillItemNotFound) {
+                                   skillItemNotFound.printStackTrace();
+                               }
+
                                if(isDelete) {
                                    if(amount <= slot.getNumItemsVal()) {
                                        try {
@@ -115,7 +129,7 @@ public class InventoryUI extends Table {
                    this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                    idx++;
                } else {
-                   inventorySlot = new InventorySlot(skin, item, 0, count);
+                   inventorySlot = new InventorySlot(skin, item, 0, count, -1, null);
                    this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                }
                count++;

@@ -1,10 +1,6 @@
 package com.ungabunga.model.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,15 +9,8 @@ import com.ungabunga.model.exceptions.NoBreedableEngimon;
 import com.ungabunga.model.utilities.ResourceProvider;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
-import com.ungabunga.model.exceptions.EngimonNotFound;
-import com.ungabunga.model.screen.BreederScreen;
-import com.ungabunga.model.screen.ChildEngimonScreen;
 import com.ungabunga.model.utilities.Pair;
-import com.ungabunga.model.utilities.ResourceProvider;
-import org.lwjgl.Sys;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class BreederEngimonUI extends Table {

@@ -58,6 +58,10 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.animTimer = 0f;
     }
 
+    public ActiveEngimon(GameState gameState, ResourceProvider resourceProvider,Player P,int x,int y){
+
+    }
+
     private void initializeMove(int dx,int dy){
         this.srcX = this.getX();
         this.srcY = this.getY();
