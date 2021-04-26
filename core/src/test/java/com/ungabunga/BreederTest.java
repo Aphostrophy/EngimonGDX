@@ -1,26 +1,17 @@
 package com.ungabunga;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.Bag;
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.Skill;
 import com.ungabunga.model.entities.Breeder;
 import com.ungabunga.model.enums.IElements;
-import com.ungabunga.model.utilities.AnimationSet;
 import com.ungabunga.model.utilities.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ungabunga.Settings.ANIM_TIMER;
 
 public class BreederTest {
 
