@@ -355,7 +355,6 @@ public class Breeder {
             }
             else if (ParentA.getElements().get(0) == IElements.ELECTRIC)
             {
-                System.out.println(ParentB.displayInfoToString());
                 if (ParentB.getElements().size() < 2) {
                     if (ParentB.getElements().get(0) == IElements.WATER)
                     {

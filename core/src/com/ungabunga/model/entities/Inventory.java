@@ -250,7 +250,6 @@ public class Inventory<T> {
         {
             if (((PlayerEngimon) this.items.get(i)).getLevel() >= 4)
             {
-                ((PlayerEngimon) this.items.get(i)).displayInfo();
                 result.add(((PlayerEngimon) this.items.get(i)));
             }
         }
