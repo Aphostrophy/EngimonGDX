@@ -93,7 +93,7 @@ public class BagTest {
             bag.insertToBagForTesting(skillItem, CONSTANTS.INVENTORYCAPACITY-1);
             bag.insertToBag(skillItem);
         } catch (FullInventoryException e){
-
+            e.printStackTrace();
         }
         Assertions.assertEquals(CONSTANTS.INVENTORYCAPACITY,bag.getCurrBagCapacity());
     }
@@ -118,7 +118,7 @@ public class BagTest {
         try {
             bag.insertToBag(playerEngimon);
         } catch (FullInventoryException e) {
-
+            e.printStackTrace();
         }
         Assertions.assertEquals(playerEngimon,bag.getEngimonByIndex(bag.getEngimonIndex(playerEngimon)));
     }
@@ -130,7 +130,7 @@ public class BagTest {
         try {
             bag.insertToBag(skillItem);
         } catch (FullInventoryException e) {
-
+            e.printStackTrace();
         }
         Assertions.assertEquals(skillItem, bag.getSkillItemByIndex(bag.getSkillItemIndex(skillItem)));
     }
@@ -143,7 +143,7 @@ public class BagTest {
             bag.insertToBag(skillItem);
             bag.insertToBag(skillItem2);
         } catch (FullInventoryException e) {
-
+            e.printStackTrace();
         }
         Assertions.assertEquals(skillItem2, bag.getSkillItemByIndex(0));
     }
@@ -184,7 +184,7 @@ public class BagTest {
             bag.insertToBag(engimon2);
             bag.insertToBag(engimon3);
         } catch (FullInventoryException e) {
-
+            e.printStackTrace();
         }
         Assertions.assertEquals(engimon3, bag.getEngimonByIndex(1));
     }
