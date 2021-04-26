@@ -118,6 +118,7 @@ public class PlayerController extends InputAdapter{
             json.setOutputType(JsonWriter.OutputType.json);
             FileHandle file = Gdx.files.local("mysave.json");
             file.writeString(json.toJson(new Save(gameState)), false);
+            gameScreen.dialogueController.startDialogue("Game saved");
         }
         return false;
     }

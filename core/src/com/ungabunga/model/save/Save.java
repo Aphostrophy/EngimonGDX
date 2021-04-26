@@ -26,8 +26,6 @@ public class Save {
 
     public Bag playerInventory;
 
-    public int wildEngimonCount;
-
     public Save(){
 
     }
@@ -44,8 +42,6 @@ public class Save {
                 map[y][x] = gameState.map.get(y).get(x);
             }
         }
-
-        this.wildEngimonCount = gameState.getWildEngimonCount();
 
         this.playerInventory = gameState.getPlayerInventory();
 

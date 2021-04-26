@@ -152,28 +152,28 @@ public class WildEngimon extends Engimon implements LivingEngimon {
             try{
                 moveUp();
             } catch(Exception e){
-                e.printStackTrace();
+
             }
         }
         if(x==1){
             try{
                 moveRight();
             } catch(Exception e){
-                e.printStackTrace();
+
             }
         }
         if(x==2){
             try{
                 moveDown();
             } catch(Exception e){
-                e.printStackTrace();
+
             }
         }
         if(x==3){
             try{
                 moveLeft();
             } catch(Exception e){
-                e.printStackTrace();
+
             }
         }
     }

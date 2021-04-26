@@ -28,9 +28,6 @@ public class InventorySlot extends Stack {
         numItemsLabel.setAlignment(Align.bottomRight);
         numItemsLabel.setColor(1, 0, 0, 1);
         numItemsLabel.setFontScale(2);
-        if(numItemsVal <= 1) {
-            numItemsLabel.setVisible(false);
-        }
 
         defaultBackground.add(image);
 
@@ -43,7 +40,10 @@ public class InventorySlot extends Stack {
         }
 
         this.add(defaultBackground);
-        this.add(numItemsLabel);
+        if(numItemsVal>0){
+            this.add(numItemsLabel);
+        }
+        checkVisibilityOfItemCount();
     }
 
     public void decrementItemCount(int count) {
@@ -56,9 +56,9 @@ public class InventorySlot extends Stack {
     }
 
     private void checkVisibilityOfItemCount(){
-        if( numItemsVal <= 1){
+        if( numItemsVal <= 1 && itemType == InventoryItem.ItemType.SKILLITEM){
             numItemsLabel.setVisible(false);
-        }else{
+        } else {
             numItemsLabel.setVisible(true);
         }
     }

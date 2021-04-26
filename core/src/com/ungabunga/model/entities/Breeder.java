@@ -87,6 +87,14 @@ public class Breeder {
 
         }
 
+        int k = 0;
+
+        while (result.size() < 4 && k < parentB.getSkills().size()) {
+            result.add(parentB.getSkills().get(k));
+            k++;
+        }
+
+
         for (int i = 0; i < parentB.getSkills().size(); i++)
         {
 
