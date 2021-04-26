@@ -72,7 +72,7 @@ public class fileUtil {
 
         for(String line : linesArray){
             String words[] = line.split(",");
-            skills.add(new Skill(words[0],StringToElements(words[1]),Integer.parseInt(words[2]),0));
+            skills.add(new Skill(words[0],StringToElements(words[1]),Integer.parseInt(words[2]),1));
         }
 
         return skills;
