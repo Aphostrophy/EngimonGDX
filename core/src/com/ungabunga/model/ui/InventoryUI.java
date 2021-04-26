@@ -38,11 +38,11 @@ public class InventoryUI extends Table {
                if(idx < inventory.getFilledSlot()) {
                    if(itemType == InventoryItem.ItemType.ENGIMON) {
                        item = new InventoryItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(idx)), itemType);
-                       inventorySlot = new InventorySlot(skin, item, 1, count);
+                       inventorySlot = new InventorySlot(skin, item, ((PlayerEngimon) inventory.getItemByIndex(idx)).getLevel(), count, ((PlayerEngimon) inventory.getItemByIndex(idx)).getId(), null);
                    } else {
                        inventory.displaySkillItem();
                        item = new InventoryItem(provider.getSprite((SkillItem) inventory.getItemByIndex(idx)), itemType);
-                       inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count);
+                       inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count, -1, ((SkillItem) inventory.getItemByIndex(idx)).getName());
                    }
 
                    inventorySlot.addListener(new ClickListener() {
@@ -53,10 +53,17 @@ public class InventoryUI extends Table {
 
                            if (slot.getItemType() == InventoryItem.ItemType.ENGIMON) {
 
-                               PlayerEngimon chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(slot.getIdx());
+                               PlayerEngimon chosenEngimon = null;
+
+                               try {
+                                   chosenEngimon = (PlayerEngimon) inventory.getItemByIndex(inventory.getEngimonIndexByID(slot.getId()));
+                               } catch (EngimonNotFound engimonNotFound) {
+                                   inventoryScreen.dialogueController.startInventoryDialogue(engimonNotFound.getMessage());
+                               }
+
                                if(isDelete) {
                                     inventory.deleteFromInventory(chosenEngimon);
-                                    slot.decrementItemCount(1);
+                                    slot.decrementItemCount(chosenEngimon.getLevel());
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " removed");
                                } else if (isDetail) {
                                     inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.displayInfoToString());
@@ -64,7 +71,7 @@ public class InventoryUI extends Table {
                                    try {
                                        gameState.removePlayerEngimon();
                                        gameState.spawnActiveEngimon(chosenEngimon);
-                                       slot.decrementItemCount(1);
+                                       slot.decrementItemCount(chosenEngimon.getLevel());
                                        inventoryScreen.dialogueController.startInventoryDialogue(chosenEngimon.getName() + " is now the active engimon!!");
                                    } catch (CellOccupiedException e) {
                                        inventoryScreen.dialogueController.startInventoryDialogue(e.getMessage());
@@ -74,7 +81,14 @@ public class InventoryUI extends Table {
                                }
 
                            } else if (slot.getItemType() == InventoryItem.ItemType.SKILLITEM) {
-                               SkillItem chosenSkillItem = (SkillItem) inventory.getItemByIndex(slot.getIdx());
+                               SkillItem chosenSkillItem = null;
+
+                               try {
+                                   chosenSkillItem = (SkillItem) inventory.getItemByIndex(inventory.getSkillItemIndexByName(slot.getSkillItemName()));
+                               } catch (SkillItemNotFound skillItemNotFound) {
+                                   skillItemNotFound.printStackTrace();
+                               }
+
                                if(isDelete) {
                                    if(amount <= slot.getNumItemsVal()) {
                                        try {
@@ -118,7 +132,7 @@ public class InventoryUI extends Table {
                    this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                    idx++;
                } else {
-                   inventorySlot = new InventorySlot(skin, item, 0, count);
+                   inventorySlot = new InventorySlot(skin, item, 0, count, -1, null);
                    this.add(inventorySlot).size(slotWidth, slotHeight).pad(5f);
                }
                count++;
