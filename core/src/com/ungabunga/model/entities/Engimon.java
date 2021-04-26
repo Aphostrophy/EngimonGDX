@@ -218,7 +218,10 @@ public class Engimon {
         str += ("Slogan \t:\t " + this.slogan + "\n");
         str += ("Elements \t:\t "+ "\n");
         for(int i = 0; i < this.elements.size(); i++) {
-            str += ("\t- " + this.elements.get(i) + "\n");
+            str += ("\t- " + this.elements.get(i));
+            if(i != this.elements.size()-1) {
+                str += ("\n");
+            }
         }
         return str;
     }
