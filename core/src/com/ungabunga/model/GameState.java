@@ -264,4 +264,11 @@ public class GameState {
     public void reduceWildEngimon(){
         this.wildEngimonCount--;
     }
+
+    public void disposePlayerEngimon(){
+        if(player.getActiveEngimon()!=null){
+            map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
+            player.removeActiveEngimon();
+        }
+    }
 }

@@ -138,7 +138,6 @@ public class DialogueController extends InputAdapter {
 
                         gameScreen.getGameState().getPlayerInventory().showInventory();
                         if(this.gameScreen.getGameState().player.getActiveEngimon()!=null){
-                            System.out.println("X DIPENCET");
                             if((this.gameScreen.getGameState().player.getY() + dir.getSecond()) != this.gameScreen.getGameState().player.getActiveEngimon().getY() || (this.gameScreen.getGameState().player.getX() + dir.getFirst()) != this.gameScreen.getGameState().player.getActiveEngimon().getX() ) {
                                 System.out.println("Ya itu engimon musuh");
                                 if(this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier != null){
@@ -153,6 +152,9 @@ public class DialogueController extends InputAdapter {
                     } else {
                         AllBattleDialogue += "Engimon anda cupu kali !";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
+                        if(this.gameScreen.getGameState().player.getActiveEngimon().isDead()){
+                            this.gameScreen.getGameState().disposePlayerEngimon();
+                        }
                     }
                     ArrayList<String> Dialog = new ArrayList<String>();
                     Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
