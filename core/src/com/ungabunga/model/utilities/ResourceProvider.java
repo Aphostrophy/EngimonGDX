@@ -63,32 +63,32 @@ public class ResourceProvider {
         assetManager.load("pic/font/small_letters_font.fnt", BitmapFont.class);
 
         assetManager.load("pic/engimon_packed/arcanine.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/blastoise.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/charmander.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/cubchoo.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/cubone.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/diglett.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/dugtrio.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/glaceon.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/glalie.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/growlithe.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/magmar.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/mareep.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/ninetales.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/pikachu.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/poliwag.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/ponyta.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/psyduck.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/raichu.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/sandshrew.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/shark.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/squirtle.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/tongkol.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/vulpix.atlas", TextureAtlas.class);
-       assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/blastoise.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/charmander.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/cubchoo.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/cubone.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/diglett.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/dugtrio.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/glaceon.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/glalie.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/growlithe.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/magmar.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/mareep.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/ninetales.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/pikachu.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/poliwag.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/ponyta.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/psyduck.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/raichu.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/sandshrew.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/shark.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/squirtle.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/tongkol.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/voltorb.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/vulpix.atlas", TextureAtlas.class);
+        assetManager.load("pic/engimon_packed/wartotle.atlas", TextureAtlas.class);
         assetManager.load("pic/engimon_packed/ifrit.atlas", TextureAtlas.class);
-       assetManager.load("pic/packed/skillLogo.atlas", TextureAtlas.class);
+        assetManager.load("pic/packed/skillLogo.atlas", TextureAtlas.class);
         assetManager.load("pic/packed/skillItemLogo.atlas", TextureAtlas.class);
         assetManager.load("pic/packed/aura.atlas", TextureAtlas.class);
 
@@ -429,7 +429,7 @@ public class ResourceProvider {
                 return skill;
             }
         }
-        return null;
+        return this.skills.get(0);
     }
 
     public Engimon randomizeEngimon(CellType biomes,int level){
