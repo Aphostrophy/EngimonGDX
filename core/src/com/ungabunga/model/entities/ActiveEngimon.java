@@ -56,6 +56,11 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
         this.isRunning = false;
 
         this.animTimer = 0f;
+
+        System.out.println("HMMM");
+        System.out.println(PE.getRemainingLives());
+        System.out.println("HAAA");
+        System.out.println(this.getRemainingLives());
     }
 
     private void initializeMove(int dx,int dy){

@@ -1,6 +1,8 @@
 package com.ungabunga.model.screen;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -195,10 +197,11 @@ public class BreederScreen implements Screen {
     private void initUI() {
         uiStage = new Stage(new ScreenViewport());
         dialogueStage = new Stage(new ScreenViewport());
-        dialogueStage.getViewport().update(Gdx.graphics.getWidth()/2,Gdx.graphics.getWidth()/2);;
+        dialogueStage.getViewport().update(Gdx.graphics.getWidth()/2,Gdx.graphics.getWidth()/3);
 
         root = new Table();
         root.setSize(uiStage.getWidth(),uiStage.getHeight());
+        uiStage.addActor(root);
 
         topBar = new Table();
         parentBar = new Table();
@@ -264,8 +267,6 @@ public class BreederScreen implements Screen {
         textFieldStyle.font = app.getSkin().getFont("font");
         textFieldStyle.fontColor = new Color(96f/255f, 96f/255f, 96f/255f, 1f);
 
-        uiStage.addActor(root);
-
         breedableEngimon = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
 
         Label labelA = new Label("Parent A", app.getSkin());
@@ -285,7 +286,7 @@ public class BreederScreen implements Screen {
         root.add(parentBar).top().fillX().row();
         root.add(breederWrapper).top().align(Align.center);
         root.add(parentWrapper);
-        breed.addListener(new ClickListener() {
+        breedButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 startBreeding();
             }
@@ -305,7 +306,7 @@ public class BreederScreen implements Screen {
             }
         });
 
-        back.addListener(new ClickListener() {
+        backButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                controller.finishBreeding();
             }

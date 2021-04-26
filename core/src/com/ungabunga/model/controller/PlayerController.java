@@ -11,6 +11,8 @@ import com.ungabunga.model.GameState;
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.DIRECTION;
+import com.ungabunga.model.exceptions.FeatureNotImplementedException;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.utilities.Pair;
@@ -35,7 +37,11 @@ public class PlayerController extends InputAdapter{
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.I) {
-            isInventoryOpen = !isInventoryOpen;
+            if(gameState.player.getState() != AVATAR_STATE.STANDING){
+                gameScreen.dialogueController.startExceptionDialogue(new FeatureNotImplementedException("You can't open your inventory\nwhile moving"));
+            } else{
+                isInventoryOpen = !isInventoryOpen;
+            }
         }
         if(isInventoryOpen) {
             return false;
@@ -63,7 +69,15 @@ public class PlayerController extends InputAdapter{
             gameState.player.isRunning = true;
         }
         if(keycode == Keys.R){
-            gameState.removePlayerEngimon();
+            if(gameState.player.getActiveEngimon()==null){
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            } else{
+                try{
+                    gameState.removePlayerEngimon();
+                } catch (FullInventoryException e){
+                    gameScreen.dialogueController.startDialogue("Can't remove engimon as your inventory is full");
+                }
+            }
         }
         if(keycode == Keys.E) {
             if(gameState.player.getActiveEngimon()!=null){
@@ -90,7 +104,14 @@ public class PlayerController extends InputAdapter{
         }
         if(keycode == Keys.M){
             gameState.player.setPosition(gameState.map.length()/2,gameState.map.get(0).length()/2);
-            gameState.removePlayerEngimon();
+            try{
+                gameState.removePlayerEngimon();
+            } catch(FullInventoryException e){
+                gameScreen.dialogueController.startDialogue("Your engimon got a heart attack and dies");
+                gameState.map.get(gameState.player.getActiveEngimon().getY()).get(gameState.player.getActiveEngimon().getX()).occupier = null;
+                gameState.player.removeActiveEngimon();
+            }
+
         }
         if(keycode == Keys.F5){
             Json json = new Json();
@@ -98,24 +119,25 @@ public class PlayerController extends InputAdapter{
             FileHandle file = Gdx.files.local("mysave.json");
             file.writeString(json.toJson(new Save(gameState)), false);
         }
-        if(keycode == Keys.F6){
-            FileHandle file = Gdx.files.local("mysave.json");
-            String mysave = file.readString();
-            Json json = new Json();
-            Save save = json.fromJson(Save.class, mysave);
-            gameState.loadSave(save);
-        }
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (Gdx.input.getX() < 220 && Gdx.input.getX() > 130 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
-            isInventoryOpen = !isInventoryOpen;
+            if(gameState.player.getState() != AVATAR_STATE.STANDING){
+                gameScreen.dialogueController.startExceptionDialogue(new FeatureNotImplementedException("You can't open your inventory\nwhile moving"));
+            } else{
+                isInventoryOpen = !isInventoryOpen;
+            }
         }
 
         if (Gdx.input.getX() < 105 && Gdx.input.getX() > 25 && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() + 80 && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() - 85) {
-            isBreederOpen = !isBreederOpen;
+            if(gameState.player.getState() != AVATAR_STATE.STANDING){
+                gameScreen.dialogueController.startExceptionDialogue(new FeatureNotImplementedException("You can't breed your engimon\nwhile moving"));
+            } else{
+                isBreederOpen = !isBreederOpen;
+            }
         }
         return super.touchUp(screenX, screenY, pointer, button);
     }
@@ -187,15 +209,21 @@ public class PlayerController extends InputAdapter{
         if(this.gameState.player.getActiveEngimon()!=null){
             Pair<Integer,Integer> dir = new Pair<>(0,0);
             DIRECTION d = this.gameState.player.getDirection();
+            DIRECTION facingPlayer = d;
             if(d == DIRECTION.UP) {
                 dir = new Pair<>(0,1);
+                facingPlayer = DIRECTION.DOWN;
             } else if(d == DIRECTION.DOWN) {
                 dir = new Pair<>(0,-1);
+                facingPlayer = DIRECTION.UP;
             } else if(d == DIRECTION.RIGHT) {
                 dir = new Pair<>(1,0);
+                facingPlayer = DIRECTION.LEFT;
             } else if(d == DIRECTION.LEFT) {
                 dir = new Pair<>(-1,0);
+                facingPlayer = DIRECTION.RIGHT;
             }
+
             System.out.println("Jessonn");
 
             if((this.gameState.player.getY() + dir.getSecond())
@@ -204,7 +232,10 @@ public class PlayerController extends InputAdapter{
                     != this.gameState.player.getActiveEngimon().getX() ) {
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+
                     if (occupier != null) {
+                        occupier.direction = facingPlayer;
+                        occupier.isInBattle = true;
                         gameScreen.dialogueController.startBattleDialogue(occupier);
                     }
                 }
@@ -214,55 +245,6 @@ public class PlayerController extends InputAdapter{
             }
         }
     }
-
-//    public void battleHandlerA(){
-//        if(this.gameState.player.getActiveEngimon()!=null){
-//            Pair<Integer,Integer> dir = new Pair<>(0,0);
-//            DIRECTION d = this.gameState.player.getDirection();
-//            if(d == DIRECTION.UP) {
-//                dir = new Pair<>(0,1);
-//            } else if(d == DIRECTION.DOWN) {
-//                dir = new Pair<>(0,-1);
-//            } else if(d == DIRECTION.RIGHT) {
-//                dir = new Pair<>(1,0);
-//            } else if(d == DIRECTION.LEFT) {
-//                dir = new Pair<>(-1,0);
-//            }
-//            System.out.println("Jessonn");
-//
-//            if((this.gameState.player.getY() + dir.getSecond())
-//                    != this.gameState.player.getActiveEngimon().getY()
-//                    || (this.gameState.player.getX() + dir.getFirst())
-//                    != this.gameState.player.getActiveEngimon().getX() ) {
-//                if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
-//                    WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
-//                    if (occupier != null) {
-//                        Battle B = new Battle();
-//                        Engimon PlayerEngimons =(Engimon)this.gameState.player.getActiveEngimon();
-//                        Engimon EnemyEngimons = (Engimon)occupier;
-//                        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
-//                        String AllBattleDialogue = B.showTotalPower();
-//                        if(B.BattleStatusIsWin()) {
-//                            AllBattleDialogue += "Engimon anda jago juga !";
-//                        } else {
-//                            AllBattleDialogue += "Engimon anda cupu kali !";
-//                        }
-//                        ArrayList<String> Dialog = new ArrayList<String>();
-//                        Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
-//                        Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
-//                        Dialog.add(AllBattleDialogue);
-//                        System.out.println(AllBattleDialogue);
-//                        gameScreen.dialogueController.startBattleDialogue(Dialog);
-//                        System.out.println(occupier.getName());
-//                    }
-//                    System.out.println("HAHA");
-//                }
-//            }
-//            else {
-//                System.out.println("JESSONNNNNNNNNNNNNNNNNNNNNNNNNNN");
-//            }
-//        }
-//    }
 
     public void instantKill(){
         if(this.gameState.player.getActiveEngimon()!=null){

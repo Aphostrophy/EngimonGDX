@@ -1,14 +1,12 @@
 package com.ungabunga.model.entities;
 
 
-import java.sql.Array;
 import java.util.*;
 
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.exceptions.*;
 import com.ungabunga.model.enums.CONSTANTS;
 
-import javax.lang.model.type.ArrayType;
 import java.lang.Integer;
 
 
@@ -208,7 +206,7 @@ public class Inventory<T> {
         return this.items.get(index);
     }
 
-    public int getEngimonIndexByID(int id) throws EngimonNotFound{
+    public int getEngimonIndexByID(int id) throws EngimonNotFoundException {
         int i;
         for (i = 0; i < this.neff; i++)
         {
@@ -217,7 +215,7 @@ public class Inventory<T> {
                 return i;
             }
         }
-        throw new EngimonNotFound("Engimon Tidak Ditemukan");
+        throw new EngimonNotFoundException("Engimon Tidak Ditemukan");
     }
 
     public int getSkillItemIndexByName(String name) throws SkillItemNotFound{
@@ -245,7 +243,7 @@ public class Inventory<T> {
         return level;
     }
 
-    public ArrayList<PlayerEngimon> getBreedableEngimonList() throws NoBreedableEngimon {
+    public ArrayList<PlayerEngimon> getBreedableEngimonList() {
         int i;
         ArrayList<PlayerEngimon> result = new ArrayList<>();
         for (i = 0; i < this.neff; i++)
@@ -255,9 +253,6 @@ public class Inventory<T> {
                 ((PlayerEngimon) this.items.get(i)).displayInfo();
                 result.add(((PlayerEngimon) this.items.get(i)));
             }
-        }
-        if (result.size() < 1){
-            throw new NoBreedableEngimon("Tidak ada Engimon yang dapat di breed");
         }
         return result;
     }

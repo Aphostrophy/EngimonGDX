@@ -71,9 +71,9 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
         HUDBatch = new SpriteBatch();
 
-        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themesong.ogg"));
+        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themesong2.ogg"));
         themeSong.setLooping(true);
-        themeSong.setVolume(.025f);
+        themeSong.setVolume(.04f);
         themeSong.play();
 
         TextureAtlas atlas = app.getAssetManager().get("pic/packed/avatarTextures.atlas", TextureAtlas.class);
@@ -153,7 +153,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
-        if(gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()<=0){
+        if(gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()<=0 && gameState.player.getActiveEngimon()==null){
             getApp().setScreen(new GameOverScreen(getApp()));
         }
         controller.update(delta);
@@ -199,21 +199,25 @@ public class GameScreen extends AbstractScreen {
 
         for(int y=0;y<gameState.map.length();y++){
             for(int x=0;x<gameState.map.get(y).length();x++){
-                if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())){
+                if(gameState.map.get(y).get(x).occupier != null && (y!=gameState.player.getY() || x!=gameState.player.getX())) {
                     LivingEngimon occupier = gameState.map.get(y).get(x).occupier;
-                        if (gameState.player.getActiveEngimon().getX() == x && gameState.player.getActiveEngimon().getY() == y){
-                            batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.0f);
+                    if (gameState.player.getActiveEngimon()!= null){
+                        if (gameState.player.getActiveEngimon().getX() == x && gameState.player.getActiveEngimon().getY() == y) {
+                            batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.0f);
                         } else {
-                            batch.draw(occupier.getSpriteAura(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.0f,Settings.SCALED_TILE_SIZE *1.5f);
+                            batch.draw(occupier.getSpriteAura(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.5f);
                             Battle b = new Battle();
-                            b.BattleEngimon(gameState.player.getActiveEngimon(),(Engimon) occupier);
-                            if (b.getActiveEngimonPower() > b.getEnemyEngimonPower()){
-                                batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 0.8f,Settings.SCALED_TILE_SIZE *0.8f);
+                            b.BattleEngimon(gameState.player.getActiveEngimon(), (Engimon) occupier);
+                            if (b.getActiveEngimonPower() > b.getEnemyEngimonPower()) {
+                                batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 0.8f, Settings.SCALED_TILE_SIZE * 0.8f);
                             } else {
-                                batch.draw(occupier.getSprite(), occupier.getWorldX()*Settings.SCALED_TILE_SIZE, occupier.getWorldY()*Settings.SCALED_TILE_SIZE,Settings.SCALED_TILE_SIZE * 1.2f,Settings.SCALED_TILE_SIZE *1.2f);
+                                batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.2f, Settings.SCALED_TILE_SIZE * 1.2f);
                             }
-
                         }
+                    } else {
+                        batch.draw(occupier.getSpriteAura(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.5f);
+                        batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.0f);
+                    }
                 }
             }
         }

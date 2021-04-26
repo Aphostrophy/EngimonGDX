@@ -16,6 +16,7 @@ public class Bag {
         this.skillItemInventory.insertToInventory(skillitem,getCurrBagCapacity());
     }
     public void insertToBag(PlayerEngimon engimon) throws FullInventoryException {
+        System.out.println(engimon.getRemainingLives());
         this.engimonInventory.insertToInventory(engimon,getCurrBagCapacity());
     }
     public void deleteFromBag(SkillItem skillitem){
@@ -41,7 +42,7 @@ public class Bag {
         return skillItemInventory.getItemIndex(skillitem);
     }
 
-    public PlayerEngimon getEngimonByID(int ID) throws EngimonNotFound{
+    public PlayerEngimon getEngimonByID(int ID) throws EngimonNotFoundException {
         return engimonInventory.getItemByIndex(engimonInventory.getEngimonIndexByID(ID));
     }
     public SkillItem getSkillItemByName(String name) throws SkillItemNotFound{

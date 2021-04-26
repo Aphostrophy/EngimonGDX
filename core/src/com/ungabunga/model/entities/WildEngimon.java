@@ -21,7 +21,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     int remainingLives;
 
-    DIRECTION direction;
+    public DIRECTION direction;
     AVATAR_STATE state;
 
     private float srcX,srcY;
@@ -30,7 +30,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     private float animTimer;
 
     private float stateTimer;
-
+    public boolean isInBattle = false;
     public WildEngimon(){
 
     }
@@ -225,6 +225,10 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     public int getY(){
         return this.position.getSecond();
+    }
+
+    public int getLevel(){
+        return this.level;
     }
 
     public void killEngimon(){
