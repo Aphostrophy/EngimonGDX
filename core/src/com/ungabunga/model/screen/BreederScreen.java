@@ -270,17 +270,19 @@ public class BreederScreen implements Screen {
 
         breedableEngimon = new BreederEngimonUI(app.getSkin(), gameState, app.getResourceProvider());
 
+        Label labelA = new Label("Parent A", app.getSkin());
+        Label labelB = new Label("Parent B", app.getSkin());
         Label labelC = new Label("Breedable Engimons", app.getSkin());
         breedableEngimon.add(labelC);
 
-        parentABox.setBackground(app.getSkin().getDrawable("optionbox"));
-        parentBBox.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentABox.setBackground(app.getSkin().getDrawable("dialoguebox"));
+        parentBBox.setBackground(app.getSkin().getDrawable("dialoguebox"));
         parentWrapper.add(parentABox).width(200).height(200).row();
         parentWrapper.add(parentBBox).width(200).height(200).row();
 
         breederWrapper.add(breedableEngimon).align(Align.topLeft);
+        breederWrapper.add(parentWrapper).space(11f);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
-        breederWrapper.add(parentWrapper);
 
         root.add(topBar).align(Align.center).height(150).row();
         root.add(breederWrapper).top().align(Align.center);
