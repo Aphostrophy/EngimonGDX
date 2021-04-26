@@ -69,9 +69,7 @@ public class PlayerController extends InputAdapter{
             try{
                 gameState.removePlayerEngimon();
             } catch (FullInventoryException e){
-                gameScreen.dialogueController.startDialogue("Your engimon got a heart attack and dies");
-                gameState.map.get(gameState.player.getActiveEngimon().getY()).get(gameState.player.getActiveEngimon().getX()).occupier = null;
-                gameState.player.removeActiveEngimon();
+                gameScreen.dialogueController.startDialogue("Can't remove engimon as your inventory is full");
             }
 
         }
