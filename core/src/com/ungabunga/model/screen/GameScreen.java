@@ -71,7 +71,7 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
         HUDBatch = new SpriteBatch();
 
-        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themesong.ogg"));
+        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themeflute.ogg"));
         themeSong.setLooping(true);
         themeSong.setVolume(.04f);
         themeSong.play();
