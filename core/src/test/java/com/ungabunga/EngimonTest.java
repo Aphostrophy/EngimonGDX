@@ -1,8 +1,9 @@
 package com.ungabunga;
 
 import com.ungabunga.model.entities.*;
+import com.ungabunga.model.enums.CONSTANTS;
 import com.ungabunga.model.enums.IElements;
-import com.ungabunga.model.utilities.AnimationSet;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.utilities.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -178,8 +179,8 @@ public class EngimonTest {
         skills.add(skill);
 
         Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals("Parent A", engimon.getParentName());
-        Assertions.assertEquals("Species B", engimon.getParentSpecies());
+        Assertions.assertEquals("Parent A", engimon.getParentName().getFirst());
+        Assertions.assertEquals("Species B", engimon.getParentSpecies().getSecond());
     }
 
     @Test
@@ -202,34 +203,23 @@ public class EngimonTest {
         Assertions.assertEquals(6, engimon.getSkills().get(0).getBasePower());
         Assertions.assertEquals(1, engimon.getSkills().get(0).getMasteryLevel());
     }
-
-    @Test
-    public void testGetPosition(AnimationSet animationSet){
-        Player player = new Player("NamaPlayer",animationSet,1,1);
-        Assertions.assertEquals(1, player.getPosition().getFirst());
-        Assertions.assertEquals(1, player.getPosition().getSecond());
-
-
-    }
     @Test
     public void testGetCapacity(){
-        List<Integer> capacity = new ArrayList<>();
-        capacity.add(10);
         Inventory inventory = new Inventory();
-        Assertions.assertEquals(10, inventory.getMaxCapacity());
+        Assertions.assertEquals(CONSTANTS.INVENTORYCAPACITY, inventory.getMaxCapacity());
     }
     @Test
-    public void testGetFileSlot(){
-        List<Integer> neff = new ArrayList<>();
-        neff.add(10);
+    public void testGetFileSlot() throws FullInventoryException {
+        SkillItem skillItem = new SkillItem("NamaSkill",10);
         Inventory inventory = new Inventory();
-        Assertions.assertEquals(10, inventory.getFilledSlot());
+        inventory.insertToInventory(skillItem, inventory.getFilledSlot());
+        Assertions.assertEquals(1, inventory.getFilledSlot());
     }
     @Test
     public void testGetAmount(){
-        List<Integer> amount = new ArrayList<>();
-        amount.add(1);
         SkillItem skillItem = new SkillItem("NamaSkill",10);
+        Assertions.assertEquals(1, skillItem.getAmount());
+        skillItem.setAmount(10);
         Assertions.assertEquals(10, skillItem.getAmount());
     }
     @Test
@@ -237,6 +227,5 @@ public class EngimonTest {
         SkillItem skillItem = new SkillItem("NamaSkill",10);
         Assertions.assertEquals("NamaSkill", skillItem.getName());
     }
-
 }
 
