@@ -38,9 +38,6 @@ public class PlayerEngimon extends Engimon{
         this.parentSpecies = AE.parentSpecies;
         this.exp = AE.exp;
         this.cumulativeExp = AE.cumulativeExp;
-
-        System.out.println("Nyawa engimon: ");
-        System.out.println(this.remainingLives);
     }
 
     public int getRemainingLives() {

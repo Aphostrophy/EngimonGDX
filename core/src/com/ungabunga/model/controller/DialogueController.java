@@ -158,7 +158,6 @@ public class DialogueController extends InputAdapter {
                         isFullInventory = false;
                     }
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
-                    System.out.println(wildEngimon.getName());
                     this.wildEngimon.isInBattle = false;
                 }
                 else if(Obox.getSelected() == 1) {
