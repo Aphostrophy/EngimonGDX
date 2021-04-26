@@ -112,7 +112,7 @@ public class DialogueController extends InputAdapter {
                             e.printStackTrace();
                             isFullInventory = true;
                         }
-                        AllBattleDialogue += "Engimon anda jago juga !";
+                        AllBattleDialogue += "Good fight you defeated " + this.wildEngimon.getSpecies() + "!";
                         if (PlayerEngimons.getLevel() < 5)
                         {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 10);
@@ -132,7 +132,7 @@ public class DialogueController extends InputAdapter {
                         gameScreen.getGameState().getPlayerInventory().showInventory();
                         this.wildEngimon.reduceLives();
                     } else {
-                        AllBattleDialogue += "Engimon anda kalah !\n";
+                        AllBattleDialogue += "You lose !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
                         AllBattleDialogue += "Remaining engimon lives :" + this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives();
                         if(this.gameScreen.getGameState().player.getActiveEngimon().isDead()){
@@ -270,9 +270,9 @@ public class DialogueController extends InputAdapter {
         this.dialogState = DIALOG_STATE.BATTLE;
         this.wildEngimon = wildEngimon;
         Dialogue dialogue = new Dialogue();
-        DialogueNode awal = new DialogueNode("Hellow nub", 0);
-        DialogueNode a = new DialogueNode("Anda mau gelud?", 1);
-        DialogueNode b = new DialogueNode("Mari kita coba!", 2);
+        DialogueNode awal = new DialogueNode("You encountered a level " + wildEngimon.getLevel() + " " + wildEngimon.getSpecies(), 0);
+        DialogueNode a = new DialogueNode("Fight?", 1);
+        DialogueNode b = new DialogueNode("Goodluck!", 2);
         DialogueNode c = new DialogueNode("Okay!", 3);
         awal.makeLinear(a.getId());
         a.addChoice("Proceed",2);
