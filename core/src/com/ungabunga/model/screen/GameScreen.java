@@ -203,12 +203,17 @@ public class GameScreen extends AbstractScreen {
                         if (gameState.player.getActiveEngimon().getX() == x && gameState.player.getActiveEngimon().getY() == y) {
                             batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.0f);
                         } else {
-                            batch.draw(occupier.getSpriteAura(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.5f);
-                            Battle b = new Battle();
-                            b.BattleEngimon(gameState.player.getActiveEngimon(), (Engimon) occupier);
-                            if (b.getActiveEngimonPower() > b.getEnemyEngimonPower()) {
-                                batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 0.8f, Settings.SCALED_TILE_SIZE * 0.8f);
-                            } else {
+                            try{
+                                batch.draw(occupier.getSpriteAura(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.0f, Settings.SCALED_TILE_SIZE * 1.5f);
+                                Battle b = new Battle();
+                                b.BattleEngimon(gameState.player.getActiveEngimon(), (Engimon) occupier);
+                                if (b.getActiveEngimonPower() > b.getEnemyEngimonPower()) {
+                                    batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 0.8f, Settings.SCALED_TILE_SIZE * 0.8f);
+                                } else {
+                                    batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.2f, Settings.SCALED_TILE_SIZE * 1.2f);
+                                }
+                            } catch(RuntimeException e){
+                                e.printStackTrace();
                                 batch.draw(occupier.getSprite(), occupier.getWorldX() * Settings.SCALED_TILE_SIZE, occupier.getWorldY() * Settings.SCALED_TILE_SIZE, Settings.SCALED_TILE_SIZE * 1.2f, Settings.SCALED_TILE_SIZE * 1.2f);
                             }
                         }
