@@ -25,7 +25,7 @@ shark_standing_north
   orig: 29, 22
   offset: 0, 0
   index: -1
-shark_walking_noth
+shark_walking_north
   rotate: false
   xy: 64, 5
   size: 29, 22
@@ -67,7 +67,7 @@ shark_walking_east
   orig: 22, 25
   offset: 0, 0
   index: 1
-shark_walking_noth
+shark_walking_north
   rotate: false
   xy: 95, 5
   size: 29, 22
