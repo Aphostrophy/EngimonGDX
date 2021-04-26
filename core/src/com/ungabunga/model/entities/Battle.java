@@ -51,7 +51,7 @@ public class Battle {
         return str;
     }
 
-    public float getActiveEngimonPower(Engimon engimon1, Engimon engimon2) {
+    public float getActiveEngimonPower() {
         return this.powerPlayer;
     }
 
