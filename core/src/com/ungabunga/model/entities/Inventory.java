@@ -243,7 +243,7 @@ public class Inventory<T> {
         return level;
     }
 
-    public ArrayList<PlayerEngimon> getBreedableEngimonList() throws NoBreedableEngimon {
+    public ArrayList<PlayerEngimon> getBreedableEngimonList() {
         int i;
         ArrayList<PlayerEngimon> result = new ArrayList<>();
         for (i = 0; i < this.neff; i++)
@@ -253,9 +253,6 @@ public class Inventory<T> {
                 ((PlayerEngimon) this.items.get(i)).displayInfo();
                 result.add(((PlayerEngimon) this.items.get(i)));
             }
-        }
-        if (result.size() < 1){
-            throw new NoBreedableEngimon("Tidak ada Engimon yang dapat di breed");
         }
         return result;
     }

@@ -29,6 +29,8 @@ public class BreederEngimonUI extends Table {
     private int parentAIdx;
     private int parentBIdx;
 
+    private ArrayList<PlayerEngimon> breedables;
+
     private boolean isParent;
 
     public BreederEngimonUI(Skin skin, GameState gameState, ResourceProvider provider){
@@ -54,33 +56,17 @@ public class BreederEngimonUI extends Table {
         this.parentA = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
         this.parentB = new Engimon("X", "X", "X",100, elmt, skills, parents, parents);
 
-//        for (int i = 0; i < inventory.getFilledSlot(); i++) {
-//            temp = inventory.getItemByIndex(i);
-//            breedableEngimon.add(temp);
-//            System.out.println(i);
-//        }
-
         int k = 0;
 
-        ArrayList<PlayerEngimon> ivt = new ArrayList<>();
-        try {
-            ivt = gameState.getPlayerInventory().getEngimonInventory().getBreedableEngimonList();
-        } catch (NoBreedableEngimon e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < ivt.size(); i++) {
-            ivt.get(i).displayInfo();
-        }
-
+        breedables = gameState.getPlayerInventory().getEngimonInventory().getBreedableEngimonList();
 
 
         for(int i = 1; i <= ROW; i++) {
             for(int j = 1; j <= COLUMN; j++) {
-                if (k < ivt.size()) {
+                if (k < breedables.size()) {
                     BreederItem item = new BreederItem();
 
-                    PlayerEngimon engimon = ivt.get(k);
+                    PlayerEngimon engimon = breedables.get(k);
                     item = new BreederItem(provider.getSprite(engimon), (Engimon) gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(k));
 
                     BreederSlot breederSlot = new BreederSlot(skin, item, k);
@@ -90,13 +76,13 @@ public class BreederEngimonUI extends Table {
                             if (isParentA) {
                                 super.clicked(event, x, y);
                                 BreederSlot slot = (BreederSlot) event.getListenerActor();
-                                setParentA(gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(slot.getIdx()), slot.getIdx());
+                                setParentA(breedables.get(slot.getIdx()), slot.getIdx());
                             }
 
                             if (isParentB) {
                                 super.clicked(event, x, y);
                                 BreederSlot slot = (BreederSlot) event.getListenerActor();
-                                setParentB(gameState.getPlayerInventory().getEngimonInventory().getItemByIndex(slot.getIdx()), slot.getIdx());
+                                setParentB(breedables.get(slot.getIdx()), slot.getIdx());
                             }
 
                         }
