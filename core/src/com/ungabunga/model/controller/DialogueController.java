@@ -139,7 +139,6 @@ public class DialogueController extends InputAdapter {
                         AllBattleDialogue += "Engimon anda kalah !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
                         AllBattleDialogue += "Remaining engimon lives :" + this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives();
-                        System.out.println(this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives());
                         if(this.gameScreen.getGameState().player.getActiveEngimon().isDead()){
                             AllBattleDialogue += "Your engimon has died";
                             this.gameScreen.getGameState().disposePlayerEngimon();
@@ -153,7 +152,6 @@ public class DialogueController extends InputAdapter {
                         Dialog.add("Inventory anda sudah penuh!\n anda tidak dapat menambah engimon dan item baru.");
                         isFullInventory = false;
                     }
-                    System.out.println(AllBattleDialogue);
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
                     System.out.println(wildEngimon.getName());
                 }
