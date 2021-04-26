@@ -93,7 +93,9 @@ public class Breeder {
             idx = getSameSkillIdx(result, parentB.getSkills().get(i));
             if (idx != -1)
             {
-                result.get(idx).addMasteryExp(51);
+                if (result.get(idx).getMasteryLevel() < 3) {
+                    result.get(idx).addMasteryExp(51);
+                }
             }
             else
             {
