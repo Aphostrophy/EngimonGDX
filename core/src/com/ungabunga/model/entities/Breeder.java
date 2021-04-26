@@ -94,7 +94,7 @@ public class Breeder {
             if (idx != -1)
             {
                 if (result.get(idx).getMasteryLevel() < 3) {
-                    result.get(idx).addMasteryExp(51);
+                    result.get(idx).addMasteryExp(101);
                 }
             }
             else
