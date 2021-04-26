@@ -15,8 +15,6 @@ import com.ungabunga.model.save.Save;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.utilities.Pair;
 
-import java.util.ArrayList;
-
 public class PlayerController extends InputAdapter{
     private GameScreen gameScreen;
     private GameState gameState;
@@ -68,7 +66,11 @@ public class PlayerController extends InputAdapter{
             gameState.removePlayerEngimon();
         }
         if(keycode == Keys.E) {
-            isDetailOpen = !isDetailOpen;
+            if(gameState.player.getActiveEngimon()!=null){
+                isDetailOpen = !isDetailOpen;
+            } else{
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            }
         }
         if (keycode == Keys.B) {
            battleHandler();
