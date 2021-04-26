@@ -209,15 +209,21 @@ public class PlayerController extends InputAdapter{
         if(this.gameState.player.getActiveEngimon()!=null){
             Pair<Integer,Integer> dir = new Pair<>(0,0);
             DIRECTION d = this.gameState.player.getDirection();
+            DIRECTION facingPlayer = d;
             if(d == DIRECTION.UP) {
                 dir = new Pair<>(0,1);
+                facingPlayer = DIRECTION.DOWN;
             } else if(d == DIRECTION.DOWN) {
                 dir = new Pair<>(0,-1);
+                facingPlayer = DIRECTION.UP;
             } else if(d == DIRECTION.RIGHT) {
                 dir = new Pair<>(1,0);
+                facingPlayer = DIRECTION.LEFT;
             } else if(d == DIRECTION.LEFT) {
                 dir = new Pair<>(-1,0);
+                facingPlayer = DIRECTION.RIGHT;
             }
+
             System.out.println("Jessonn");
 
             if((this.gameState.player.getY() + dir.getSecond())
@@ -226,7 +232,9 @@ public class PlayerController extends InputAdapter{
                     != this.gameState.player.getActiveEngimon().getX() ) {
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
+
                     if (occupier != null) {
+                        occupier.direction = facingPlayer;
                         occupier.isInBattle = true;
                         gameScreen.dialogueController.startBattleDialogue(occupier);
                     }

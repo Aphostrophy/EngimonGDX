@@ -21,7 +21,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
     int remainingLives;
 
-    DIRECTION direction;
+    public DIRECTION direction;
     AVATAR_STATE state;
 
     private float srcX,srcY;
