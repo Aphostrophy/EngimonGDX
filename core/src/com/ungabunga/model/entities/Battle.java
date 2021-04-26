@@ -41,7 +41,7 @@ public class Battle {
         }
         for (int i = 0; i < engimon2.getSkills().size(); i++)
         {
-            sumPowerEnemy += engimon2.getSkills().get(i).getBasePower() * engimon1.getSkills().get(i).getMasteryLevel();
+            sumPowerEnemy += engimon2.getSkills().get(i).getBasePower() * engimon2.getSkills().get(i).getMasteryLevel();
         }
         Pair<Float, Float> PairElementAdvantage = new Pair<Float, Float>(this.elementAdvantage());
         this.powerPlayer = (engimon1.getLevel() * PairElementAdvantage.getFirst()) + sumPowerPlayer;
