@@ -211,6 +211,36 @@
    <property name="Biome" value="Tundra"/>
   </properties>
  </tile>
+ <tile id="420">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="421">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="428">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="429">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="436">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="437">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="499">
   <properties>
    <property name="Blocked" type="bool" value="true"/>
@@ -516,12 +546,412 @@
    <property name="Blocked" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="1096">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1097">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1098">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1099">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1100">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1104">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1105">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1106">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1107">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1108">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1112">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1113">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1114">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1115">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1116">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1120">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1121">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1122">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1123">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1128">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1129">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1130">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1131">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1136">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1137">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1138">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1139">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="1140">
   <properties>
    <property name="Blocked" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="1144">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1145">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1146">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1147">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="1148">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1149">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1150">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1151">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1157">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1158">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1159">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1165">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1166">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1167">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1173">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1174">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1175">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1176">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1177">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1178">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1179">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1180">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1181">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1182">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1183">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1184">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1185">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1186">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1187">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1188">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1189">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1190">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1191">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1192">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1193">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1194">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1195">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1196">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1197">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1198">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1199">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1315">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1316">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1317">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1318">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1323">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1324">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1325">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1326">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1327">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1331">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1332">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1333">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1335">
   <properties>
    <property name="Blocked" type="bool" value="true"/>
   </properties>
