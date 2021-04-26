@@ -19,8 +19,6 @@ import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.dialogue.Dialogue;
-import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.Battle;
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.LivingEngimon;

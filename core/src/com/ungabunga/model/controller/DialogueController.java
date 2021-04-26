@@ -131,6 +131,9 @@ public class DialogueController extends InputAdapter {
                         {
                             PlayerEngimons.addExp(25);
                         }
+                        for(int i = 0; i < PlayerEngimons.getSkills().size(); i++) {
+                            PlayerEngimons.getSkills().get(i).addMasteryExp(25);
+                        }
                         PlayerEngimons.displayInfo();
                         this.wildEngimon.reduceLives();
                         if(PlayerEngimons.isMaxLevel()){

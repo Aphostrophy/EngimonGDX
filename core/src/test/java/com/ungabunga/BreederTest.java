@@ -97,12 +97,18 @@ public class BreederTest {
         Skill skill = new Skill("Capacitor", skillElements, 6, 1);
         skills.add(skill);
 
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals("Parent A", engimon.getParentName().getFirst());
-        Assertions.assertEquals("Parent B", engimon.getParentName().getSecond());
-        Assertions.assertEquals("Species A", engimon.getParentSpecies().getFirst());
-        Assertions.assertEquals("Species B", engimon.getParentSpecies().getSecond());
+
+        Engimon a = new Engimon("Pokemon A", "A", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
+        Engimon b = new Engimon("Pokemon B", "B", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
+
+        ArrayList<Pair<String,String>> result = Breeder.getParentDetails(a, b);
+
+        Assertions.assertEquals(result.get(0).getFirst(), a.getName());
+        Assertions.assertEquals(result.get(0).getSecond(), b.getName());
+        Assertions.assertEquals(result.get(1).getFirst(), a.getSpecies());
+        Assertions.assertEquals(result.get(1).getSecond(), b.getSpecies());
     }
+    
     @Test
     public void testGetChildSkill() {
         List<IElements> engimonElements = new ArrayList<>();
