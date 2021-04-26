@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.utilities.Pair;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -92,7 +93,9 @@ public class Breeder {
             idx = getSameSkillIdx(result, parentB.getSkills().get(i));
             if (idx != -1)
             {
-                result.get(idx).addMasteryExp(51);
+                if (result.get(idx).getMasteryLevel() < 3) {
+                    result.get(idx).addMasteryExp(101);
+                }
             }
             else
             {
@@ -164,24 +167,31 @@ public class Breeder {
                 } else {
                     if (ParentB.getElements().get(0) == IElements.WATER) {
                         if (ParentB.getElements().get(1) == IElements.GROUND) {
-                            // Ground + WaterGround = Ground + Ground
+                            // Ground + WaterGround = Ground + Ground = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.GROUND);
-                            Engimon newParentB = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         } else {
-                            // Ground + WaterIce = Ground + Water
+                            // Ground + WaterIce = Ground + Water = WaterGround
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.WATER);
-                            Engimon newParentB = new Engimon(ParentB.getName(), "Wartotle", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         }
                     } else {
-                        // Ground + FireElectric = Ground + Fire
+                        // Ground + FireElectric = Ground + Fire = Ground
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                         ArrayList<IElements> elmt = new ArrayList<>();
-                        elmt.add(IElements.FIRE);
-                        Engimon newParentB = new Engimon(ParentB.getName(), "Ifrit", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                        return Breed(ParentA, newParentB, name, bag);
+                        elmt.add(IElements.GROUND);
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
                     }
                 }
 
@@ -232,24 +242,30 @@ public class Breeder {
                 } else {
                     if (ParentB.getElements().get(0) == IElements.WATER) {
                         if (ParentB.getElements().get(1) == IElements.GROUND) {
-                            // Fire + WaterGround = Fire + Ground
+                            // Fire + WaterGround = Fire + Ground = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.GROUND);
-                            Engimon newParentB = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            Engimon child = new Engimon(name, "Diglett", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         } else {
-                            // Fire + WaterIce = Fire + Water
+                            // Fire + WaterIce = Fire + Water = Water
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.WATER);
-                            Engimon newParentB = new Engimon(ParentB.getName(), "Wartotle", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            Engimon child = new Engimon(name, "Wartotle", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         }
                     } else {
                         // Fire + FireElectric = Fire + Fire
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.FIRE);
-                        Engimon newParentB = new Engimon(ParentB.getName(), "Ifrit", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                        return Breed(ParentA, newParentB, name, bag);
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
                     }
                 }
             }
@@ -301,30 +317,38 @@ public class Breeder {
                 } else {
                     if (ParentB.getElements().get(0) == IElements.WATER) {
                         if (ParentB.getElements().get(1) == IElements.GROUND) {
-                            // Water + WaterGround = Water + Ground
-                            ArrayList<IElements> elmt = new ArrayList<>();
-                            elmt.add(IElements.GROUND);
-                            Engimon newParentB = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
-                        } else {
-                            // Water + WaterIce = Water + Water
+                            // Water + WaterGround = Water + Ground = WaterGround
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.WATER);
-                            Engimon newParentB = new Engimon(ParentB.getName(), "Wartotle", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        } else {
+                            // Water + WaterIce = Water + Water = Water
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         }
                     } else {
-                        // Water + FireElectric = Water + Fire
+                        // Water + FireElectric = Water + Fire = Water
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                         ArrayList<IElements> elmt = new ArrayList<>();
-                        elmt.add(IElements.FIRE);
-                        Engimon newParentB = new Engimon(ParentB.getName(), "Ifrit", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                        return Breed(ParentA, newParentB, name, bag);
+                        elmt.add(IElements.WATER);
+                        Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
                     }
                 }
             }
             else if (ParentA.getElements().get(0) == IElements.ELECTRIC)
             {
-                if (ParentB.getElements().size() == 1) {
+                System.out.println(ParentB.displayInfoToString());
+                if (ParentB.getElements().size() < 2) {
                     if (ParentB.getElements().get(0) == IElements.WATER)
                     {
                         // Electric + Water = Water
@@ -368,25 +392,32 @@ public class Breeder {
                     }
                 } else {
                     if (ParentB.getElements().get(0) == IElements.WATER) {
-                        if (ParentB.getElements().get(0) ==  IElements.GROUND) {
-                            // Electric + WaterGround = Electric + Ground
+                        if (ParentB.getElements().get(1) ==  IElements.GROUND) {
+                            // Electric + Ground = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.GROUND);
-                            Engimon newParentB = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            Engimon child = new Engimon(name, "Diglett", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         } else {
-                            // Electric + WaterIce = Electric + Water
+                            // Electric + WaterIce = Electric + Water = Electric
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
-                            elmt.add(IElements.WATER);
-                            Engimon newParentB = new Engimon(ParentB.getName(), "Wartotle", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            elmt.add(IElements.ELECTRIC);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         }
                     } else {
-                        // Electric + FireElectric = Fire
+                        // Electric + FireElectric = FireElectric
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.FIRE);
-                        Engimon newParentB = new Engimon(ParentB.getName(), "Ifrit", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                        return Breed(ParentA, newParentB, name, bag);
+                        elmt.add(IElements.ELECTRIC);
+                        Engimon child = new Engimon(name, "Charmander", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
                     }
                 }
 
@@ -437,24 +468,28 @@ public class Breeder {
                 } else {
                     if (ParentB.getElements().get(0) == IElements.WATER) {
                         if (ParentB.getElements().get(0) == IElements.GROUND) {
-                            // Ice + WaterGround = Ice + Ground
+                            // Ice + WaterGround = Ice + Ground = Ice
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                             ArrayList<IElements> elmt = new ArrayList<>();
-                            elmt.add(IElements.GROUND);
-                            Engimon newParentB = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                            return Breed(ParentA, newParentB, name, bag);
+                            elmt.add(IElements.ICE);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
                         } else {
-                            // Ice + WaterIce = Ice + Water
+                            // Ice + WaterIce = Ice + Water = WaterIce
                             ArrayList<IElements> elmt = new ArrayList<>();
                             elmt.add(IElements.WATER);
-                            Engimon newParentB = new Engimon(ParentB.getName(), "Wartotle", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
+                            Engimon newParentB = new Engimon(ParentB.getName(), ParentB.getSpecies(), ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
                             return Breed(ParentA, newParentB, name, bag);
                         }
                     } else {
-                        // Ice + FireElectric = Ice + Fire
+                        // Ice + FireElectric = Ice + Fire = Fire
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
                         ArrayList<IElements> elmt = new ArrayList<>();
                         elmt.add(IElements.FIRE);
-                        Engimon newParentB = new Engimon(ParentB.getName(), "Ifrit", ParentB.getSlogan(), ParentB.getLevel(), elmt, ParentB.getSkills(), ParentB.getParentName(), ParentB.getParentSpecies());
-                        return Breed(ParentA, newParentB, name, bag);
+                        Engimon child = new Engimon(name, "Ifrit", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
                     }
                 }
 
@@ -462,24 +497,213 @@ public class Breeder {
         } else {
             if (ParentA.getElements().get(0) == IElements.WATER) {
                 if (ParentA.getElements().get(1) == IElements.GROUND) {
-                    // WaterGround engimon jadi Ground engimon
-                    ArrayList<IElements> elmt = new ArrayList<>();
-                    elmt.add(IElements.GROUND);
-                    Engimon newParentA = new Engimon(ParentA.getName(), "Diglett", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                    return Breed(newParentA, ParentB, name, bag);
+                    if (ParentB.getElements().size() == 1) {
+                        if (ParentB.getElements().get(0) == IElements.WATER) {
+                            // Ground + Water = WaterGround
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        } else if (ParentB.getElements().get(0) == IElements.ICE) {
+                            // Ground + Ice = Ice
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.ICE);
+                            Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        } else {
+                            // Ground + Fire = Ground
+                            // Ground + Electric = Ground
+                            // Ground + Ground = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Diglett", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                    } else {
+                        if (ParentB.getElements().get(0) == IElements.WATER) {
+                            if (ParentB.getElements().get(1) == IElements.GROUND) {
+                                // Ground + WaterGround = Ground + Ground = Ground
+                                ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                                ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                                ArrayList<IElements> elmt = new ArrayList<>();
+                                elmt.add(IElements.GROUND);
+                                Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                                return BreedFinishing(ParentA, ParentB, child, bag);
+                            } else {
+                                // Ground + WaterIce = Ground + Water = WaterGround
+                                ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                                ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                                ArrayList<IElements> elmt = new ArrayList<>();
+                                elmt.add(IElements.WATER);
+                                elmt.add(IElements.GROUND);
+                                Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                                return BreedFinishing(ParentA, ParentB, child, bag);
+                            }
+                        } else {
+                            // Ground + FireElectric = Ground + Fire = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                    }
                 } else {
                     // WaterIce engimon jadi Water engimon
-                    ArrayList<IElements> elmt = new ArrayList<>();
-                    elmt.add(IElements.WATER);
-                    Engimon newParentA = new Engimon(ParentA.getName(), "Wartotle", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                    return Breed(newParentA, ParentB, name, bag);
+                    if (ParentB.getElements().size() == 1) {
+                        if (ParentB.getElements().get(0) == IElements.GROUND)
+                        {
+                            // Water + Ground = WaterGround
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Psyduck", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                        else if (ParentB.getElements().get(0) == IElements.ICE)
+                        {
+                            // Water + Ice = WaterIce
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            elmt.add(IElements.ICE);
+                            Engimon child = new Engimon(name, "Poliwag", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                        else if (ParentB.getElements().get(0) == IElements.ELECTRIC)
+                        {
+                            // Water + Electric = Electric
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.ELECTRIC);
+                            Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                        else {
+                            // Water + Fire = Water
+                            // Water + Water = Water
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            Engimon child = new Engimon(name, ParentA.getSpecies(), ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                    } else {
+                        if (ParentB.getElements().get(0) == IElements.WATER) {
+                            if (ParentB.getElements().get(1) == IElements.GROUND) {
+                                // Water + WaterGround = Water + Ground = WaterGround
+                                ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                                ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                                ArrayList<IElements> elmt = new ArrayList<>();
+                                elmt.add(IElements.WATER);
+                                elmt.add(IElements.GROUND);
+                                Engimon child = new Engimon(name, "Psyduck", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                                return BreedFinishing(ParentA, ParentB, child, bag);
+                            } else {
+                                // Water + WaterIce = Water + Water = Water
+                                ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                                ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                                ArrayList<IElements> elmt = new ArrayList<>();
+                                elmt.add(IElements.WATER);
+                                Engimon child = new Engimon(name, "Wartotle", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                                return BreedFinishing(ParentA, ParentB, child, bag);
+                            }
+                        } else {
+                            // Water + FireElectric = Water + Fire = Water
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            Engimon child = new Engimon(name, "Wartotle", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                    }
                 }
             } else {
                 // FireElectric engimon jadi Fire engimon
-                ArrayList<IElements> elmt = new ArrayList<>();
-                elmt.add(IElements.FIRE);
-                Engimon newParentA = new Engimon(ParentA.getName(), "Ifrit", ParentA.getSlogan(), ParentA.getLevel(), elmt, ParentA.getSkills(), ParentA.getParentName(), ParentA.getParentSpecies());
-                return Breed(newParentA, ParentB, name, bag);
+                if (ParentB.getElements().size() == 1) {
+                    if (ParentB.getElements().get(0) == IElements.ELECTRIC)
+                    {
+                        // Fire + Electric = FireElectric
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                        ArrayList<IElements> elmt = new ArrayList<>();
+                        elmt.add(IElements.FIRE);
+                        elmt.add(IElements.ELECTRIC);
+                        Engimon child = new Engimon(name, "Charmander", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
+                    }
+                    else if (ParentB.getElements().get(0) == IElements.WATER)
+                    {
+                        // Fire + Water = Water
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                        ArrayList<IElements> elmt = new ArrayList<>();
+                        elmt.add(IElements.WATER);
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
+                    } else if (ParentB.getElements().get(0) == IElements.GROUND)
+                    {
+                        // Fire + Ground = Ground
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                        ArrayList<IElements> elmt = new ArrayList<>();
+                        elmt.add(IElements.GROUND);
+                        Engimon child = new Engimon(name, ParentB.getSpecies(), ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
+                    } else
+                    {
+                        // Fire + Ice = Fire
+                        // Fire + Fire = Fire
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                        ArrayList<IElements> elmt = new ArrayList<>();
+                        elmt.add(IElements.FIRE);
+                        Engimon child = new Engimon(name, "Ifrit", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
+                    }
+                } else {
+                    if (ParentB.getElements().get(0) == IElements.WATER) {
+                        if (ParentB.getElements().get(1) == IElements.GROUND) {
+                            // Fire + WaterGround = Fire + Ground = Ground
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.GROUND);
+                            Engimon child = new Engimon(name, "Diglett", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        } else {
+                            // Fire + WaterIce = Fire + Water = Water
+                            ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                            ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                            ArrayList<IElements> elmt = new ArrayList<>();
+                            elmt.add(IElements.WATER);
+                            Engimon child = new Engimon(name, "Wartotle", ParentB.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                            return BreedFinishing(ParentA, ParentB, child, bag);
+                        }
+                    } else {
+                        // Fire + FireElectric = Fire + Fire
+                        ArrayList<Skill> skill = getChildSkill(ParentA, ParentB);
+                        ArrayList<Pair<String,String>> parentDetails = getParentDetails(ParentA,ParentB);
+                        ArrayList<IElements> elmt = new ArrayList<>();
+                        elmt.add(IElements.FIRE);
+                        Engimon child = new Engimon(name, "Ifrit", ParentA.getSlogan(), 1, elmt, skill, parentDetails.get(0), parentDetails.get(1));
+                        return BreedFinishing(ParentA, ParentB, child, bag);
+                    }
+                }
             }
         }
 

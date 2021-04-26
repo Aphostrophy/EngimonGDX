@@ -254,14 +254,15 @@ public class BreederScreen implements Screen {
         parentB.getLabel().setFontScale(2, 2);
 
         parentAButton.setBackground(app.getSkin().getDrawable("optionbox"));
-        parentAButton.add(parentA).expand().align(Align.center).width(100).height(25).space(11f);
-        parentBButton.add(parentB).expand().align(Align.center).width(100).height(25).space(11f);
+        parentAButton.add(parentA).expand().align(Align.left).width(150).height(25).space(11f);
+        parentBButton.add(parentB).expand().align(Align.right).width(150).height(25).space(11f);
         parentBButton.setBackground(app.getSkin().getDrawable("optionbox"));
         parentBar.add(parentAButton);
         parentBar.add(parentBButton);
 
-        topBar.add(backButton).align(Align.topLeft);
+        topBar.add(backButton);
         topBar.add(title);
+        topBar.add(parentBar);
 
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.font = app.getSkin().getFont("font");
@@ -274,18 +275,17 @@ public class BreederScreen implements Screen {
         Label labelC = new Label("Breedable Engimons", app.getSkin());
         breedableEngimon.add(labelC);
 
-        parentABox.setBackground(app.getSkin().getDrawable("optionbox"));
-        parentBBox.setBackground(app.getSkin().getDrawable("optionbox"));
+        parentABox.setBackground(app.getSkin().getDrawable("dialoguebox"));
+        parentBBox.setBackground(app.getSkin().getDrawable("dialoguebox"));
         parentWrapper.add(parentABox).width(200).height(200).row();
         parentWrapper.add(parentBBox).width(200).height(200).row();
 
         breederWrapper.add(breedableEngimon).align(Align.topLeft);
+        breederWrapper.add(parentWrapper).space(11f);
         breederWrapper.add(breedButton).expand().align(Align.center).width(250).height(75).space(11f);
 
-        root.add(topBar).top().fillX().row();
-        root.add(parentBar).top().fillX().row();
+        root.add(topBar).align(Align.center).height(150).row();
         root.add(breederWrapper).top().align(Align.center);
-        root.add(parentWrapper);
         breedButton.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 startBreeding();

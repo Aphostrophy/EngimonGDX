@@ -17,6 +17,7 @@ import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.ResourceProvider;
 
 import javax.xml.stream.events.EntityReference;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -93,7 +94,7 @@ public class DialogueController extends InputAdapter {
                     Engimon PlayerEngimons =this.gameScreen.getGameState().player.getActiveEngimon();
                     Engimon EnemyEngimons = this.wildEngimon;
                     B.BattleEngimon(PlayerEngimons, EnemyEngimons);
-                    String AllBattleDialogue = B.showTotalPower();
+                    String AllBattleDialogue = "";
                     Pair<Integer,Integer> dir = new Pair<>(0,0);
                     DIRECTION d = this.gameScreen.getGameState().player.getDirection();
                     if(d == DIRECTION.UP) {
@@ -116,22 +117,25 @@ public class DialogueController extends InputAdapter {
                         AllBattleDialogue += "Good fight you defeated " + this.wildEngimon.getSpecies() + "!";
                         if (PlayerEngimons.getLevel() < 5)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 10);
+                            PlayerEngimons.addExp(100);
                         }
                         else if (PlayerEngimons.getLevel() <= 10)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 15);
+                            PlayerEngimons.addExp(75);
                         }
                         else if (PlayerEngimons.getLevel() <= 20)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 20);
+                            PlayerEngimons.addExp(50);
                         }
                         else
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
+                            PlayerEngimons.addExp(25);
                         }
-                        gameScreen.getGameState().getPlayerInventory().showInventory();
+                        PlayerEngimons.displayInfo();
                         this.wildEngimon.reduceLives();
+                        if(PlayerEngimons.isMaxLevel()){
+                            this.gameScreen.getGameState().disposePlayerEngimon();
+                        }
                     } else {
                         AllBattleDialogue += "You lose !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
@@ -142,8 +146,6 @@ public class DialogueController extends InputAdapter {
                         }
                     }
                     ArrayList<String> Dialog = new ArrayList<String>();
-                    Dialog.add("=====DETAIL MY ENGIMON=====\n" + PlayerEngimons.displayInfoToString());
-                    Dialog.add("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString());
                     Dialog.add(AllBattleDialogue);
                     if(isFullInventory) {
                         Dialog.add("Inventory anda sudah penuh!\n anda tidak dapat menambah engimon dan item baru.");
@@ -275,13 +277,21 @@ public class DialogueController extends InputAdapter {
         this.dialogState = DIALOG_STATE.BATTLE;
         this.wildEngimon = wildEngimon;
         Dialogue dialogue = new Dialogue();
-        DialogueNode awal = new DialogueNode("You encountered a level " + wildEngimon.getLevel() + " " + wildEngimon.getSpecies(), 0);
-        DialogueNode a = new DialogueNode("Fight?", 1);
-        DialogueNode b = new DialogueNode("Goodluck!", 2);
-        DialogueNode c = new DialogueNode("Okay!", 3);
+        Battle B = new Battle();
+        Engimon PlayerEngimons = this.gameScreen.getGameState().player.getActiveEngimon();
+        Engimon EnemyEngimons = this.wildEngimon;
+        B.BattleEngimon(PlayerEngimons, EnemyEngimons);
+        String AllBattleDialogue = B.showTotalPower();
+        DialogueNode lebihawal = new DialogueNode("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString(), 0);
+        DialogueNode awal = new DialogueNode(AllBattleDialogue,1);
+        DialogueNode a = new DialogueNode("Fight?", 2);
+        DialogueNode b = new DialogueNode("Goodluck!", 3);
+        DialogueNode c = new DialogueNode("Okay!", 4);
+        lebihawal.makeLinear(awal.getId());
         awal.makeLinear(a.getId());
         a.addChoice("Proceed",2);
         a.addChoice("Abort",3);
+        dialogue.addNode(lebihawal);
         dialogue.addNode(awal);
         dialogue.addNode(a);
         dialogue.addNode(b);
@@ -314,6 +324,7 @@ public class DialogueController extends InputAdapter {
         dialogState = DIALOG_STATE.CHOOSESKILL;
         this.skillList = skillList;
         this.newSkill = newSkill;
+
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("Your engimon already has 4 skills learned" ,0);
         DialogueNode b = new DialogueNode("You already have 4 skills, choose one to unlearn", 1);
