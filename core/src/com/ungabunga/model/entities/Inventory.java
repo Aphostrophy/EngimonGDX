@@ -186,7 +186,7 @@ public class Inventory<T> {
             }
             return c;
         };
-        Collections.sort(this.items,compareByElementLevel);
+        Collections.sort(this.items,compareByElementLevel.reversed());
     }
 
     public void sortSkillItem(){
@@ -255,6 +255,28 @@ public class Inventory<T> {
             }
         }
         return result;
+    }
+
+    public void insertToInventoryForTesting(SkillItem skillitem, int currCapacity,int amount) throws FullInventoryException {
+        if (currCapacity+amount <= capacity)
+        {
+            int i;
+            for (i = 0; i < this.neff; i++)
+            {
+                if (((SkillItem) this.items.get(i)).getName().equals(skillitem.getName()))
+                {
+                    ((SkillItem) this.items.get(i)).setAmount(((SkillItem) this.items.get(i)).getAmount() + amount);
+                    return;
+                }
+            }
+            this.items.add(this.neff,((T)skillitem));
+            this.neff++;
+            this.sortSkillItem();
+        }
+        else
+        {
+            throw new FullInventoryException("Inventory Penuh");
+        }
     }
 
 }
