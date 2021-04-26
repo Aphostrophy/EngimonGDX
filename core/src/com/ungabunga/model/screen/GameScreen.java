@@ -153,7 +153,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public  void render(float delta) {
-        if(gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()<=0){
+        if(gameState.getPlayerInventory().getEngimonInventory().getFilledSlot()<=0 && gameState.player.getActiveEngimon()==null){
             getApp().setScreen(new GameOverScreen(getApp()));
         }
         controller.update(delta);

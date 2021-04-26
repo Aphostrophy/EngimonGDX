@@ -16,6 +16,7 @@ public class Bag {
         this.skillItemInventory.insertToInventory(skillitem,getCurrBagCapacity());
     }
     public void insertToBag(PlayerEngimon engimon) throws FullInventoryException {
+        System.out.println(engimon.getRemainingLives());
         this.engimonInventory.insertToInventory(engimon,getCurrBagCapacity());
     }
     public void deleteFromBag(SkillItem skillitem){

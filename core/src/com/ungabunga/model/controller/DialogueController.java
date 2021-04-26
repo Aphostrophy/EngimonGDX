@@ -150,9 +150,12 @@ public class DialogueController extends InputAdapter {
                             }
                         }
                     } else {
-                        AllBattleDialogue += "Engimon anda cupu kali !";
+                        AllBattleDialogue += "Engimon anda kalah !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
+                        AllBattleDialogue += "Remaining engimon lives :" + this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives();
+                        System.out.println(this.gameScreen.getGameState().player.getActiveEngimon().getRemainingLives());
                         if(this.gameScreen.getGameState().player.getActiveEngimon().isDead()){
+                            AllBattleDialogue += "Your engimon has died";
                             this.gameScreen.getGameState().disposePlayerEngimon();
                         }
                     }

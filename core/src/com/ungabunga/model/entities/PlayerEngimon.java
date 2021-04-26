@@ -20,6 +20,11 @@ public class PlayerEngimon extends Engimon{
         this.remainingLives = CONSTANTS.PLAYERENGIMONDEFAULTLIVES;
     }
 
+    public PlayerEngimon(PlayerEngimon PE){
+        super(PE);
+        this.remainingLives = PE.getRemainingLives();
+    }
+
     public PlayerEngimon(ActiveEngimon AE){
         this.remainingLives = AE.remainingLives;
         this.id = AE.id;
@@ -33,5 +38,12 @@ public class PlayerEngimon extends Engimon{
         this.parentSpecies = AE.parentSpecies;
         this.exp = AE.exp;
         this.cumulativeExp = AE.cumulativeExp;
+
+        System.out.println("Nyawa engimon: ");
+        System.out.println(this.remainingLives);
+    }
+
+    public int getRemainingLives() {
+        return remainingLives;
     }
 }
