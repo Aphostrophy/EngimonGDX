@@ -1,6 +1,7 @@
 package com.ungabunga.model.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.enums.AVATAR_STATE;
 import com.ungabunga.model.enums.CellType;
@@ -12,6 +13,9 @@ import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.ResourceProvider;
 
 import java.util.concurrent.ThreadLocalRandom;
+
+import static com.ungabunga.Settings.ANIM_TIMER;
+import static com.ungabunga.Settings.RUN_ANIM_TIMER;
 
 public class WildEngimon extends Engimon implements LivingEngimon {
     Pair<Integer,Integer> position;
@@ -54,24 +58,40 @@ public class WildEngimon extends Engimon implements LivingEngimon {
 
         this.worldX =  this.position.getFirst();
         this.worldY = this.position.getSecond();
+
+        this.animTimer = 0f;
+        this.stateTimer = 0f;
     }
 
-//    private void initializeMove(int dx,int dy){
-//        this.srcX = this.getX();
-//        this.srcY = this.getY();
-//        this.destX = this.getX() + dx;
-//        this.destY = this.getY() + dy;
-//        this.worldX = this.getX();
-//        this.worldY = this.getY();
-//        this.animTimer = 0f;
-//        this.state = AVATAR_STATE.WALKING;
-//    }
+    private void initializeMove(int dx,int dy){
+        this.srcX = this.getX();
+        this.srcY = this.getY();
+        this.destX = this.getX() + dx;
+        this.destY = this.getY() + dy;
+        this.worldX = this.getX();
+        this.worldY = this.getY();
+        this.animTimer = 0f;
+        this.state = AVATAR_STATE.WALKING;
+    }
+
+    public void update(float delta) throws EngimonConflictException {
+        animTimer += delta;
+        stateTimer += delta;
+
+        worldX = Interpolation.pow2.apply(this.srcX,this.destX,animTimer/ANIM_TIMER);
+        worldY = Interpolation.pow2.apply(this.srcY,this.destY,animTimer/ANIM_TIMER);
+        if(animTimer > ANIM_TIMER){
+            stateTimer -= (animTimer - ANIM_TIMER);
+            finishMove();
+            stateTimer = 0f;
+        }
+    }
 
     // I.S. Movement bisa dilakukan dengan valid
     // F.S Engimon langsung berpindah ke tujuan secara memori namun secara visual seolah-olah berjalan
     @Override
     public void move(int dx, int dy){
-//        initializeMove(dx,dy);
+        initializeMove(dx,dy);
         gameState.map.get(this.getY()).get(this.getX()).occupier=null;
         this.position.setFirst(this.getX()+dx);
         this.position.setSecond(this.getY()+dy);
