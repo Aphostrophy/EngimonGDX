@@ -28,7 +28,6 @@ public class InventorySlot extends Stack {
         numItemsLabel.setAlignment(Align.bottomRight);
         numItemsLabel.setColor(1, 0, 0, 1);
         numItemsLabel.setFontScale(2);
-        checkVisibilityOfItemCount();
 
         defaultBackground.add(image);
 
@@ -41,7 +40,10 @@ public class InventorySlot extends Stack {
         }
 
         this.add(defaultBackground);
-        this.add(numItemsLabel);
+        if(numItemsVal>0){
+            this.add(numItemsLabel);
+        }
+        checkVisibilityOfItemCount();
     }
 
     public void decrementItemCount(int count) {
