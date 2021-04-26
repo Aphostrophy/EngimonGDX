@@ -12,6 +12,7 @@ import com.ungabunga.model.enums.DIRECTION;
 import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.screen.GameScreen;
 import com.ungabunga.model.ui.DialogueBox;
+import com.ungabunga.model.ui.InventorySlot;
 import com.ungabunga.model.ui.OptionBox;
 import com.ungabunga.model.utilities.Pair;
 import com.ungabunga.model.utilities.ResourceProvider;
@@ -40,6 +41,9 @@ public class DialogueController extends InputAdapter {
 
     private List<Skill> skillList;
     private Skill newSkill;
+    private SkillItem skillItem;
+    private Inventory skillitemInventory;
+    private InventorySlot slot;
     private WildEngimon wildEngimon;
 
     public boolean isFullInventory = false;
@@ -168,6 +172,8 @@ public class DialogueController extends InputAdapter {
                     System.out.println(skillList.get(Obox.getSelected()).getSkillName());
                     gameScreen.getGameState().player.getActiveEngimon().deleteSkill(skillList.get(Obox.getSelected()).getSkillName());
                     gameScreen.getGameState().player.getActiveEngimon().addSkill(provider.getSkill(this.newSkill.getSkillName()));
+                    skillitemInventory.deleteFromInventory(skillItem);
+                    slot.decrementItemCount(1);
                 }
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.ELSE) {
@@ -321,10 +327,13 @@ public class DialogueController extends InputAdapter {
     }
 
     // I.S SkillList 4
-    public void startSkillChoiceDialogue(List<Skill> skillList, Skill newSkill){
+    public void startSkillChoiceDialogue(List<Skill> skillList, Skill newSkill, Inventory skillitemInventory, InventorySlot slot, SkillItem skillItem){
         dialogState = DIALOG_STATE.CHOOSESKILL;
         this.skillList = skillList;
         this.newSkill = newSkill;
+        this.skillitemInventory = skillitemInventory;
+        this.skillItem = skillItem;
+        this.slot = slot;
 
         Dialogue dialogue = new Dialogue();
         DialogueNode a = new DialogueNode("Your engimon already has 4 skills learned" ,0);
