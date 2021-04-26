@@ -133,7 +133,7 @@ public class ChildEngimonScreen implements Screen {
             System.out.println("ok");
             try {
                 if (childName.getText().length() > 0) {
-                    Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState);
+                    Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState.getPlayerInventory());
                     controller.finishBreeding();
                 } else {
                     throw new EmptyNameException("Name cannot be empty!");

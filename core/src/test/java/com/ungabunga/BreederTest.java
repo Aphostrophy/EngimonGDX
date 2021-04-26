@@ -1,5 +1,6 @@
 package com.ungabunga;
 
+import com.ungabunga.model.entities.Bag;
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.Skill;
 import com.ungabunga.model.entities.Breeder;
@@ -8,9 +9,9 @@ import com.ungabunga.model.utilities.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class BreederTest {
 
@@ -123,6 +124,39 @@ public class BreederTest {
         Assertions.assertEquals(1, engimonA.getSkills().get(0).getMasteryLevel());
         Assertions.assertEquals(6, engimonB.getSkills().get(0).getBasePower());
         Assertions.assertEquals(1, engimonB.getSkills().get(0).getMasteryLevel());
+    }
+
+    @Test
+    public void testBreed() {
+        Bag bag = new Bag();
+
+        List<IElements> elmtA = new ArrayList<>();
+        List<IElements> elmtB = new ArrayList<>();
+        List<IElements> skillAElmt = new ArrayList<>();
+        List<IElements> skillBElmt = new ArrayList<>();
+        List<Skill> skillsA = new ArrayList<>();
+        List<Skill> skillsB = new ArrayList<>();
+
+        Pair<String, String> parentName = new Pair("Parent A", "Parent B");
+        Pair<String, String> parentSpecies = new Pair("Species A", "Species B");
+
+        elmtA.add(IElements.ELECTRIC);
+        elmtB.add(IElements.WATER);
+        skillAElmt.add(IElements.ELECTRIC);
+        skillBElmt.add(IElements.WATER);
+
+        skillsA.add(new Skill("Capacitor", skillAElmt, 6, 1));
+        skillsA.add(new Skill("Water Power", skillBElmt, 6, 1));
+
+        Engimon engimonA = new Engimon("Parent A", "Pikachu", "Bzzt", 10, elmtA, skillsA, parentName, parentSpecies);
+        Engimon engimonB = new Engimon("Parent B", "Squirtle", "Splash", 10, elmtB, skillsB, parentName, parentSpecies);
+
+        Engimon child = Breeder.Breed(engimonA, engimonB, "Anak", bag);
+
+        Assertions.assertEquals("Anak", child.getName());
+        Assertions.assertEquals(1, child.getElements().size());
+        Assertions.assertEquals(IElements.WATER, child.getElements().get(0));
+
     }
 
 }

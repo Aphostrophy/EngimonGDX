@@ -32,6 +32,7 @@ public class GameOverScreen implements Screen {
     private Texture exitButtonInactive;
     private Texture loadButtonActive;
     private Texture loadButtonInactive;
+    private Sprite gameOver;
 
     public GameOverScreen(EngimonGame game) {
         this.game = game;
@@ -45,8 +46,11 @@ public class GameOverScreen implements Screen {
 
         // NANTI GANTI LOGONYA DISINI LAGI
         Texture splashTexture = new Texture("LOGO.png");
+        Texture splashTexture2 = new Texture("game_over.png");
         this.heading = new Sprite(splashTexture);
+        this.gameOver = new Sprite(splashTexture2);
 
+        gameOver.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         heading.setSize(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -81,8 +85,11 @@ public class GameOverScreen implements Screen {
         pm.dispose();
 
         batch.begin();
-        heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 125);
+        heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 150);
+
         heading.draw(batch);
+        gameOver.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 375);
+        gameOver.draw(batch);
 
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 4 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 4) {
             batch.draw(exitButtonActive, Gdx.graphics.getWidth() / 2 - BUTTON_WIDTH / 2, Gdx.graphics.getHeight() / 4, BUTTON_WIDTH, BUTTON_HEIGHT);

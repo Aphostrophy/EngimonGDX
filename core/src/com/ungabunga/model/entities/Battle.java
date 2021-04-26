@@ -20,24 +20,28 @@ public class Battle {
     private static final int ICE_INDEX = 4;
 
     private float powerPlayer,powerEnemy;
-    private float[][] advantageChart = new float[arrSize][arrSize];
+    public float[][] advantageChart = new float[arrSize][arrSize];
     private  Engimon playerEngimons, enemyEngimons;
+    private boolean unitTest;
 
     public Battle() {
         this.generateChart();
     }
 
+    public Battle(Boolean unitTest) {
+
+    }
     //setter and getter
     public void HitungPower(Engimon engimon1, Engimon engimon2)
     {
         int sumPowerPlayer = 0, sumPowerEnemy = 0;
         for (int i = 0; i < engimon1.getSkills().size(); i++)
         {
-            sumPowerPlayer += engimon1.getSkills().get(i).getBasePower();
+            sumPowerPlayer += engimon1.getSkills().get(i).getBasePower() * engimon1.getSkills().get(i).getMasteryLevel();
         }
         for (int i = 0; i < engimon2.getSkills().size(); i++)
         {
-            sumPowerEnemy += engimon2.getSkills().get(i).getBasePower();
+            sumPowerEnemy += engimon2.getSkills().get(i).getBasePower() * engimon1.getSkills().get(i).getMasteryLevel();
         }
         Pair<Float, Float> PairElementAdvantage = new Pair<Float, Float>(this.elementAdvantage());
         this.powerPlayer = (engimon1.getLevel() * PairElementAdvantage.getFirst()) + sumPowerPlayer;
@@ -85,6 +89,7 @@ public class Battle {
             j = 0;
             for (String str : words) {
                 float str_float = Float.parseFloat(str);
+//                System.out.println(this.advantageChart[i][j]);
                 this.advantageChart[i][j] = str_float;
                 j++;
             }

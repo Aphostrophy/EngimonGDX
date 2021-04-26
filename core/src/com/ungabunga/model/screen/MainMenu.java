@@ -109,7 +109,7 @@ public class MainMenu implements Screen {
         pm.dispose();
         
         batch.begin();
-        heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 125);
+        heading.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight() - 150);
         heading.draw(batch);
 
         if (Gdx.input.getX() < x + BUTTON_WIDTH && Gdx.input.getX() > x && Gdx.graphics.getHeight() - Gdx.input.getY() < Gdx.graphics.getHeight() / 2 + BUTTON_HEIGHT && Gdx.graphics.getHeight() - Gdx.input.getY() > Gdx.graphics.getHeight() / 2) {

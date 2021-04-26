@@ -116,22 +116,25 @@ public class DialogueController extends InputAdapter {
                         AllBattleDialogue += "Good fight you defeated " + this.wildEngimon.getSpecies() + "!";
                         if (PlayerEngimons.getLevel() < 5)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 10);
+                            PlayerEngimons.addExp(100);
                         }
                         else if (PlayerEngimons.getLevel() <= 10)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 15);
+                            PlayerEngimons.addExp(75);
                         }
                         else if (PlayerEngimons.getLevel() <= 20)
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 20);
+                            PlayerEngimons.addExp(50);
                         }
                         else
                         {
-                            PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
+                            PlayerEngimons.addExp(25);
                         }
-                        gameScreen.getGameState().getPlayerInventory().showInventory();
+                        PlayerEngimons.displayInfo();
                         this.wildEngimon.reduceLives();
+                        if(PlayerEngimons.isMaxLevel()){
+                            this.gameScreen.getGameState().disposePlayerEngimon();
+                        }
                     } else {
                         AllBattleDialogue += "You lose !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
