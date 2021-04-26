@@ -2,9 +2,11 @@ package com.ungabunga;
 
 import com.ungabunga.model.entities.*;
 import com.ungabunga.model.enums.IElements;
+import com.ungabunga.model.exceptions.FullInventoryException;
 import com.ungabunga.model.utilities.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,45 +14,41 @@ import java.util.List;
 public class BagTest {
     @Test
     public void testGetCurrBagCapacity(){
-        List<Integer> amount = new ArrayList<>(1);
-        List<Integer> neff = new ArrayList<>(10);
+        Bag bag = new Bag();
 
-        Inventory skillItemInventory = new Inventory<SkillItem>();
-        Inventory engimonInventory = new Inventory<PlayerEngimon>();
-        Assertions.assertEquals(1, skillItemInventory.getSkillItemAmount());
-        Assertions.assertEquals(10,engimonInventory.getFilledSlot() );
+        Assertions.assertEquals(0,bag.getCurrBagCapacity());
     }
     @Test
     public void testInsertToBag(){
-        List<Integer> amount = new ArrayList<>(1);
-        List<Integer> neff = new ArrayList<>(10);
+        Bag bag = new Bag();
 
-        amount.add(9);
-        neff.add(5);
-
-        Inventory skillItemInventory = new Inventory<SkillItem>();
-        Inventory engimonInventory = new Inventory<PlayerEngimon>();
-        Assertions.assertEquals(10, skillItemInventory.getSkillItemAmount());
-        Assertions.assertEquals(15,engimonInventory.getFilledSlot() );
+        SkillItem skillItem = new SkillItem("NamaSkilItem",1);
+        try {
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(1,bag.getCurrBagCapacity());
 
     }
 
     @Test
     public void testDeleteFromBag() {
-        List<Integer> amount = new ArrayList<>(1);
-        List<Integer> neff = new ArrayList<>(10);
-
-        amount.remove(1);
-        neff.remove(5);
-
-        Inventory skillItemInventory = new Inventory<SkillItem>();
-        Inventory engimonInventory = new Inventory<PlayerEngimon>();
-        Assertions.assertEquals(0, skillItemInventory.getSkillItemAmount());
-        Assertions.assertEquals(5, engimonInventory.getFilledSlot());
+        Bag bag = new Bag();
+        SkillItem skillItem = new SkillItem("NamaSkilItem",1);
+        try {
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        bag.deleteFromBag(skillItem);
+        Assertions.assertEquals(0, bag.getCurrBagCapacity());
     }
 
     @Test
     public void testGetEngimonIndeks(){
+        Bag bag = new Bag();
+
         List<IElements> engimonElements = new ArrayList<>();
         List<IElements> skillElements = new ArrayList<>();
         List<Skill> skills = new ArrayList<>();
@@ -65,26 +63,50 @@ public class BagTest {
         skills.add(skill);
 
         Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
-        int indeks = 1;
-        Inventory engimonInventory = new Inventory<PlayerEngimon>();
-        Assertions.assertEquals(indeks, engimonInventory.getItemIndex(engimon));
+        PlayerEngimon playerEngimon = new PlayerEngimon(engimon);
+        try {
+            bag.insertToBag(playerEngimon);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(0, bag.getEngimonInventory().getItemIndex(playerEngimon));
     }
     @Test
     public void testGetSkillItemIndeks(){
-        SkillItem skillItem = new SkillItem("NamaSkilItem",1);
+        Bag bag = new Bag();
+        SkillItem skillItem = new SkillItem("NamaSkillItem",1);
 
-        int indeks = 1;
-        Inventory skillItemInventory = new Inventory<SkillItem>();
-        Assertions.assertEquals(indeks, skillItemInventory.getItemIndex(skillItem));
+        try {
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(0, bag.getSkillItemInventory().getItemIndex(skillItem));
     }
     @Test
-    public void testGetSkillItemInventory(){
-        SkillItem skillItem = new SkillItem("NamaSkilItem",1);
-        Inventory skillItemInventory = new Inventory<SkillItem>();
-        Assertions.assertEquals(skillItem, skillItemInventory);
+    public void testFullInventory() throws FullInventoryException {
+        Bag bag = new Bag();
+        SkillItem skillItem = new SkillItem("NamaSkillItem",1);
+
+        try{
+            bag.insertToBag(skillItem);
+            bag.insertToBag(skillItem);
+            bag.insertToBag(skillItem);
+            bag.insertToBag(skillItem);
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e){
+            e.printStackTrace();
+        }
+        try{
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e){
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(5,bag.getCurrBagCapacity());
     }
     @Test
     public void testGetEngimonInventory(){
+        Bag bag = new Bag();
         List<IElements> engimonElements = new ArrayList<>();
         List<IElements> skillElements = new ArrayList<>();
         List<Skill> skills = new ArrayList<>();
@@ -99,7 +121,24 @@ public class BagTest {
         skills.add(skill);
 
         Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 1, engimonElements, skills, parentName, parentSpecies);
-        Inventory engimonInventory = new Inventory<PlayerEngimon>();
-        Assertions.assertEquals(engimon, engimonInventory);
+        PlayerEngimon playerEngimon = new PlayerEngimon(engimon);
+        try {
+            bag.insertToBag(playerEngimon);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(playerEngimon,bag.getEngimonByIndex(bag.getEngimonIndex(playerEngimon)));
+    }
+
+    @Test
+    public void testGetSkillItemInventory(){
+        Bag bag = new Bag();
+        SkillItem skillItem = new SkillItem("NamaSkillItem",1);
+        try {
+            bag.insertToBag(skillItem);
+        } catch (FullInventoryException e) {
+            e.printStackTrace();
+        }
+        Assertions.assertEquals(skillItem, bag.getSkillItemByIndex(bag.getSkillItemIndex(skillItem)));
     }
 }
