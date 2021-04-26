@@ -116,7 +116,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public void moveUp() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.UP;
-            if(gameState.map.get(this.getX()).get(this.getY()+1).occupier!=null){
+            if(gameState.map.get(this.getY()+1).get(this.getX()).occupier!=null){
                 repositionOnCellConflict();
             }
             move(0,1);
@@ -126,7 +126,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public void moveDown() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.DOWN;
-            if(gameState.map.get(this.getX()).get(this.getY()-1).occupier!=null){
+            if(gameState.map.get(this.getY()-1).get(this.getX()).occupier!=null){
                 repositionOnCellConflict();
             }
             move(0,-1);
@@ -136,7 +136,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public void moveLeft() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.LEFT;
-            if(gameState.map.get(this.getX()-1).get(this.getY()).occupier!=null){
+            if(gameState.map.get(this.getY()).get(this.getX()-1).occupier!=null){
                 repositionOnCellConflict();
             }
             move(-1,0);
@@ -146,7 +146,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
     public void moveRight() throws EngimonConflictException {
         if(state == AVATAR_STATE.STANDING){
             direction = DIRECTION.RIGHT;
-            if(gameState.map.get(this.getX()+1).get(this.getY()).occupier!=null){
+            if(gameState.map.get(this.getY()).get(this.getX()+1).occupier!=null){
                 repositionOnCellConflict();
             }
             move(1,0);
@@ -182,6 +182,7 @@ public class ActiveEngimon extends PlayerEngimon implements LivingEngimon{
 
     @Override
     public void repositionOnCellConflict() throws EngimonConflictException {
+        System.out.println("REPOSITIONN");
         if(gameState.map.get(player.getY()).get(player.getX()-1).occupier == null){
             gameState.map.get(player.getActiveEngimon().getY()).get(player.getActiveEngimon().getX()).occupier = null;
             this.position.setFirst(player.getX()-1);
