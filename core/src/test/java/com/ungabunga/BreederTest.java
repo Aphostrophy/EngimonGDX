@@ -2,11 +2,13 @@ package com.ungabunga;
 
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.Skill;
+import com.ungabunga.model.entities.Breeder;
 import com.ungabunga.model.enums.IElements;
 import com.ungabunga.model.utilities.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,64 +29,58 @@ public class BreederTest {
         Skill skill = new Skill("Capacitor", skillElements, 6, 1);
         skills.add(skill);
 
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 2, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(1, engimon.getLevel()-1);
+        Engimon a = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 10, engimonElements, skills, parentName, parentSpecies);
+        Engimon b = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 6, engimonElements, skills, parentName, parentSpecies);
+        Breeder.reduceLevel(a,b);
+        Assertions.assertEquals(7, a.getLevel());
+        Assertions.assertEquals(3, b.getLevel());
     }
     @Test
     public void testGetSameSkillIdx(){
-        List<IElements> engimonElements = new ArrayList<>();
-        List<IElements> skillElements = new ArrayList<>();
-        List<Skill> skills = new ArrayList<>();
+        ArrayList<IElements> skillElements = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
 
-        Pair<String, String> parentName = new Pair("Parent A","Parent B");
-        Pair<String, String> parentSpecies = new Pair("Species A","Species B");
-
-        engimonElements.add(IElements.ELECTRIC);
         skillElements.add(IElements.ELECTRIC);
 
-        Skill skill = new Skill("Capacitor", skillElements, 6, 1);
-        skills.add(skill);
-        int indexSkill = 2;
+        Skill skillA = new Skill("Capacitor", skillElements, 6, 1);
+        Skill skillB = new Skill("Metal", skillElements, 6, 1);
+        skills.add(skillA);
+        skills.add(skillB);
 
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 2, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(indexSkill, engimon.getSkills().get(1));
+        Assertions.assertEquals(1, Breeder.getSameSkillIdx(skills, skillB));
+
     }
     @Test
     public void testGetLowSkillIdx(){
-        List<IElements> engimonElements = new ArrayList<>();
-        List<IElements> skillElements = new ArrayList<>();
-        List<Skill> skills = new ArrayList<>();
+        ArrayList<IElements> skillElements = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
 
-        Pair<String, String> parentName = new Pair("Parent A","Parent B");
-        Pair<String, String> parentSpecies = new Pair("Species A","Species B");
-
-        engimonElements.add(IElements.ELECTRIC);
         skillElements.add(IElements.ELECTRIC);
 
-        Skill skill = new Skill("Capacitor", skillElements, 6, 1);
-        skills.add(skill);
-        int indexSkill = 2;
+        Skill skillA = new Skill("Capacitor", skillElements, 6, 9);
+        Skill skillB = new Skill("Metal", skillElements, 6, 3);
+        Skill skillC = new Skill("Metal", skillElements, 6, 1);
+        skills.add(skillA);
+        skills.add(skillB);
+        skills.add(skillC);
 
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 2, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(indexSkill, engimon.getSkills().get(0).getMasteryLevel());
+        Assertions.assertEquals(2, Breeder.getLowSkillIdx(skills));
     }
     @Test
     public void testGetLowestMastery(){
-        List<IElements> engimonElements = new ArrayList<>();
-        List<IElements> skillElements = new ArrayList<>();
-        List<Skill> skills = new ArrayList<>();
+        ArrayList<IElements> skillElements = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
 
-        Pair<String, String> parentName = new Pair("Parent A","Parent B");
-        Pair<String, String> parentSpecies = new Pair("Species A","Species B");
-
-        engimonElements.add(IElements.ELECTRIC);
         skillElements.add(IElements.ELECTRIC);
 
-        Skill skill = new Skill("Capacitor", skillElements, 6, 1);
-        skills.add(skill);
+        Skill skillA = new Skill("Capacitor", skillElements, 6, 9);
+        Skill skillB = new Skill("Metal", skillElements, 6, 3);
+        Skill skillC = new Skill("Metal", skillElements, 6, 1);
+        skills.add(skillA);
+        skills.add(skillB);
+        skills.add(skillC);
 
-        Engimon engimon = new Engimon("NamaPokemon", "Jolteon", "Keep the energy", 2, engimonElements, skills, parentName, parentSpecies);
-        Assertions.assertEquals(1, engimon.getSkills().get(0).getMasteryLevel());
+        Assertions.assertEquals(1, Breeder.getLowestMastery(skills));
     }
     @Test
     public void testGetParentDetails() {
