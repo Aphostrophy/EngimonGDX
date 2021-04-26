@@ -26,6 +26,11 @@
    <property name="Biome" value="Grassland"/>
   </properties>
  </tile>
+ <tile id="108">
+  <properties>
+   <property name="Blocked" type="bool" value="true"/>
+  </properties>
+ </tile>
  <tile id="134">
   <properties>
    <property name="Biome" value="Sea"/>
