@@ -48,6 +48,7 @@ public class Skill {
         String str = new String();
         str += ("Base Power\t:\t " + this.basePower + "\n");
         str += ("Mastery Level\t:\t " + this.masteryLevel + "\n");
+        str += ("Mastery Exp\t:\t " + this.masteryExp + "\n");
         str += ("Element\t\t:" + "\n");
         for (int i = 0; i < this.elements.size(); i++)
         {

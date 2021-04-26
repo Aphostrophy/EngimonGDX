@@ -190,8 +190,8 @@ public class Inventory<T> {
     }
 
     public void sortSkillItem(){
-        Comparator<T> compareByPower = (T s1, T s2) -> ((Integer) ((SkillItem) s1).getPower()).compareTo(((Integer) ((SkillItem) s2).getPower()));
-        Collections.sort(this.items,compareByPower);
+        Comparator<T> compareByPower = Comparator.comparing((T s) -> ((SkillItem) s).getPower());
+        Collections.sort(this.items,compareByPower.reversed());
     }
 
     public String getEngimonElementInString(PlayerEngimon engimon){
