@@ -85,6 +85,7 @@ public class Battle {
             j = 0;
             for (String str : words) {
                 float str_float = Float.parseFloat(str);
+//                System.out.println(this.advantageChart[i][j]);
                 this.advantageChart[i][j] = str_float;
                 j++;
             }
