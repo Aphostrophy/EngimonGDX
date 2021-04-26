@@ -30,7 +30,7 @@ public class WildEngimon extends Engimon implements LivingEngimon {
     private float animTimer;
 
     private float stateTimer;
-
+    public boolean isInBattle = false;
     public WildEngimon(){
 
     }

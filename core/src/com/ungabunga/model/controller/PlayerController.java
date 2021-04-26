@@ -218,6 +218,7 @@ public class PlayerController extends InputAdapter{
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     if (occupier != null) {
+                        occupier.isInBattle = true;
                         gameScreen.dialogueController.startBattleDialogue(occupier);
                     }
                 }

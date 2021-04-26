@@ -19,6 +19,7 @@ import com.ungabunga.model.utilities.ResourceProvider;
 import javax.xml.stream.events.EntityReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DialogueController extends InputAdapter {
     private DialogueTraverser traverser;
@@ -165,6 +166,10 @@ public class DialogueController extends InputAdapter {
                     System.out.println(AllBattleDialogue);
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
                     System.out.println(wildEngimon.getName());
+                    this.wildEngimon.isInBattle = false;
+                }
+                else if(Obox.getSelected() == 1) {
+                    this.wildEngimon.isInBattle = false;
                 }
             }
             else if(traverser.getType() == NODE_TYPE.MULT && dialogState == DIALOG_STATE.CHOOSESKILL){

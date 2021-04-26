@@ -19,7 +19,10 @@ public class WildEngimonThread extends Thread{
     }
     public void run(){
         while(!wildEngimon.isDead()){
-            wildEngimon.randomizeMove();
+            System.out.println(this.wildEngimon.isInBattle);
+            if(!this.wildEngimon.isInBattle) {
+                wildEngimon.randomizeMove();
+            }
             this.turns++;
             if(turns % 3 ==0){
                 wildEngimon.addExp(25);
