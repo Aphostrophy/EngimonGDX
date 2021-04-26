@@ -51,7 +51,7 @@ public class Battle {
     //Method
     public String showTotalPower()
     {
-        String str = ("Power level engimon player : " + this.powerPlayer +  "\n" + "Power level engimon enemy : " + this.powerEnemy + "\n");
+        String str = ("Power level engimon player : " + this.powerPlayer +  "\n" + "Power level engimon enemy : " + this.powerEnemy);
         return str;
     }
 
@@ -79,8 +79,6 @@ public class Battle {
     {
         int i = 0, j = 0;
         FileHandle inputFile = Gdx.files.internal("resources/advantageChart.csv");
-//            BufferedReader inputFile = new BufferedReader(new FileReader("../constants/advantageChart.csv"));
-//            String line;
         String text = inputFile.readString();
         String linesArray[] = text.split("\\r?\\n");
         i = 0;

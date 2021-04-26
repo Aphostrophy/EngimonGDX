@@ -19,8 +19,6 @@ import com.ungabunga.Settings;
 import com.ungabunga.model.GameState;
 import com.ungabunga.model.controller.DialogueController;
 import com.ungabunga.model.controller.PlayerController;
-import com.ungabunga.model.dialogue.Dialogue;
-import com.ungabunga.model.dialogue.DialogueNode;
 import com.ungabunga.model.entities.Battle;
 import com.ungabunga.model.entities.Engimon;
 import com.ungabunga.model.entities.LivingEngimon;
@@ -71,7 +69,7 @@ public class GameScreen extends AbstractScreen {
         batch = new SpriteBatch();
         HUDBatch = new SpriteBatch();
 
-        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themesong.ogg"));
+        this.themeSong = Gdx.audio.newMusic(Gdx.files.internal("song/themeflute.ogg"));
         themeSong.setLooping(true);
         themeSong.setVolume(.04f);
         themeSong.play();
@@ -92,7 +90,7 @@ public class GameScreen extends AbstractScreen {
                 new Animation(0.25f/2f, atlas.findRegions("brendan_run_south"), Animation.PlayMode.LOOP_PINGPONG),
                 new Animation(0.25f/2f, atlas.findRegions("brendan_run_west"), Animation.PlayMode.LOOP_PINGPONG),
                 new Animation(0.25f/2f, atlas.findRegions("brendan_run_east"), Animation.PlayMode.LOOP_PINGPONG));
-        map = new TmxMapLoader().load("Maps/Map.tmx");
+        map = new TmxMapLoader().load("Maps/BigMap.tmx");
 
         gameState = new GameState("orz", playerAnimations,map, app);
 
