@@ -134,21 +134,7 @@ public class DialogueController extends InputAdapter {
                             PlayerEngimons.addExp(5 / PlayerEngimons.getLevel() * 30);
                         }
                         gameScreen.getGameState().getPlayerInventory().showInventory();
-
-
-                        gameScreen.getGameState().getPlayerInventory().showInventory();
-                        if(this.gameScreen.getGameState().player.getActiveEngimon()!=null){
-                            if((this.gameScreen.getGameState().player.getY() + dir.getSecond()) != this.gameScreen.getGameState().player.getActiveEngimon().getY() || (this.gameScreen.getGameState().player.getX() + dir.getFirst()) != this.gameScreen.getGameState().player.getActiveEngimon().getX() ) {
-                                System.out.println("Ya itu engimon musuh");
-                                if(this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier != null){
-                                    WildEngimon occupier = (WildEngimon) this.gameScreen.getGameState().map.get(this.gameScreen.getGameState().player.getY() + dir.getSecond()).get(this.gameScreen.getGameState().player.getX() + dir.getFirst()).occupier;
-                                    occupier.reduceLives();
-                                    System.out.println("mati lo anjeng");
-                                }
-                            }   else {
-                                System.out.println("Itu engimon anda sendiri");
-                            }
-                        }
+                        this.wildEngimon.reduceLives();
                     } else {
                         AllBattleDialogue += "Engimon anda kalah !\n";
                         this.gameScreen.getGameState().player.getActiveEngimon().reduceLives();
