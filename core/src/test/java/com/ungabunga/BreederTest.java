@@ -58,7 +58,6 @@ public class BreederTest {
         skills.add(skillB);
 
         Assertions.assertEquals(1, Breeder.getSameSkillIdx(skills, skillB));
-
     }
     @Test
     public void testGetLowSkillIdx(){

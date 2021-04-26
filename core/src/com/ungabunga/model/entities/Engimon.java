@@ -215,7 +215,11 @@ public class Engimon {
         str += ("Parents \t:\t "+ "\n");
         str += ("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")"+ "\n");
         str += ("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")"+ "\n");
-        str += ("Slogan \t:\t " + this.slogan);
+        str += ("Slogan \t:\t " + this.slogan + "\n");
+        str += ("Elements \t:\t "+ "\n");
+        for(int i = 0; i < this.elements.size(); i++) {
+            str += ("\t- " + this.elements.get(i) + "\n");
+        }
         return str;
     }
 
