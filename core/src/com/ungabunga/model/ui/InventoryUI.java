@@ -25,11 +25,6 @@ public class InventoryUI extends Table {
     public InventoryUI(Skin skin, Inventory inventory, InventoryItem.ItemType itemType, ResourceProvider provider, GameState gameState, InventoryScreen inventoryScreen){
        super(skin);
        this.setBackground("dialoguebox");
-       try{
-           inventory.displaySkillItem();
-       } catch(RuntimeException e){
-
-       }
 
        Integer count = 0;
        int idx = 0;
