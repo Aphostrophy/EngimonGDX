@@ -41,7 +41,6 @@ public class BattleTest {
     }
     @Test
     public void testIsPlayerLose() {
-        System.out.println("WOIiii");
         List<IElements> engimonElements = new ArrayList<>();
         List<IElements> skillElements = new ArrayList<>();
         List<Skill> skills = new ArrayList<>();
@@ -77,7 +76,6 @@ public class BattleTest {
     }
     @Test
     public void testIsPlayerWin() {
-        System.out.println("WOIiii");
         List<IElements> engimonElements = new ArrayList<>();
         List<IElements> skillElements = new ArrayList<>();
         List<Skill> skills = new ArrayList<>();

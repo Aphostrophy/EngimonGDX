@@ -37,12 +37,13 @@ public class InventorySlot extends Stack {
         if(item != null) {
             itemType = item.getItemType();
             defaultBackground.add(item);
+        } else {
+            itemType = null;
         }
 
         this.add(defaultBackground);
-        if(numItemsVal>0){
-            this.add(numItemsLabel);
-        }
+        this.add(numItemsLabel);
+
         checkVisibilityOfItemCount();
     }
 
@@ -57,6 +58,8 @@ public class InventorySlot extends Stack {
 
     private void checkVisibilityOfItemCount(){
         if( numItemsVal <= 1 && itemType == InventoryItem.ItemType.SKILLITEM){
+            numItemsLabel.setVisible(false);
+        } else if (numItemsVal <= 1){
             numItemsLabel.setVisible(false);
         } else {
             numItemsLabel.setVisible(true);

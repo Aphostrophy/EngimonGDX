@@ -68,8 +68,6 @@ public class GameState {
         a.setLevel(30);
         a.setParentName(new Pair<String,String>("A","B"));
 
-        a.getSkills().get(0).displaySkillInfo();
-
         Engimon b = app.getResourceProvider().getEngimon("Raichu");
         b.setSkills(skills);
         b.setName("Hola");

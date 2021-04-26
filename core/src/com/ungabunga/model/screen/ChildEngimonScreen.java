@@ -130,7 +130,6 @@ public class ChildEngimonScreen implements Screen {
         }
 
         if (isEnterClicked) {
-            System.out.println("ok");
             try {
                 if (childName.getText().length() > 0) {
                     Engimon child = Breeder.Breed(ParentA, ParentB, childName.getText(), gameState.getPlayerInventory());

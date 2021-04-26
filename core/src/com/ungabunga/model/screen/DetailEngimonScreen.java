@@ -99,7 +99,7 @@ public class DetailEngimonScreen extends AbstractScreen implements Screen {
         name.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
         name.add(nameText).expand().align(Align.center).width(600).height(25).space(11f);
 
-        TextButton detailsText = new TextButton(this.activeEngimon.displayInfoToString() + "\nRemaining Life \t:\t " + this.activeEngimon.getRemainingLives(), textButtonStyle);
+        TextButton detailsText = new TextButton(this.activeEngimon.displayInfoToStringDetailEngimon() + "\nRemaining Life \t:\t " + this.activeEngimon.getRemainingLives(), textButtonStyle);
         detailsText.getLabel().setFontScale(1.5f, 1.5f);
         details.setBackground(getApp().getSkin().getDrawable("dialoguebox"));
         details.add(detailsText).expand().align(Align.center).width(600).height(375).space(11f);

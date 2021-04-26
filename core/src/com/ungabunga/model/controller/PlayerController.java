@@ -87,6 +87,9 @@ public class PlayerController extends InputAdapter{
             }
         }
         if (keycode == Keys.B) {
+            if(gameState.player.getActiveEngimon()==null){
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            }
            battleHandler();
         }
         if (keycode ==Keys.Z){
@@ -114,11 +117,15 @@ public class PlayerController extends InputAdapter{
 
         }
         if(keycode == Keys.F5){
-            Json json = new Json();
-            json.setOutputType(JsonWriter.OutputType.json);
-            FileHandle file = Gdx.files.local("mysave.json");
-            file.writeString(json.toJson(new Save(gameState)), false);
-            gameScreen.dialogueController.startDialogue("Game saved");
+            if(gameScreen.getGameState().player.getActiveEngimon()!=null){
+                Json json = new Json();
+                json.setOutputType(JsonWriter.OutputType.json);
+                FileHandle file = Gdx.files.local("mysave.json");
+                file.writeString(json.toJson(new Save(gameState)), false);
+                gameScreen.dialogueController.startDialogue("Game saved");
+            } else{
+                gameScreen.dialogueController.startDialogue("You need to select a companion to save your game");
+            }
         }
         return false;
     }
@@ -225,7 +232,6 @@ public class PlayerController extends InputAdapter{
                 facingPlayer = DIRECTION.RIGHT;
             }
 
-            System.out.println("Jessonn");
 
             if((this.gameState.player.getY() + dir.getSecond())
                     != this.gameState.player.getActiveEngimon().getY()
@@ -242,7 +248,6 @@ public class PlayerController extends InputAdapter{
                 }
             }
             else {
-                System.out.println("ITU ENGIMON KITA");
             }
         }
     }
@@ -253,27 +258,19 @@ public class PlayerController extends InputAdapter{
             DIRECTION d = this.gameState.player.getDirection();
             if(d == DIRECTION.UP) {
                 dir = new Pair<>(0,1);
-                System.out.println("atas");
             } else if(d == DIRECTION.DOWN) {
                 dir = new Pair<>(0,-1);
-                System.out.println("bawah");
             } else if(d == DIRECTION.RIGHT) {
                 dir = new Pair<>(1,0);
-                System.out.println("kanan");
             } else if(d == DIRECTION.LEFT) {
                 dir = new Pair<>(-1,0);
-                System.out.println("kiri");
             }
-            System.out.println("X DIPENCET");
             if((this.gameState.player.getY() + dir.getSecond()) != this.gameState.player.getActiveEngimon().getY() || (this.gameState.player.getX() + dir.getFirst()) != this.gameState.player.getActiveEngimon().getX() ) {
-                System.out.println("Ya itu engimon musuh");
                 if(gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier != null){
                     WildEngimon occupier = (WildEngimon) gameState.map.get(this.gameState.player.getY() + dir.getSecond()).get(this.gameState.player.getX() + dir.getFirst()).occupier;
                     occupier.reduceLives();
-                    System.out.println("mati lo anjeng");
                 }
             }   else {
-                System.out.println("Itu engimon anda sendiri");
             }
         }
     }

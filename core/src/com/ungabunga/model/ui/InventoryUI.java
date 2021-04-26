@@ -37,7 +37,6 @@ public class InventoryUI extends Table {
                        item = new InventoryItem(provider.getSprite((PlayerEngimon) inventory.getItemByIndex(idx)), itemType);
                        inventorySlot = new InventorySlot(skin, item, ((PlayerEngimon) inventory.getItemByIndex(idx)).getLevel(), count, ((PlayerEngimon) inventory.getItemByIndex(idx)).getId(), null);
                    } else {
-                       inventory.displaySkillItem();
                        item = new InventoryItem(provider.getSprite((SkillItem) inventory.getItemByIndex(idx)), itemType);
                        inventorySlot = new InventorySlot(skin, item, ((SkillItem) inventory.getItemByIndex(idx)).getAmount(), count, -1, ((SkillItem) inventory.getItemByIndex(idx)).getName());
                    }

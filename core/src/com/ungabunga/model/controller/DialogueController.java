@@ -138,7 +138,6 @@ public class DialogueController extends InputAdapter {
                         for(int i = 0; i < PlayerEngimons.getSkills().size(); i++) {
                             PlayerEngimons.getSkills().get(i).addMasteryExp(25);
                         }
-                        PlayerEngimons.displayInfo();
                         this.wildEngimon.reduceLives();
                         if(PlayerEngimons.isMaxLevel()){
                             this.gameScreen.getGameState().disposePlayerEngimon();
@@ -159,7 +158,6 @@ public class DialogueController extends InputAdapter {
                         isFullInventory = false;
                     }
                     gameScreen.dialogueController.startBattleDialogue2(Dialog);
-                    System.out.println(wildEngimon.getName());
                     this.wildEngimon.isInBattle = false;
                 }
                 else if(Obox.getSelected() == 1) {
@@ -292,7 +290,7 @@ public class DialogueController extends InputAdapter {
         DialogueNode lebihawal = new DialogueNode("=====DETAIL ENEMY ENGIMON=====\n" + EnemyEngimons.displayInfoToString(), 0);
         DialogueNode awal = new DialogueNode(AllBattleDialogue,1);
         DialogueNode a = new DialogueNode("Fight?", 2);
-        DialogueNode b = new DialogueNode("Goodluck!", 3);
+        DialogueNode b = new DialogueNode("You escaped!", 3);
         DialogueNode c = new DialogueNode("Okay!", 4);
         lebihawal.makeLinear(awal.getId());
         awal.makeLinear(a.getId());

@@ -218,10 +218,33 @@ public class Engimon {
         str += ("Slogan \t:\t " + this.slogan + "\n");
         str += ("Elements \t:\t "+ "\n");
         for(int i = 0; i < this.elements.size(); i++) {
-            str += ("\t- " + this.elements.get(i));
-            if(i != this.elements.size()-1) {
+            str += ("\t- " + this.elements.get(i)+ "\n");
+        }
+        str += ("Skills \t:\t "+ "\n");
+        for(int i = 0; i < this.skills.size(); i++) {
+            str += ("\t- " + this.skills.get(i).getSkillName());
+            if(i != this.skills.size()-1) {
                 str += ("\n");
             }
+        }
+        return str;
+    }
+
+    public String displayInfoToStringDetailEngimon() {
+        String str = new String();
+        str += ("ID \t\t:\t " + this.id+ "\n");
+        str += ("Name \t\t:\t " + this.name+ "\n");
+        str += ("Species \t:\t " + this.species+ "\n");
+        str += ("Level \t\t:\t " + this.level+ "\n");
+        str += ("Exp \t\t:\t " + this.exp+ "\n");
+        str += ("Cumulative Exp \t:\t " + this.cumulativeExp+ "\n");
+        str += ("Parents \t:\t "+ "\n");
+        str += ("\t- " + this.parentName.getFirst() + " (" + this.parentSpecies.getFirst() + ")"+ "\n");
+        str += ("\t- " + this.parentName.getSecond() + " (" + this.parentSpecies.getSecond() + ")"+ "\n");
+        str += ("Slogan \t:\t " + this.slogan + "\n");
+        str += ("Elements \t:\t "+ "\n");
+        for(int i = 0; i < this.elements.size(); i++) {
+            str += ("\t- " + this.elements.get(i)+ "\n");
         }
         return str;
     }
