@@ -7,7 +7,7 @@ public class DialogueBox extends Table{
     private  String text = "";
     private float animTimer = 0f;
     private float animationTime = 0f;
-    private float TIME_PER_CHAR = 0.05f;
+    private float TIME_PER_CHAR = 0.02f;
     private STATE state = STATE.IDLE;
 
     private Label textLabel;

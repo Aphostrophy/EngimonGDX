@@ -69,12 +69,15 @@ public class PlayerController extends InputAdapter{
             gameState.player.isRunning = true;
         }
         if(keycode == Keys.R){
-            try{
-                gameState.removePlayerEngimon();
-            } catch (FullInventoryException e){
-                gameScreen.dialogueController.startDialogue("Can't remove engimon as your inventory is full");
+            if(gameState.player.getActiveEngimon()==null){
+                gameScreen.dialogueController.startDialogue("No active engimon");
+            } else{
+                try{
+                    gameState.removePlayerEngimon();
+                } catch (FullInventoryException e){
+                    gameScreen.dialogueController.startDialogue("Can't remove engimon as your inventory is full");
+                }
             }
-
         }
         if(keycode == Keys.E) {
             if(gameState.player.getActiveEngimon()!=null){

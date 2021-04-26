@@ -97,16 +97,12 @@ public class DialogueController extends InputAdapter {
                     DIRECTION d = this.gameScreen.getGameState().player.getDirection();
                     if(d == DIRECTION.UP) {
                         dir = new Pair<>(0,1);
-                        System.out.println("atas");
                     } else if(d == DIRECTION.DOWN) {
                         dir = new Pair<>(0,-1);
-                        System.out.println("bawah");
                     } else if(d == DIRECTION.RIGHT) {
                         dir = new Pair<>(1,0);
-                        System.out.println("kanan");
                     } else if(d == DIRECTION.LEFT) {
                         dir = new Pair<>(-1,0);
-                        System.out.println("kiri");
                     }
                     if(B.BattleStatusIsWin()) {
                         try {
@@ -235,19 +231,24 @@ public class DialogueController extends InputAdapter {
         DialogueNode c = new DialogueNode("To walk, use W A S D." +
                 "\nPress H to restart the tutorial. " +
                 "\nPress B for Battle", 2);
+        DialogueNode c1 = new DialogueNode("Press I to open your inventory"+
+                "\nPress R to remove active engimon"+
+                "\nPress shift to walk faster",3);
         DialogueNode d = new DialogueNode("Press F5 to save the game"+
                 "\nYou can breed and open the inventory by"+
-                "\nclicking the icons at the top left of the screen",3);
-        DialogueNode e = new DialogueNode("Enjoy the game!", 4);
+                "\nclicking the icons at the top left of the screen",4);
+        DialogueNode e = new DialogueNode("Enjoy the game!", 5);
 
         a.makeLinear(b.getId());
-        c.makeLinear(d.getId());
-        b.addChoice("Yes",4);
+        c.makeLinear(c1.getId());
+        c1.makeLinear(d.getId());
+        b.addChoice("Yes",5);
         b.addChoice("No",2);
 
         dialogue.addNode(a);
         dialogue.addNode(b);
         dialogue.addNode(c);
+        dialogue.addNode(c1);
         dialogue.addNode(d);
         dialogue.addNode(e);
 
